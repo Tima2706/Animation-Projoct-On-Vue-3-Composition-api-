@@ -114,7 +114,7 @@ const onChangePage = () => {
               {{ dayjs(record.date).format(DATE_TIME_FORMAT) }}
             </template>
             <template v-if="column.key === 'summa'">
-              {{ record.summa }}
+              {{ record?.summa }}
             </template>
           </template>
         </a-table>

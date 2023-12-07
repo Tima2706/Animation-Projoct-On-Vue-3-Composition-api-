@@ -158,10 +158,10 @@ const onChangePage = () => {
         >
           <template #bodyCell="{ column, record }">
             <template v-if="column.key === 'organization_account.bank.mfo'">
-              {{ record.organization_account.bank.mfo }}
+              {{ record.organization_account?.bank?.mfo }}
             </template>
             <template v-if="column.key === 'organization_account.account'">
-              {{ record.organization_account.account }}
+              {{ record.organization_account?.account }}
             </template>
             <template v-if="column.key === 'date'">
               {{ dayjs(record.date).format(DATE_TIME_FORMAT) }}
@@ -170,7 +170,7 @@ const onChangePage = () => {
               {{ record.type === 5 ? "вывести" : "пополнения" }}
             </template>
             <template v-if="column.key === 'summa'">
-              {{ record.summa }}
+              {{ record?.summa }}
             </template>
             <template v-if="column.key === 'status'">
               <span>
