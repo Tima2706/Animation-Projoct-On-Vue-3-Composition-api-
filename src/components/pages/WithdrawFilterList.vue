@@ -6,6 +6,7 @@ import {notification} from "ant-design-vue";
 import {useServerError} from '~/services/useServerError'
 import {DEFAULT_ERROR_MESSAGE, SAVED_SUCCESSFULLY} from '~/utils/constants'
 import { Field, Form, ErrorMessage } from 'vee-validate';
+import {formatMoney} from "~/utils/pureFunction";
 
 
 const visible = ref(false)
@@ -150,9 +151,9 @@ getOrganizationForSearch()
               </div>
             </Field>
 
-            <v-text class="pt-2"><span>{{$t('canBeWithdrawn')}}</span>:
-              {{ organizations?.data?.available_balance ? parseFloat(organizations.data.available_balance.replace(/\s/g, ' ')): '0' }}
-              {{ $t('sum') }}
+            <v-text class="pt-2"><span style="font-weight: 500">{{$t('canBeWithdrawn')}}</span>:
+            <span style="font-weight: 600">{{ organizations?.data?.available_balance ? formatMoney(organizations.data.available_balance.replace(/\s/g, ' ')): '0' }}
+              {{ $t('sum') }} </span>
             </v-text>
 
           </a-col>
