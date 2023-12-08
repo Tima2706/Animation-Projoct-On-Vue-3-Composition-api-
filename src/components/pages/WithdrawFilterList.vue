@@ -150,9 +150,9 @@ getOrganizationForSearch()
               </div>
             </Field>
 
-            <v-text class="pt-2"><span>Можно вывести</span>:
-              {{ organizations?.data?.available_balance ? organizations?.data?.available_balance : '0' }}
-              {{ $t('summa') }}
+            <v-text class="pt-2"><span>{{$t('canBeWithdrawn')}}</span>:
+              {{ organizations?.data?.available_balance ? parseFloat(organizations.data.available_balance.replace(/\s/g, ' ')): '0' }}
+              {{ $t('sum') }}
             </v-text>
 
           </a-col>
@@ -164,14 +164,14 @@ getOrganizationForSearch()
             <VText size="12" weight="400" class="mb-2">
               {{ $t('purposeOfPayment') }}
             </VText>
-            <Field :model-value="form.note" name="note" rules="required">
+            <Field :model-value="form.note" :name="$t('note')" rules="required">
               <a-textarea
                 v-model:value="form.note"
                 :autoSize="false"
                 :rows="4"
               />
               <div class="helper-message">
-                <ErrorMessage name="note"/>
+                <ErrorMessage :name="$t('note')"/>
               </div>
             </Field>
           </a-col>

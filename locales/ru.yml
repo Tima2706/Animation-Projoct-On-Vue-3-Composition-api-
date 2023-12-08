@@ -357,5 +357,7 @@ transactionAmount: Сумма транзакции
 partner: Партнер
 notEnoughMoney: На вашем счету недостаточно средств
 summaMustBeGreater: Сумма должна быть больше или равна 10 000 сум
+canBeWithdrawn: Можно вывести
+
 
 
