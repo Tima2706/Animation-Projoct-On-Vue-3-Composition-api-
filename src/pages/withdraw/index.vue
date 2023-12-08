@@ -89,7 +89,7 @@ const onChangePage = () => {
     <VText weight="600" size="18" class="mb-4">
       {{ t("withdraw") }}
     </VText>
-    <WithdrawFilterList  />
+    <WithdrawFilterList @changed="useFetchData"  />
     <div>
       <a-spin :spinning="bankingLoading">
         <a-table

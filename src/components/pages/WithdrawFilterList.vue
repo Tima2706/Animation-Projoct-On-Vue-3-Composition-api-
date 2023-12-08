@@ -5,10 +5,10 @@ import {organizationWuthdrawal, postOrganizationWithdrawal} from "~/services/tra
 import {notification} from "ant-design-vue";
 import {useServerError} from '~/services/useServerError'
 import {DEFAULT_ERROR_MESSAGE, SAVED_SUCCESSFULLY} from '~/utils/constants'
-import {ErrorMessage, Field, Form, configure} from 'vee-validate'
-import {getUserInfo} from "~/services/userInformation";
+import { Field, Form, ErrorMessage } from 'vee-validate';
 
 
+const visible = ref(false)
 const {t} = useI18n()
 const loading = ref(false)
 const organizations = ref<any>([])
@@ -39,43 +39,62 @@ const DEFAULT_FILTER_DATA = {
   account: '',
   note: '',
 }
-const checkBalance = (rule, value, callback) => {
-  if (organization.value.data.available_balance <= value) {
-    callback();
-  } else {
-    callback(new Error(t('balanceError')));
-  }
-};
+
+
 
 const form = ref<any>({...DEFAULT_FILTER_DATA})
 
 const getOrganizationForSearch = async () => {
-  const {data: data} = await organizationWuthdrawal()
+  const {data} = await organizationWuthdrawal()
   organizations.value = {data}
+
 }
 
-const submit = async () => {
-  try {
-    await postOrganizationWithdrawal({...form.value})
-    notification.success({
-      message: SAVED_SUCCESSFULLY,
-    })
-    emit('changed');
-    setTimeout(() => {
-      window.location.reload();
+const checkSumma = (value) => {
 
-    }, 600)
-  } catch (err: any) {
-    notification.error({
-      message: DEFAULT_ERROR_MESSAGE,
-    })
-    formRef.value.setErrors(getFieldErrors(err))
-
-  } finally {
-    submitLoading.value = false
+  if (value <= 10000) {
+    return t('summaMustBeGreater')
+  } else if(organizations.value.data?.available_balance <= value) {
+    return t('notEnoughMoney')
+  } else {
+    return true;
   }
 
 }
+
+
+const submit = async () => {
+  const validate = await formRef.value.validate()
+  if (validate && validate.valid) {
+    submitLoading.value = true
+    try {
+      await postOrganizationWithdrawal({...form.value})
+      notification.success({
+        message: SAVED_SUCCESSFULLY,
+      })
+      emit('changed');
+      visible.value = false
+
+    } catch (err: any) {
+      notification.error({
+        message: DEFAULT_ERROR_MESSAGE,
+      })
+      formRef.value.setErrors(getFieldErrors(err))
+
+    } finally {
+      submitLoading.value = false
+    }
+  }
+}
+watch(visible, (val) => {
+  if (!val) {
+    form.value = { ...DEFAULT_FILTER_DATA }
+  }
+
+  setTimeout(() => {
+    formRef.value?.resetForm()
+  })
+})
 
 
 getOrganizationForSearch()
@@ -83,10 +102,8 @@ getOrganizationForSearch()
 <template>
   <a-card>
     <div>
-      <Field
+      <Form
         ref="formRef"
-        name="advanced_search"
-        class="ant-advanced-search-form"
       >
         <a-row :gutter="24">
           <a-col :span="12">
@@ -97,7 +114,7 @@ getOrganizationForSearch()
             <VText size="12" weight="400" class="mb-2">
               {{ $t('checkingAccount') }}
             </VText>
-            <Field :model-value="form.account" name="account" :rules="{required: true, min: 500}">
+            <Field :model-value="form.account" name="account">
               <a-select
                 v-model:value="form.account"
                 show-search
@@ -115,14 +132,24 @@ getOrganizationForSearch()
               {{ $t('transactionAmount') }}
             </VText>
             <Field
-              v-slot="{ errors }"
+              v-slot="{ errors, value }"
               :model-value="form.summa"
-              :name="$t('summa')"
-              :rules="[{ required: true },{ validator: checkBalance }]">
-              <a-input type="number" :class="{ 'has-error': errors.length }" :placeholder="$t('sum')"
-                       v-model:value="form.summa"/>
-              <ErrorMessage :name="$t('summa')"/>
+              name="summa"
+              :rules="checkSumma"
+            >
+              <a-input-number
+                rules="max:3"
+                type="number"
+                style="width: 100%"
+                :placeholder="$t('summa')"
+                v-model:value="form.summa"
+                :class="{ 'has-error': errors.length }"
+              />
+              <div class="helper-message">
+                <ErrorMessage name="summa" />
+              </div>
             </Field>
+
             <v-text class="pt-2"><span>Можно вывести</span>:
               {{ organizations?.data?.available_balance ? organizations?.data?.available_balance : '0' }}
               {{ $t('summa') }}
@@ -137,9 +164,8 @@ getOrganizationForSearch()
             <VText size="12" weight="400" class="mb-2">
               {{ $t('purposeOfPayment') }}
             </VText>
-            <Field v-slot="{ errors }" :model-value="form.note" name="note" rules="required">
+            <Field :model-value="form.note" name="note" rules="required">
               <a-textarea
-                :class="{ 'has-error': errors.length }"
                 v-model:value="form.note"
                 :autoSize="false"
                 :rows="4"
@@ -158,7 +184,7 @@ getOrganizationForSearch()
             </a-button>
           </a-col>
         </a-row>
-      </Field>
+      </Form>
     </div>
   </a-card>
 

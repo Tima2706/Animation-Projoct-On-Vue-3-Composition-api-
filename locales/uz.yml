@@ -351,7 +351,8 @@ purposeOfPayment: Tolovnoma tayinlash
 transactionAmount: Tranzaksiya summasi
 сanBeWithdrawn: Yechib olinishi mumkin
 partner: Hamkor
-
+notEnoughMoney: Hisobingizda mablag‘ yetarli emas
+summaMustBeGreater: Miqdor 10 000 sum dan katta yoki unga teng bo'lishi kerak
 
 
 
