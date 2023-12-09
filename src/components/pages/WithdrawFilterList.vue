@@ -5,7 +5,7 @@ import {organizationWuthdrawal, postOrganizationWithdrawal} from "~/services/tra
 import {notification} from "ant-design-vue";
 import {useServerError} from '~/services/useServerError'
 import {DEFAULT_ERROR_MESSAGE, SAVED_SUCCESSFULLY} from '~/utils/constants'
-import { Field, Form, ErrorMessage } from 'vee-validate';
+import {Field, Form, ErrorMessage} from 'vee-validate';
 import {formatMoney} from "~/utils/pureFunction";
 
 
@@ -42,7 +42,6 @@ const DEFAULT_FILTER_DATA = {
 }
 
 
-
 const form = ref<any>({...DEFAULT_FILTER_DATA})
 
 const getOrganizationForSearch = async () => {
@@ -53,9 +52,10 @@ const getOrganizationForSearch = async () => {
 
 const checkSumma = (value) => {
 
-  if (value <= 10000) {
+  if (value < 10000
+  ) {
     return t('summaMustBeGreater')
-  } else if(organizations.value.data?.available_balance <= value) {
+  } else if (value > organizations.value.data?.available_balance) {
     return t('notEnoughMoney')
   } else {
     return true;
@@ -89,7 +89,7 @@ const submit = async () => {
 }
 watch(visible, (val) => {
   if (!val) {
-    form.value = { ...DEFAULT_FILTER_DATA }
+    form.value = {...DEFAULT_FILTER_DATA}
   }
 
   setTimeout(() => {
@@ -139,7 +139,6 @@ getOrganizationForSearch()
               :rules="checkSumma"
             >
               <a-input-number
-                rules="max:3"
                 type="number"
                 style="width: 100%"
                 :placeholder="$t('summa')"
@@ -147,12 +146,14 @@ getOrganizationForSearch()
                 :class="{ 'has-error': errors.length }"
               />
               <div class="helper-message">
-                <ErrorMessage name="summa" />
+                <ErrorMessage name="summa"/>
               </div>
             </Field>
 
-            <v-text class="pt-2"><span style="font-weight: 500">{{$t('canBeWithdrawn')}}</span>:
-            <span style="font-weight: 600">{{ organizations?.data?.available_balance ? formatMoney(organizations.data.available_balance.replace(/\s/g, ' ')): '0' }}
+            <v-text class="pt-2"><span style="font-weight: 500">{{ $t('canBeWithdrawn') }}</span>:
+              <span style="font-weight: 600">{{
+                  organizations?.data?.available_balance ? formatMoney(organizations.data.available_balance.replace(/\s/g, ' ')) : '0'
+                }}
               {{ $t('sum') }} </span>
             </v-text>
 
