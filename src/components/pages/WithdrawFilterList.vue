@@ -65,37 +65,35 @@ const checkSumma = (value) => {
 
 
 const submit = async () => {
-  const validate = await formRef.value.validate()
+  const validate = await formRef.value.validate();
   if (validate && validate.valid) {
-    submitLoading.value = true
+    submitLoading.value = true;
     try {
-      await postOrganizationWithdrawal({...form.value})
+      await postOrganizationWithdrawal({ ...form.value });
       notification.success({
         message: SAVED_SUCCESSFULLY,
-      })
+      });
       emit('changed');
-      visible.value = false
 
+
+      form.value = { ...DEFAULT_FILTER_DATA };
+      setTimeout(() => {
+        formRef.value.resetForm();
+      })
     } catch (err: any) {
       notification.error({
         message: DEFAULT_ERROR_MESSAGE,
-      })
-      formRef.value.setErrors(getFieldErrors(err))
-
+      });
+      formRef.value.setErrors(getFieldErrors(err));
     } finally {
-      submitLoading.value = false
+      submitLoading.value = false;
     }
   }
-}
-watch(visible, (val) => {
-  if (!val) {
-    form.value = {...DEFAULT_FILTER_DATA}
-  }
+};
 
-  setTimeout(() => {
-    formRef.value?.resetForm()
-  })
-})
+
+
+
 
 
 getOrganizationForSearch()
@@ -181,7 +179,7 @@ getOrganizationForSearch()
 
         <a-row>
           <a-col :span="24" style="text-align: right">
-            <a-button @click="submit" type="primary" html-type="submit">
+            <a-button @click="submit" type="primary">
               {{ $t('withdraw') }} !
             </a-button>
           </a-col>
