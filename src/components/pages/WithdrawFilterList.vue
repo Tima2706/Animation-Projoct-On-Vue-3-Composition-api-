@@ -69,14 +69,14 @@ const submit = async () => {
   if (validate && validate.valid) {
     submitLoading.value = true;
     try {
-      await postOrganizationWithdrawal({ ...form.value });
+      await postOrganizationWithdrawal({...form.value});
       notification.success({
         message: SAVED_SUCCESSFULLY,
       });
       emit('changed');
 
 
-      form.value = { ...DEFAULT_FILTER_DATA };
+      form.value = {...DEFAULT_FILTER_DATA};
       setTimeout(() => {
         formRef.value.resetForm();
       })
@@ -92,32 +92,43 @@ const submit = async () => {
 };
 
 
-
-
-
-
 getOrganizationForSearch()
 </script>
 <template>
   <a-card>
-    <div>
+    <div class="withdraw-filter">
       <Form
         ref="formRef"
       >
         <a-row :gutter="24">
-          <a-col :span="12">
-            <p style="padding-bottom: 8px">{{ $t('tin') }}</p>
-            <div class="mb-5" style=" padding: 10px; border-radius: 12px; background: #F0F4F9; ">
-              <VText class="text-dark"> {{ organizations?.data?.tin }}</VText>
+          <a-col :span="24">
+            <div class="withdraw-filter__lside flex gap-5 justify-between">
+              <div style="width: 50%">
+                <p style="padding-bottom: 8px">{{ $t('tin') }}</p>
+                <div class="mb-5 withdraw-filter__lside__item" style=" padding: 10px; border-radius: 12px; background: #F0F4F9; ">
+                  <VText class="text-dark"> {{ organizations?.data?.tin }}</VText>
+                </div>
+              </div>
+              <div style="width: 50%">
+                <p style="padding-bottom: 8px">{{ $t('name') }}</p>
+                <div class="mb-5 withdraw-filter__lside__item" style=" padding: 10px; border-radius: 12px; background: #F0F4F9;">
+                  <VText class="text-dark"> {{ organizations?.data?.name }}</VText>
+                </div>
+              </div>
             </div>
+          </a-col>
+          <a-col :span="24">
+            <div class="withdraw-filter__lside flex justify-between gap-5 items-center">
+              <div   style="width: 50%">
             <VText size="12" weight="400" class="mb-2">
               {{ $t('checkingAccount') }}
             </VText>
-            <Field :model-value="form.account" name="account">
+            <Field  :model-value="form.account" name="account">
               <a-select
                 v-model:value="form.account"
                 show-search
                 allow-clear
+                class="withdraw-filter__select"
                 style="width: 100%"
                 :field-names="{ label: 'account', value: 'account' }"
                 :options="organizations?.data?.items"
@@ -127,6 +138,8 @@ getOrganizationForSearch()
                 <ErrorMessage name="account"/>
               </div>
             </Field>
+              </div>
+              <div  style="width: 50%">
             <VText size="12" weight="400" class="mb-2">
               {{ $t('transactionAmount') }}
             </VText>
@@ -139,6 +152,7 @@ getOrganizationForSearch()
               <a-input-number
                 type="number"
                 style="width: 100%"
+                class="withdraw-filter__select"
                 :placeholder="$t('summa')"
                 v-model:value="form.summa"
                 :class="{ 'has-error': errors.length }"
@@ -147,20 +161,14 @@ getOrganizationForSearch()
                 <ErrorMessage name="summa"/>
               </div>
             </Field>
-
+              </div>
+            </div>
             <v-text class="pt-2"><span style="font-weight: 500">{{ $t('canBeWithdrawn') }}</span>:
               <span style="font-weight: 600">{{
                   organizations?.data?.available_balance ? formatMoney(organizations.data.available_balance.replace(/\s/g, ' ')) : '0'
                 }}
               {{ $t('sum') }} </span>
             </v-text>
-
-          </a-col>
-          <a-col :span="12">
-            <p style="padding-bottom: 8px">{{ $t('name') }}</p>
-            <div class="mb-5" style=" padding: 10px; border-radius: 12px; background: #F0F4F9;">
-              <VText class="text-dark"> {{ organizations?.data?.name }}</VText>
-            </div>
             <VText size="12" weight="400" class="mb-2">
               {{ $t('purposeOfPayment') }}
             </VText>
@@ -176,7 +184,6 @@ getOrganizationForSearch()
             </Field>
           </a-col>
         </a-row>
-
         <a-row>
           <a-col :span="24" style="text-align: right">
             <a-button @click="submit" type="primary">
@@ -217,6 +224,17 @@ getOrganizationForSearch()
     border: 1px solid #0096B2;
     background: #0096B2;
     color: #FFFFFF;
+  }
+}
+@media (max-width: 1000px) {
+  .withdraw-filter__select{
+    width: 200% !important;
+  }
+  .withdraw-filter__lside{
+    flex-wrap: wrap;
+    &__item{
+      width: 200%;
+    }
   }
 }
 </style>

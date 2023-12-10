@@ -9,19 +9,23 @@ import { useStorageService } from '~/modules/storage-service'
 import '@shohrux_saidov/dt-header/dist/style.css'
 import Cookies from 'universal-cookie'
 import {IS_DEV} from "~/utils/config";
+
 const open = ref<boolean>(false);
-import { API_FILE_URL } from '~/utils/config'
-
-
-const showDrawer = () => {
-  open.value = true;
-};
 
 interface Language {
   value: string
   label: string
 }
 const cookies = new Cookies(null, { path: '/' })
+
+const sidebar = ref(false)
+
+function sidebarOpen() {
+  sidebar.value = true
+}
+function sidebarClose() {
+  sidebar.value = false
+}
 
 const { locale } = useI18n({ useScope: 'local' })
 const { $set, $get } = useStorageService()
@@ -30,6 +34,7 @@ const organizationStore = useOrganizationStore()
 
 const router = useRouter()
 // const { removeToken } = useToken()
+
 const {logout, removeToken} = useToken()
 const isOpenSubMenu = ref(false)
 const menu1Ref = ref()
@@ -37,11 +42,11 @@ const menu2Ref = ref()
 const menu2ChildRef = ref()
 
 const languageList = ref<Array<Language>>([
-  { value: 'uz', label: 'languages.uz' },
-  { value: 'en', label: 'languages.en' },
+  { value: 'uz', label: 'Uz' },
+  { value: 'en', label: 'En' },
 ])
 
-const currentLanguage = ref<Language>({ value: 'ru', label: 'languages.ru' })
+const currentLanguage = ref<Language>({ value: 'ru', label: 'Ру' })
 cookies.set('lang', currentLanguage.value.value)
 watch(isOpenSubMenu, (val) => {
   setTimeout(() => {
@@ -78,10 +83,7 @@ const checkLanguage = () => {
 }
 checkLanguage()
 
-// const handleLogout = () => {
-//   removeToken()
-//   router.replace({ name: 'auth-login' })
-// }
+
 const handleLogout = () => {
   if (IS_DEV) {
     removeToken()
@@ -92,11 +94,11 @@ const handleLogout = () => {
 }
 
 
-const mainNavActive = ref(false)
-
-function menuToggle() {
-  mainNavActive.value = !mainNavActive.value
-}
+// const mainNavActive = ref(false)
+//
+// function menuToggle() {
+//   mainNavActive.value = !mainNavActive.value
+// }
 
 const maxWidth = 1060
 
@@ -111,6 +113,10 @@ window.addEventListener('resize', updateIsOpenSubMenu)
 <template>
   <!--  <div class="ant-layout-header__inner"> -->
   <DTHeader>
+    <template #modules>
+      {{$t('modules')}}
+    </template>
+    <template #profile>
     <div class="flex navbar-dropdown">
       <div class="action action-language">
         <a-dropdown :trigger="['click']">
@@ -135,81 +141,70 @@ window.addEventListener('resize', updateIsOpenSubMenu)
         </a-dropdown>
       </div>
       <div class="dropdown-trigger-separator" />
-      <div v-if="organizationStore?.organization" class="action" />
-      <div @click="showDrawer">
-        <p class="dropdown-trigger select-none">
+      <div v-if="organizationStore" class="action" />
+      <div>
+        <p @click="sidebarOpen" class="dropdown-trigger select-none">
           <UserProfileIcon />
+          <span class="organization-organization__name">
           {{ organizationStore?.organization?.name }}
+          </span>
           <AngleDownIcon />
         </p>
-      </div>
-      <div class="user-profile-information">
-      <a-drawer
-        v-model:open="open"
-        class="custom-class"
-        root-class-name="root-class-name"
-        :root-style="{ color: 'blue' }"
-        style="color: #000000; background: rgb(19,30,44)"
-        :title="$t('profile')"
-        placement="right"
-      >
-        <ACard style="border: 1px solid #d5d3d3">
-          <div class="mb-3">
-          <VText>
-            {{$t('companyName')}}
-          </VText>
-            <VText style="font-size: 16px; font-weight: 600; color: #4A5C71">
-              {{organizationStore?.organization?.name}}
-            </VText>
-          </div>
-          <div class="mb-3">
-            <VText>
-              {{$t('fullName')}}
-            </VText>
-            <VText  style="font-size: 16px; font-weight: 600; color: #4A5C71">
-            {{organizationStore?.organization?.director.lastname}}    {{organizationStore?.organization?.director.firstname}} {{organizationStore?.organization?.director.middlename}}
-            </VText>
-          </div>
-          <div class="mb-3">
-            <VText>
-              {{$t('numberPhone')}}
-            </VText>
-            <VText  style="font-size: 16px; font-weight: 600; color: #4A5C71">
-              +{{organizationStore?.organization?.director?.phone_number}}
-            </VText>
-          </div>
-          <div class="mb-3">
-            <VText>
-              {{$t('email')}}
-            </VText>
-            <VText  style="font-size: 16px; font-weight: 600; color: #4A5C71">
-              {{organizationStore?.organization?.director?.email}}
-            </VText>
-          </div>
-          <div class="mb-3">
-            <VText>
-              {{$t('address')}}
-            </VText>
-            <VText  style="font-size: 16px; font-weight: 600; color: #4A5C71">
-              {{organizationStore?.organization?.address}}
-            </VText>
-          </div>
-          <div class="mb-3">
-            <VText>
-              {{$t('website')}}
-            </VText>
-            <VText  style="font-size: 16px; font-weight: 600; color: #4A5C71">
-              {{organizationStore?.organization?.website}}
-            </VText>
-          </div>
-        </ACard>
-        <div style="cursor: pointer;" class="flex justify-center mt-5"  @click="handleLogout">
-          <AButton style="color: #FFFFFF">{{ $t("exitTheOffice") }}</AButton>
-        </div>
+        <a-drawer
+          placement="right"
+          @close="sidebarClose"
+          :open="sidebar"
+          :closable="false"
+          :trigger="['click']"
+        >
+          <div class="flex flex-col justify-between h-full">
+            <div>
+              <p class="text-[20px] text-[#48545D] font-medium">{{ $t('profile') }}</p>
+              <div
+                v-if="organizationStore!.organization?.logo"
+                class="w-full h-[150px] border-[1px] border-[#DFE2E9] rounded-md my-6 flex justify-center"
+              >
+                <VImg
+                  :src-from-local-server="!!organizationStore!.organization.logo"
+                  class="object-contain"
+                  alt="organizationName"
+                  :src="organizationStore!.organization.logo"
+                />
+              </div>
 
-      </a-drawer>
+              <p class="text-[#A2A5B9] mb-1">{{ $t('companyName') }}</p>
+              <p class="font-medium text-[#48545D]">{{ organizationStore!.organization?.name }}</p>
+
+              <a-divider class="text-[#DFE2E9]" />
+
+              <p class="text-[#A2A5B9]">{{ $t('fullName') }}</p>
+              <p class="font-medium text-[#48545D]">
+                {{ organizationStore!.organization?.director.firstname + ' ' + organizationStore!.organization?.director?.middlename + ' ' + organizationStore!.organization?.director?.lastname }}
+              </p>
+
+              <p class="mt-4 text-[#A2A5B9]">{{ $t('user') }}</p>
+              <p class="font-medium text-[#0096B2]">{{ organizationStore!.organization?.director?.username }}</p>
+
+              <!--              <p class="capitalize mt-4 text-[#A2A5B9]">{{ $t('role') }}</p>-->
+              <!--              <div class="flex gap-2">-->
+              <!--                <p class="font-medium text-[#48545D]" v-for="role in user.roles">{{ role.name }}</p>-->
+              <!--              </div>-->
+              <a-divider />
+            </div>
+            <div
+              class="w-full flex gap-2 items-center border-[1px] border-[#DFE2E9] py-2 px-3 rounded-md text-[#D65E81]"
+              @click="handleLogout"
+            >
+              <Logout />
+              <p class="cursor-pointer">{{ $t('exitTheOffice') }}</p>
+            </div>
+          </div>
+        </a-drawer>
       </div>
+
+
     </div>
+    </template>
   </DTHeader>
 
   <!--  </div> -->

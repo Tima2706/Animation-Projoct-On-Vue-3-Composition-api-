@@ -106,14 +106,14 @@ const onChangePage = () => {
             <Filter />
             {{ t("filter") }}
           </a-button>
-          <a-button
-              type="primary"
-              ghost
-              class="flex justify-center items-center gap-2"
-          >
-            <Hashtag />
-            {{ t("exportToExel") }}
-          </a-button>
+<!--          <a-button-->
+<!--              type="primary"-->
+<!--              ghost-->
+<!--              class="flex justify-center items-center gap-2"-->
+<!--          >-->
+<!--            <Hashtag />-->
+<!--            {{ t("exportToExel") }}-->
+<!--          </a-button>-->
         </div>
 
         <!--        <div class="flex items-center gap-2"> -->

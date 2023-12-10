@@ -91,8 +91,8 @@ getOrganizationForSearch()
 <!--        <a-input style="width: 435px" v-model:value="filterData.product_name"  type="text" />-->
 <!--      </div>-->
     </div>
-    <div class="flex justify-between mt-3">
-      <div class="flex gap-2 items-center">
+    <div class="flex justify-between filter-options mt-3">
+      <div class="flex gap-2 filter-options items-center">
         <div class="mb-3">
           <VText weight="500" size="14" class="mb-1">
             {{ $t('date') }}

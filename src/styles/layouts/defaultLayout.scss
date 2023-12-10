@@ -156,10 +156,15 @@
   .logo {
     max-width: 50px;
   }
-
-  .action-language, .dropdown-trigger-separator {
-    display: none;
+.organization-organization__name{
+  display: none !important;
+}
+.filter-options{
+  flex-wrap: wrap;
+  &_select{
+    width: 100%;
   }
+}
 
   .dropdown-solid-line {
     width: 100%;
@@ -281,6 +286,11 @@
   .nav--sub-menu {
     top: 177px;
   }
+  .filter-options{
+    &_select{
+      width: 300px !important;
+    }
+  }
 }
 
 @media only screen and (max-height: 560px) {
@@ -293,4 +303,6 @@
   .first-nav {
     justify-content: space-between !important;
   }
+
 }
+

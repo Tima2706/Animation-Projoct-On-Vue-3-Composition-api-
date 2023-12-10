@@ -84,7 +84,7 @@ function handleHideAmount(str) {
       </div>
       <div class="status__item">
         <div class="abs_befor abs_bg_black" />
-        <h1>{{ t("balance") }}</h1>
+        <h1>{{ t("cost") }}</h1>
         <p class="mb-1 color_black">
           {{
             showTransactionBalance.outlay

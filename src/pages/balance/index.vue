@@ -93,10 +93,10 @@ const onChangePage = () => {
                   <FilterIcon />
                   {{ $t('filter') }}
               </AButton>
-              <AButton  size="large" class="filter_btn ml-4" >
-                  <HashtagIcon style="fill: none;" />
-                  {{ $t('exportToExel') }}
-              </AButton>
+<!--              <AButton  size="large" class="filter_btn ml-4" >-->
+<!--                  <HashtagIcon style="fill: none;" />-->
+<!--                  {{ $t('exportToExel') }}-->
+<!--              </AButton>-->
               </div>
           </div>
         <transition name="transition-effect" mode="out-in">

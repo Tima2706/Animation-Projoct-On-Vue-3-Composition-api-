@@ -63,7 +63,7 @@ getOrganizationForSearch()
 <template>
   <div v-if="isFilterOpened === true">
     <hr style="color: #DFE2E9" class="my-4" />
-    <div class="flex gap-2">
+    <div class="filter-options flex gap-2">
       <div  class="mb-3 ">
         <VText weight="500" size="12" class="mb-1">
           {{ $t('contractNumber') }}
@@ -79,6 +79,7 @@ getOrganizationForSearch()
             show-search
             allow-clear
             style="width: 470px"
+            class="filter-options_select"
             :field-names="{ label: 'name', value: 'id' }"
             :options="organizations"
             :filter-option="filterOption"
@@ -89,11 +90,12 @@ getOrganizationForSearch()
         <VText weight="500" size="12" class="mb-1">
           {{ $t('nameOfProduct') }}
         </VText>
-        <a-input style="width: 435px" v-model:value="filterData.product_name"  type="text" />
+
+        <a-input style="width: 435px" v-model:value="filterData.product_name"   class="filter-options_select"   type="text" />
       </div>
     </div>
-    <div class="flex justify-between mt-3">
-      <div class="flex gap-2 items-center">
+    <div class="flex justify-between filter-options mt-3">
+      <div class="filter-options flex gap-2 items-center">
         <div class="mb-3">
           <VText weight="500" size="14" class="mb-1">
             {{ $t('date') }}
@@ -135,6 +137,7 @@ getOrganizationForSearch()
 
 
 <style lang="scss" scoped>
+
 .search_btn-reset{
   background: #D65E81;
   color: #FFFFFF;
