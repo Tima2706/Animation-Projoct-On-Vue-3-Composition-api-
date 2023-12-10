@@ -72,7 +72,6 @@
 }
 
 
-
 .ant-layout-sider {
   background: #3A4B5F !important;
 }
@@ -111,7 +110,7 @@
     position: absolute;
     left: 230px;
     top: 75px;
-    z-index: 1;
+    z-index: 2;
     color: #fff;
     display: flex;
     align-items: center;
@@ -145,6 +144,12 @@
 }
 
 @media only screen and (max-width: 1275px) {
+  .ant-layout-sider {
+    background: #3A4B5F !important;
+    position: absolute !important;
+    height: 100vh;
+    z-index: 1;
+  }
   .sidebar {
     &__collapse-btn {
       top: 93px;
