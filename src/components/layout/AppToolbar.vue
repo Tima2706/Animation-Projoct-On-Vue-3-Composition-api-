@@ -187,8 +187,8 @@ window.addEventListener('resize', updateIsOpenSubMenu)
                 {{ organizationStore!.organization?.director.firstname + ' ' + organizationStore!.organization?.director?.middlename + ' ' + organizationStore!.organization?.director?.lastname }}
               </p>
 
-              <p class="mt-4 text-[#A2A5B9]">{{ $t('user') }}</p>
-              <p class="font-medium text-[#0096B2]">{{ organizationStore!.organization?.username }}</p>
+<!--              <p class="mt-4 text-[#A2A5B9]">{{ $t('user') }}</p>-->
+<!--              <p class="font-medium text-[#0096B2]">{{ organizationStore!.organization?.username }}</p>-->
 
               <!--              <p class="capitalize mt-4 text-[#A2A5B9]">{{ $t('role') }}</p>-->
               <!--              <div class="flex gap-2">-->
