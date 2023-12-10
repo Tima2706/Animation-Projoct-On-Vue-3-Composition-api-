@@ -4,11 +4,6 @@ import type { RouteLocationRaw } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import BankLogo from '~/assets/icons/sidebar/bank.svg'
 import AngleLeftIcon from '~/assets/icons/angle-left.svg'
-import UsersIcon from '~/assets/icons/sidebar/users-line.svg'
-import ProfileIcon from '~/assets/icons/sidebar/profile.svg'
-import ProductsIcon from '~/assets/icons/sidebar/products.svg'
-import ContractIcon from '~/assets/icons/contract.svg'
-import ShoppingIcon from '~/assets/icons/shopping-cart.svg'
 import AcceptBasket from '~/assets/icons/sidebar/accept-basket.svg'
 import Balance from '~/assets/icons/balance.svg'
 import Withdraw from '~/assets/icons/sidebar/withdraw.svg'
@@ -17,10 +12,12 @@ import ErrorTransaction from '~/assets/icons/sidebar/error-transaction.svg'
 import Expenses from '~/assets/icons/sidebar/expenses.svg'
 import { useAccess } from '~/composables/useAccess'
 import { PERMISSIONS } from '~/utils/constants'
+import {useOrganizationStore} from "~/stores/organization";
 const { t } = useI18n({ useScope: 'local' })
 
 const collapsed = ref(false)
 
+const organization = useOrganizationStore()
 const { hasAccess } = useAccess()
 
 const navigations: {
@@ -70,6 +67,7 @@ const navigations: {
 </script>
 
 <template>
+  <div v-if="organization.organization">
 <!--  <a-layout>-->
       <AppToolbar />
     <div>
@@ -102,6 +100,11 @@ const navigations: {
     </a-layout>
 <!--  </a-layout>-->
     </div>
+  </div>
+  <div style="display: flex; gap: 20px; justify-content: center; height: 100vh; align-items: center;" v-else>
+    loading...
+      <a-spin />
+  </div>
 </template>
 
 <style lang="scss">

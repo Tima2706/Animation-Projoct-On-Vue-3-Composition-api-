@@ -23,7 +23,7 @@ export function useToken() {
   }
 
   const gotoLogin = () => {
-    window.location.href = `${IDENTITY_SERVICE}?returnUrl=https://rkp.dt.uz`
+    window.location.href = `${IDENTITY_SERVICE}?returnUrl=https://.dt.uz`
   }
 
 
