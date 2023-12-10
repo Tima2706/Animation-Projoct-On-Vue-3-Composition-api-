@@ -67,7 +67,7 @@ const navigations: {
 </script>
 
 <template>
-  <div v-if="organization.organization">
+<!--  <div v-if="organization.organization">-->
 <!--  <a-layout>-->
       <AppToolbar />
     <div>
@@ -100,11 +100,11 @@ const navigations: {
     </a-layout>
 <!--  </a-layout>-->
     </div>
-  </div>
-  <div style="display: flex; gap: 20px; justify-content: center; height: 100vh; align-items: center;" v-else>
-    loading...
-      <a-spin />
-  </div>
+<!--  </div>-->
+<!--  <div style="display: flex; gap: 20px; justify-content: center; height: 100vh; align-items: center;" v-else>-->
+<!--    loading...-->
+<!--      <a-spin />-->
+<!--  </div>-->
 </template>
 
 <style lang="scss">
