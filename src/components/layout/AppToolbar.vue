@@ -3,6 +3,7 @@ import { ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import DTHeader from '@shohrux_saidov/dt-header'
 import AngleDownIcon from '~/assets/icons/angle-down.svg'
+import ClosePage from '~/assets/icons/close.svg'
 import UserProfileIcon from '~/assets/icons/user-tag-line.svg'
 import { useToken } from '~/composables/useToken'
 import { useStorageService } from '~/modules/storage-service'
@@ -159,7 +160,11 @@ window.addEventListener('resize', updateIsOpenSubMenu)
         >
           <div class="flex flex-col justify-between h-full">
             <div>
+              <div class="flex justify-between items-center">
               <p class="text-[20px] text-[#48545D] font-medium">{{ $t('profile') }}</p>
+                <button  @click="sidebarClose"><ClosePage /></button>
+
+              </div>
               <div
                 v-if="organizationStore!.organization?.logo"
                 class="w-full h-[150px] border-[1px] border-[#DFE2E9] rounded-md my-6 flex justify-center"
@@ -183,7 +188,7 @@ window.addEventListener('resize', updateIsOpenSubMenu)
               </p>
 
               <p class="mt-4 text-[#A2A5B9]">{{ $t('user') }}</p>
-              <p class="font-medium text-[#0096B2]">{{ organizationStore!.organization?.director?.username }}</p>
+              <p class="font-medium text-[#0096B2]">{{ organizationStore!.organization?.username }}</p>
 
               <!--              <p class="capitalize mt-4 text-[#A2A5B9]">{{ $t('role') }}</p>-->
               <!--              <div class="flex gap-2">-->
