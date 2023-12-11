@@ -63,7 +63,7 @@ getOrganizationForSearch()
         <VText weight="500" size="12" class="mb-1">
           {{ $t('contractNumber') }}
         </VText>
-        <a-input style="width: 122px;" v-model:value="filterData.doc_number" :placeholder="t('-')"  type="number" />
+        <a-input  v-model:value="filterData.doc_number" :placeholder="t('-')"  />
       </div>
 <!--      <div class="mb-3">-->
 <!--        <VText weight="500" size="12" class="mb-1">-->
@@ -89,29 +89,29 @@ getOrganizationForSearch()
     </div>
     <div class="flex justify-between filter-options mt-3">
       <div class="flex gap-2 filter-options items-center">
-        <div class="mb-3">
+        <div class="mb-3 filter-doc-number">
           <VText weight="500" size="14" class="mb-1">
             {{ $t('date') }}
           </VText>
-          <a-space>
+          <div class="flex gap-3 filter-doc-number-item">
             <a-date-picker :placeholder="$t('from')" v-model:value="filterData.from_date" />
             <a-date-picker :placeholder="$t('before')" v-model:value="filterData.to_date" />
-          </a-space>
+          </div>
         </div>
-        <div class="mb-3">
+        <div class="mb-3 filter-doc-number">
           <VText weight="500" size="14" class="mb-1">
             {{ $t('price') }}
           </VText>
-          <a-space>
+          <div class="flex gap-3 filter-doc-number-item">
             <a-input style="width: 122px;" v-model:value="filterData.from_summa" :placeholder="t('from')" filterData  type="number" />
             <a-input style="width: 122px;" v-model:value="filterData.to_summa" :placeholder="t('to')"   type="number" />
-          </a-space>
+          </div>
         </div>
-        <div class="mb-2">
+        <div class="mb-2 filter-doc-number">
           <VText weight="500" size="12" class="mb-1">
             {{ $t('note') }}
           </VText>
-          <AInput  style="width: 289px" placeholder="-" v-model:value="filterData.note" />
+          <AInput class="filter-doc-number__input"  style="width: 289px" placeholder="-" v-model:value="filterData.note" />
         </div>
       </div>
       <div  class="flex items-center gap-2">
@@ -153,5 +153,18 @@ getOrganizationForSearch()
     color: #FFFFFF;
   }
 }
-
+@media (max-width: 667px) {
+  .filter-doc-number{
+    flex-grow: 1;
+    &-item{
+      flex-direction: column;
+      input{
+        width: 100% !important;
+      }
+    }
+    &__input{
+      width: 100% !important;
+    }
+  }
+}
 </style>
