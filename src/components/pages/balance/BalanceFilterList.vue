@@ -43,7 +43,7 @@ const reset = () => {
 const filterData = ref<any>({ ...DEFAULT_FILTER_DATA })
 const getOrganizationForSearch = async () => {
   const { data } = await getOrganizationPartner()
-  organizations.value = data.data
+  organizations.value = data
 }
 
 const onSearch = (input: string) => {
@@ -83,7 +83,6 @@ getOrganizationForSearch()
             :field-names="{ label: 'name', value: 'id' }"
             :options="organizations"
             :filter-option="filterOption"
-            @change="onSearch"
         />
       </div>
       <div class="mb-3">

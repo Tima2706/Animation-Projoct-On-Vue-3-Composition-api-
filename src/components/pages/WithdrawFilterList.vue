@@ -118,7 +118,7 @@ getOrganizationForSearch()
             </div>
           </a-col>
           <a-col :span="24">
-            <div class="withdraw-filter__lside flex justify-between gap-5 items-center">
+            <div class="withdraw-filter__lside flex justify-between gap-5 items-start">
               <div   style="width: 50%">
             <VText size="12" weight="400" class="mb-2">
               {{ $t('checkingAccount') }}
@@ -157,18 +157,19 @@ getOrganizationForSearch()
                 v-model:value="form.summa"
                 :class="{ 'has-error': errors.length }"
               />
+              <v-text class="pt-2"><span style="font-weight: 500">{{ $t('canBeWithdrawn') }}</span>:
+                <span style="font-weight: 600">{{
+                    organizations?.data?.available_balance ? formatMoney(organizations.data.available_balance.replace(/\s/g, ' ')) : '0'
+                  }}
+              {{ $t('sum') }} </span>
+              </v-text>
               <div class="helper-message">
                 <ErrorMessage name="summa"/>
               </div>
             </Field>
               </div>
             </div>
-            <v-text class="pt-2"><span style="font-weight: 500">{{ $t('canBeWithdrawn') }}</span>:
-              <span style="font-weight: 600">{{
-                  organizations?.data?.available_balance ? formatMoney(organizations.data.available_balance.replace(/\s/g, ' ')) : '0'
-                }}
-              {{ $t('sum') }} </span>
-            </v-text>
+
             <VText size="12" weight="400" class="mb-2">
               {{ $t('purposeOfPayment') }}
             </VText>
