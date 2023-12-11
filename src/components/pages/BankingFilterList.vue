@@ -46,10 +46,6 @@ const getOrganizationForSearch = async () => {
   organizations.value = data
 }
 
-const onSearch = (input: string) => {
-  organizations.value = input
-}
-
 const submit = () => {
   emit('changed', {
     ...filterData.value,
@@ -63,7 +59,7 @@ getOrganizationForSearch()
   <div v-if="isFilterOpened === true">
     <hr style="color: #DFE2E9" class="my-4" />
     <div class="flex gap-2">
-      <div  class="mb-3 ">
+      <div  class="mb-3 filter-doc-number">
         <VText weight="500" size="12" class="mb-1">
           {{ $t('contractNumber') }}
         </VText>
@@ -108,14 +104,14 @@ getOrganizationForSearch()
           </VText>
           <a-space>
             <a-input style="width: 122px;" v-model:value="filterData.from_summa" :placeholder="t('from')" filterData  type="number" />
-            <a-input style="width: 122px;" v-model:value="filterData.to_summa"   type="number" />
+            <a-input style="width: 122px;" v-model:value="filterData.to_summa" :placeholder="t('to')"   type="number" />
           </a-space>
         </div>
         <div class="mb-2">
           <VText weight="500" size="12" class="mb-1">
             {{ $t('note') }}
           </VText>
-          <AInput style="width: 289px" placeholder="-" v-model:value="filterData.note" />
+          <AInput  style="width: 289px" placeholder="-" v-model:value="filterData.note" />
         </div>
       </div>
       <div  class="flex items-center gap-2">
@@ -157,4 +153,5 @@ getOrganizationForSearch()
     color: #FFFFFF;
   }
 }
+
 </style>

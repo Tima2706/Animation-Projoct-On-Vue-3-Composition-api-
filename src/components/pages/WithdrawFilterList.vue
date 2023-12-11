@@ -157,7 +157,7 @@ getOrganizationForSearch()
                 v-model:value="form.summa"
                 :class="{ 'has-error': errors.length }"
               />
-              <v-text class="pt-2"><span style="font-weight: 500">{{ $t('canBeWithdrawn') }}</span>:
+              <v-text class="pt-2 can-be-withdrawn"><span style="font-weight: 500">{{ $t('canBeWithdrawn') }}</span>:
                 <span style="font-weight: 600">{{
                     organizations?.data?.available_balance ? formatMoney(organizations.data.available_balance.replace(/\s/g, ' ')) : '0'
                   }}
@@ -236,6 +236,9 @@ getOrganizationForSearch()
     &__item{
       width: 200%;
     }
+  }
+  .can-be-withdrawn{
+    width: 200%;
   }
 }
 </style>
