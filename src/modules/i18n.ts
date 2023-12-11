@@ -1,6 +1,8 @@
 import { createI18n } from 'vue-i18n'
-import { useStorageService } from '~/modules/storage-service'
 import { type UserModule } from '~/types/types'
+import {useLanguage} from "~/composables/useLanguage";
+
+const {getLang, setLang} = useLanguage()
 
 // Import i18n resources
 // https://vitejs.dev/guide/features.html#glob-import
@@ -16,14 +18,11 @@ const messages = Object.fromEntries(
     }),
 )
 
-const { $get } = useStorageService()
-
-const selectedLanguage: { label: string; value: string } = $get()
 
 export const install: UserModule = ({ app }) => {
   const i18n = createI18n({
     legacy: false,
-    locale: selectedLanguage ? selectedLanguage.value : 'ru',
+    locale: getLang() || 'ru',
     fallbackLocale: ['uz', 'en'],
     missingWarn: false,
     fallbackWarn: false,
