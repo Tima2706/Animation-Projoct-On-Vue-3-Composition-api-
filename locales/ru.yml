@@ -181,7 +181,7 @@ all: Все
 balance: Баланс
 transactions: Транзакции
 operations: Операции
-remainBalance: 'Пустой остаток'
+remainBalance: Пустой остаток
 blockedBalance: Блокированный (дипозит)
 expenses: Расходы
 throughKlering: Через клиринг

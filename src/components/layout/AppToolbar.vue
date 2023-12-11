@@ -6,7 +6,7 @@ import AngleDownIcon from '~/assets/icons/angle-down.svg'
 import ClosePage from '~/assets/icons/close.svg'
 import UserProfileIcon from '~/assets/icons/user-tag-line.svg'
 import { useToken } from '~/composables/useToken'
-import { useStorageService } from '~/modules/storage-service'
+import {useLanguage} from "~/composables/useLanguage";
 import '@shohrux_saidov/dt-header/dist/style.css'
 import Cookies from 'universal-cookie'
 import {IS_DEV} from "~/utils/config";
@@ -29,7 +29,7 @@ function sidebarClose() {
 }
 
 const { locale } = useI18n({ useScope: 'local' })
-const { $set, $get } = useStorageService()
+const { setLang, getLang } = useLanguage()
 
 const organizationStore = useOrganizationStore()
 
@@ -43,12 +43,12 @@ const menu2Ref = ref()
 const menu2ChildRef = ref()
 
 const languageList = ref<Array<Language>>([
-  { value: 'uz', label: 'Uz' },
-  { value: 'en', label: 'En' },
-])
+  { value: "uz", label: "languages.uz" },
+  { value: "en", label: "languages.en" },
+  { value: "ru", label: "languages.ru" },
+]);
+const selectedLang = ref(getLang());
 
-const currentLanguage = ref<Language>({ value: 'ru', label: 'Ру' })
-cookies.set('lang', currentLanguage.value.value)
 watch(isOpenSubMenu, (val) => {
   setTimeout(() => {
     if (val && menu2Ref.value) {
@@ -58,31 +58,28 @@ watch(isOpenSubMenu, (val) => {
   }, 20)
 })
 
-const changeLanguage = (selectedLanguage: Language, i: number) => {
-  languageList.value.push(currentLanguage.value)
-  currentLanguage.value = { ...selectedLanguage }
-  languageList.value.splice(i, 1)
-  $set(selectedLanguage)
-  window.location.reload()
-}
+const changeLanguage = (lang: string) => {
+  setLang(lang?.value);
+  window.location.reload();
+};
 
-const checkLanguage = () => {
-  const selectedLanguage: { label: string; value: string } = $get()
-  if (selectedLanguage) {
-    const lang = languageList.value.find(
-      p => p.value === selectedLanguage.value,
-    )
-    if (lang) {
-      languageList.value.push(currentLanguage.value)
-      languageList.value = languageList.value.filter(
-        p => p.value !== lang.value,
-      )
-      currentLanguage.value = lang
-      locale.value = lang.value
-    }
-  }
-}
-checkLanguage()
+// const checkLanguage = () => {
+//   const selectedLanguage: { label: string; value: string } = getLang()
+//   if (selectedLanguage) {
+//     const lang = languageList.value.find(
+//       p => p.value === selectedLanguage.value,
+//     )
+//     if (lang) {
+//       languageList.value.push(currentLanguage.value)
+//       languageList.value = languageList.value.filter(
+//         p => p.value !== lang.value,
+//       )
+//       currentLanguage.value = lang
+//       locale.value = lang.value
+//     }
+//   }
+// }
+// checkLanguage()
 
 
 const handleLogout = () => {
@@ -122,7 +119,8 @@ window.addEventListener('resize', updateIsOpenSubMenu)
       <div class="action action-language">
         <a-dropdown :trigger="['click']">
           <p class="dropdown-trigger select-none">
-            {{ $t(currentLanguage.label) }}
+            {{ $t(`languages.${selectedLang}`) }}
+
             <AngleDownIcon />
           </p>
           <template #overlay>
