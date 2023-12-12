@@ -11,3 +11,5 @@ export const MARKET_URL = import.meta.env.VITE_MARKET_URL
 
 export const SOCKET_URL = import.meta.env.VITE_SOCKET_URL
 export const IDENTITY_SERVICE = import.meta.env.VITE_IDENTITY_SERVICE
+
+export const COOKIE_HOST = import.meta.env.VITE_COOKIE_HOST
