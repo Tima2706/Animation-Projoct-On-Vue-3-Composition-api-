@@ -1,4 +1,13 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import {
+  HEADER_CABINET,
+} from '~/utils/config'
+
+
+
+const menus = { url: HEADER_CABINET, text: 'Kabinet' }
+
+</script>
 
 <template>
   <div class="error_file">
@@ -8,7 +17,7 @@
     <VText size="22" color="#A2A5B9" class="mb-6">
       Страница не найдена
     </VText>
-    <AButton href="/" type="primary" class="btn">
+    <AButton   :href="menus.url" type="primary" class="btn">
       На главную
     </AButton>
   </div>

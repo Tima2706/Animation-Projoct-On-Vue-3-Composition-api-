@@ -25,7 +25,7 @@ $http.interceptors.response.use(
 
       }
     }else if (error.response.status === 403) {
-      window.location.href='/404'
+      window.location.href='/forbidden'
     }
     return Promise.reject(error)
   }

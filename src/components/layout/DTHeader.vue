@@ -73,6 +73,9 @@ const menus = [
 </template>
 
 <style lang="css" scoped>
+.dt-header__nav__item__icon {
+  margin-top: 4px;
+}
 .dt-header_container {
   position: relative;
   background: #303d4d;
