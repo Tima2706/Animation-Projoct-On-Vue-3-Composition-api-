@@ -15,7 +15,6 @@
   },
   "dependencies": {
     "@morev/vue-transitions": "^2.3.6",
-    "@shohrux_saidov/dt-header": "^0.1.26",
     "@shohrux_saidov/eimzo-client": "^0.0.9",
     "@vee-validate/i18n": "^4.11.8",
     "@vee-validate/rules": "^4.7.4",

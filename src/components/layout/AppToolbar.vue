@@ -1,13 +1,11 @@
 <script setup lang="ts">
 import { ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
-import DTHeader from '@shohrux_saidov/dt-header'
 import AngleDownIcon from '~/assets/icons/angle-down.svg'
 import ClosePage from '~/assets/icons/close.svg'
 import UserProfileIcon from '~/assets/icons/user-tag-line.svg'
 import { useToken } from '~/composables/useToken'
 import {useLanguage} from "~/composables/useLanguage";
-import '@shohrux_saidov/dt-header/dist/style.css'
 import Cookies from 'universal-cookie'
 import {IS_DEV} from "~/utils/config";
 
@@ -43,9 +41,9 @@ const menu2Ref = ref()
 const menu2ChildRef = ref()
 
 const languageList = ref<Array<Language>>([
-  { value: "uz", label: "languages.uz" },
-  { value: "en", label: "languages.en" },
-  { value: "ru", label: "languages.ru" },
+  { value: "uz", label: "Uz" },
+  { value: "en", label: "En" },
+  { value: "ru", label: "Ru" },
 ]);
 const selectedLang = ref(getLang());
 
@@ -118,8 +116,8 @@ window.addEventListener('resize', updateIsOpenSubMenu)
     <div class="flex navbar-dropdown">
       <div class="action action-language">
         <a-dropdown :trigger="['click']">
-          <p class="dropdown-trigger select-none">
-            {{ $t(`languages.${selectedLang}`) }}
+          <p style="text-transform: capitalize" class="dropdown-trigger select-none">
+            {{ selectedLang}}
 
             <AngleDownIcon />
           </p>

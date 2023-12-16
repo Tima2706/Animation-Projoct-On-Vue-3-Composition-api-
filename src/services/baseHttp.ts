@@ -24,6 +24,8 @@ $http.interceptors.response.use(
         gotoLogin()
 
       }
+    }else if (error.response.status === 403) {
+      window.location.href='/404'
     }
     return Promise.reject(error)
   }

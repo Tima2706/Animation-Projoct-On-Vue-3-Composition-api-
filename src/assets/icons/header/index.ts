@@ -1,0 +1,6 @@
+export {default as IconMarket} from "./market.svg"
+export {default as IconEtm} from "./etm.svg"
+export {default as IconWms} from "./wms.svg"
+export {default as IconKabinet} from "./kabinet.svg"
+export {default as IconRkp} from "./rkp.svg"
+export {default as Logo} from "./logo.svg"

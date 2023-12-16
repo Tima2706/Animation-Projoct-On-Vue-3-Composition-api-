@@ -45,6 +45,7 @@ declare module '@vue/runtime-core' {
     BalanceFilterList: typeof import('./components/pages/balance/BalanceFilterList.vue')['default']
     BalanceStatusForm: typeof import('./components/pages/balance/BalanceStatusForm.vue')['default']
     BankingFilterList: typeof import('./components/pages/BankingFilterList.vue')['default']
+    DTHeader: typeof import('./components/layout/DTHeader.vue')['default']
     EmptyText: typeof import('./components/base/EmptyText.vue')['default']
     ESignKey: typeof import('./components/base/ESign/ESignKey.vue')['default']
     ImageUploader: typeof import('./components/base/ImageUploader.vue')['default']

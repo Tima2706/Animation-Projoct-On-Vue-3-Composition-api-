@@ -9,7 +9,7 @@ export function useLanguage() {
 
 
   const setLang = (lang: string) => {
-    const domain = IS_DEV ? COOKIE_HOST : '.dt.uz'
+    const domain = IS_DEV ?  'localhost' : COOKIE_HOST
     cookies.set(LANGUAGE_KEY, lang, {
       domain,
     })
