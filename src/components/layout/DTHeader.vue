@@ -9,7 +9,7 @@ import {
   VITE_HEADER_DWM
 } from '~/utils/config'
 
-const currentProject = ref('cabinet')
+const currentProject = ref('rkp')
 
 const isOpenMenu = ref(false)
 
