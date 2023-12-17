@@ -54,6 +54,7 @@ declare module '@vue/runtime-core' {
     README: typeof import('./components/README.md')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    TheFooter: typeof import('./components/layout/TheFooter.vue')['default']
     VImg: typeof import('./components/base/VImg.vue')['default']
     VStatus: typeof import('./components/base/VStatus.vue')['default']
     VText: typeof import('./components/base/VText.vue')['default']

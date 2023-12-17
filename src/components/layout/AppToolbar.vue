@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { ref, watch } from 'vue'
-import { useI18n } from 'vue-i18n'
+import {ref, watch} from 'vue'
+import {useI18n} from 'vue-i18n'
 import AngleDownIcon from '~/assets/icons/angle-down.svg'
 import ClosePage from '~/assets/icons/close.svg'
 import UserProfileIcon from '~/assets/icons/user-tag-line.svg'
-import { useToken } from '~/composables/useToken'
+import {useToken} from '~/composables/useToken'
 import {useLanguage} from "~/composables/useLanguage";
 import Cookies from 'universal-cookie'
 import {IS_DEV} from "~/utils/config";
@@ -15,19 +15,21 @@ interface Language {
   value: string
   label: string
 }
-const cookies = new Cookies(null, { path: '/' })
+
+const cookies = new Cookies(null, {path: '/'})
 
 const sidebar = ref(false)
 
 function sidebarOpen() {
   sidebar.value = true
 }
+
 function sidebarClose() {
   sidebar.value = false
 }
 
-const { locale } = useI18n({ useScope: 'local' })
-const { setLang, getLang } = useLanguage()
+const {locale} = useI18n({useScope: 'local'})
+const {setLang, getLang} = useLanguage()
 
 const organizationStore = useOrganizationStore()
 
@@ -41,9 +43,9 @@ const menu2Ref = ref()
 const menu2ChildRef = ref()
 
 const languageList = ref<Array<Language>>([
-  { value: "uz", label: "Uz" },
-  { value: "en", label: "En" },
-  { value: "ru", label: "Ru" },
+  {value: "uz", label: "Uz"},
+  {value: "en", label: "En"},
+  {value: "ru", label: "Ru"},
 ]);
 const selectedLang = ref(getLang());
 
@@ -83,7 +85,7 @@ const changeLanguage = (lang: string) => {
 const handleLogout = () => {
   if (IS_DEV) {
     removeToken()
-    router.replace({ name: 'auth-login' })
+    router.replace({name: 'auth-login'})
     return
   }
   logout()
@@ -110,124 +112,139 @@ window.addEventListener('resize', updateIsOpenSubMenu)
   <!--  <div class="ant-layout-header__inner"> -->
   <DTHeader>
     <template #modules>
-      {{$t('modules')}}
+      {{ $t('modules') }}
     </template>
     <template #profile>
-    <div class="flex navbar-dropdown">
-      <div class="action action-language">
-        <a-dropdown :trigger="['click']">
-          <p style="text-transform: capitalize" class="dropdown-trigger select-none">
-            {{ selectedLang}}
+      <div class="flex navbar-dropdown">
+        <div class="action action-language">
+          <a-dropdown :trigger="['click']">
+            <p style="text-transform: capitalize" class="dropdown-trigger select-none">
+              {{ selectedLang }}
 
-            <AngleDownIcon />
-          </p>
-          <template #overlay>
-            <a-menu>
-              <a-menu-item>
-                <div
-                  v-for="(language, i) in languageList"
-                  :key="`language-${i}`"
-                >
-                  <p @click="changeLanguage(language, i)">
-                    {{ $t(language.label) }}
-                  </p>
-                </div>
-              </a-menu-item>
-            </a-menu>
-          </template>
-        </a-dropdown>
-      </div>
-      <div class="dropdown-trigger-separator" />
-      <div v-if="organizationStore" class="action" />
-      <div>
-        <p @click="sidebarOpen" class="dropdown-trigger select-none">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-            <path d="M12.1207 12.7805C12.0507 12.7705 11.9607 12.7705 11.8807 12.7805C10.1207 12.7205 8.7207 11.2805 8.7207 9.51047C8.7207 7.70047 10.1807 6.23047 12.0007 6.23047C13.8107 6.23047 15.2807 7.70047 15.2807 9.51047C15.2707 11.2805 13.8807 12.7205 12.1207 12.7805Z" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M18.7398 19.3796C16.9598 21.0096 14.5998 21.9996 11.9998 21.9996C9.39977 21.9996 7.03977 21.0096 5.25977 19.3796C5.35977 18.4396 5.95977 17.5196 7.02977 16.7996C9.76977 14.9796 14.2498 14.9796 16.9698 16.7996C18.0398 17.5196 18.6398 18.4396 18.7398 19.3796Z" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-          <span class="organization-organization__name">
-          {{$t('profile')}}
+              <AngleDownIcon/>
+            </p>
+            <template #overlay>
+              <a-menu>
+                <a-menu-item>
+                  <div
+                    v-for="(language, i) in languageList"
+                    :key="`language-${i}`"
+                  >
+                    <p @click="changeLanguage(language, i)">
+                      {{ $t(language.label) }}
+                    </p>
+                  </div>
+                </a-menu-item>
+              </a-menu>
+            </template>
+          </a-dropdown>
+        </div>
+        <div class="dropdown-trigger-separator"/>
+        <div v-if="organizationStore" class="action"/>
+        <div>
+          <p @click="sidebarOpen" class="dropdown-trigger select-none">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+              <path
+                d="M12.1207 12.7805C12.0507 12.7705 11.9607 12.7705 11.8807 12.7805C10.1207 12.7205 8.7207 11.2805 8.7207 9.51047C8.7207 7.70047 10.1807 6.23047 12.0007 6.23047C13.8107 6.23047 15.2807 7.70047 15.2807 9.51047C15.2707 11.2805 13.8807 12.7205 12.1207 12.7805Z"
+                stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <path
+                d="M18.7398 19.3796C16.9598 21.0096 14.5998 21.9996 11.9998 21.9996C9.39977 21.9996 7.03977 21.0096 5.25977 19.3796C5.35977 18.4396 5.95977 17.5196 7.02977 16.7996C9.76977 14.9796 14.2498 14.9796 16.9698 16.7996C18.0398 17.5196 18.6398 18.4396 18.7398 19.3796Z"
+                stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <path
+                d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z"
+                stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <span class="organization-organization__name">
+          {{ $t('profile') }}
           </span>
-          <AngleDownIcon />
-        </p>
-        <a-drawer
-          placement="right"
-          @close="sidebarClose"
-          :open="sidebar"
-          :closable="false"
-          :trigger="['click']"
-        >
-          <div class="flex flex-col justify-between h-full">
-            <div>
-              <div class="flex justify-between items-center">
-              <p class="text-[20px] text-[#48545D] font-medium">{{ $t('profile') }}</p>
-                <button  @click="sidebarClose"><ClosePage /></button>
+            <AngleDownIcon/>
+          </p>
+          <a-drawer
+            placement="right"
+            @close="sidebarClose"
+            :open="sidebar"
+            :closable="false"
+            :trigger="['click']"
+          >
+            <div class="flex flex-col justify-between h-full">
+              <div>
+                <div class="flex justify-between items-center">
+                  <p class="text-[20px] text-[#48545D] font-medium">{{ $t('profile') }}</p>
+                  <button @click="sidebarClose">
+                    <ClosePage/>
+                  </button>
 
+                </div>
+                <div
+                  v-if="organizationStore!.organization?.organization?.logo"
+                  class="w-full h-[150px] border-[1px] border-[#DFE2E9] rounded-md my-6 flex justify-center"
+                >
+                  <VImg
+                    :src-from-local-server="!!organizationStore!.organization?.organization?.logo"
+                    class="object-contain"
+                    alt="organizationName"
+                    :src="organizationStore!.organization?.organization?.logo"
+                  />
+                </div>
+
+                <p class="text-[#A2A5B9] mb-1">{{ $t('companyName') }}</p>
+                <p class="font-medium text-[#48545D]">{{ organizationStore!.organization?.organization?.name }}</p>
+
+                <a-divider class="text-[#DFE2E9]"/>
+
+                <p class="text-[#A2A5B9]">{{ $t('fullName') }}</p>
+                <p class="font-medium text-[#48545D]">
+                  {{
+                    organizationStore?.organization?.firstname + ' ' + organizationStore?.organization?.middlename + ' ' + organizationStore!.organization?.lastname
+                  }}
+                </p>
+
+                <a-divider/>
+                <p class="mt-4 text-[#A2A5B9]">{{ $t('users') }}</p>
+                <p class="font-medium text-[#0096B2]">{{ organizationStore!.organization?.username }}</p>
+
+                <!--      <p class="capitalize mt-4 text-[#A2A5B9]">{{ $t('role') }}</p>-->
+                <!--              <div class="flex gap-2">-->
+                <!--                <p class="font-medium text-[#48545D]" v-for="role in user.roles">{{ role.name }}</p>-->
+                <!--              </div>-->
               </div>
               <div
-                v-if="organizationStore!.organization?.organization?.logo"
-                class="w-full h-[150px] border-[1px] border-[#DFE2E9] rounded-md my-6 flex justify-center"
+                class="w-full flex gap-2 items-center border-[1px] border-[#DFE2E9] py-2 px-3 rounded-md text-[#D65E81]"
+                @click="handleLogout"
               >
-                <VImg
-                  :src-from-local-server="!!organizationStore!.organization?.organization?.logo"
-                  class="object-contain"
-                  alt="organizationName"
-                  :src="organizationStore!.organization?.organization?.logo"
-                />
+                <Logout/>
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none">
+                  <path stroke="#D65E81" stroke-linecap="round" stroke-linejoin="round"
+                        d="M5.6 13.475H1.925c-.371 0-.727-.152-.99-.421a1.46 1.46 0 0 1-.41-1.018V1.964c0-.382.148-.748.41-1.017.263-.27.619-.422.99-.422H5.6M9.976 10.5l3.5-3.5-3.5-3.5M13.475 7h-8.4"></path>
+                </svg>
+                <p class="cursor-pointer">{{ $t('exitTheOffice') }}</p>
               </div>
-
-              <p class="text-[#A2A5B9] mb-1">{{ $t('companyName') }}</p>
-              <p class="font-medium text-[#48545D]">{{ organizationStore!.organization?.organization?.name }}</p>
-
-              <a-divider class="text-[#DFE2E9]" />
-
-              <p class="text-[#A2A5B9]">{{ $t('fullName') }}</p>
-              <p class="font-medium text-[#48545D]">
-                {{ organizationStore?.organization?.firstname + ' ' + organizationStore?.organization?.middlename + ' ' + organizationStore!.organization?.lastname }}
-              </p>
-
-              <a-divider />
-                            <p class="mt-4 text-[#A2A5B9]">{{ $t('users') }}</p>
-                            <p class="font-medium text-[#0096B2]">{{ organizationStore!.organization?.username }}</p>
-
-<!--                            <p class="capitalize mt-4 text-[#A2A5B9]">{{ $t('role') }}</p>-->
-              <!--              <div class="flex gap-2">-->
-              <!--                <p class="font-medium text-[#48545D]" v-for="role in user.roles">{{ role.name }}</p>-->
-              <!--              </div>-->
             </div>
-            <div
-              class="w-full flex gap-2 items-center border-[1px] border-[#DFE2E9] py-2 px-3 rounded-md text-[#D65E81]"
-              @click="handleLogout"
-            >
-              <Logout />
-              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none"><path stroke="#D65E81" stroke-linecap="round" stroke-linejoin="round" d="M5.6 13.475H1.925c-.371 0-.727-.152-.99-.421a1.46 1.46 0 0 1-.41-1.018V1.964c0-.382.148-.748.41-1.017.263-.27.619-.422.99-.422H5.6M9.976 10.5l3.5-3.5-3.5-3.5M13.475 7h-8.4"></path></svg>
-              <p class="cursor-pointer">{{ $t('exitTheOffice') }}</p>
-            </div>
-          </div>
-        </a-drawer>
+          </a-drawer>
+        </div>
+
+
       </div>
-
-
-    </div>
     </template>
   </DTHeader>
 
   <!--  </div> -->
 </template>
 
-<style   lang="scss">
-.ant-drawer-header{
+<style lang="scss">
+.ant-drawer-header {
   background: #FFFFFF;
 }
-.ant-drawer-close{
-  svg{
+
+.ant-drawer-close {
+  svg {
     fill: #4A5C71;
   }
 }
-  .ant-drawer-title{
-    color: #4A5C71 !important;
-  }
+
+.ant-drawer-title {
+  color: #4A5C71 !important;
+}
 
 
 //::-webkit-scrollbar{

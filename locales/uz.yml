@@ -356,6 +356,8 @@ summaMustBeGreater: Miqdor 10 000 sum dan katta yoki unga teng bo'lishi kerak
 canBeWithdrawn: Qaytarish mumkin bo'lgan maksimal erkin mablag'
 cost: Xarajat
 modules: Modullar
+toHome: Bosh sahifaga
+forbiddenMessage: Sizda bu sahifaga ruhsat yo'q :(
 
 
 
