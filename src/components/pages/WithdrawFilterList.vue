@@ -95,7 +95,7 @@ const submit = async () => {
 getOrganizationForSearch()
 </script>
 <template>
-  <a-card>
+  <a-card v-if="organizations?.data?.role === 'admin'">
     <div class="withdraw-filter">
       <Form
         ref="formRef"
