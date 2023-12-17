@@ -158,7 +158,7 @@ window.addEventListener('resize', updateIsOpenSubMenu)
           :closable="false"
           :trigger="['click']"
         >
-          <div class="flex flex-col justify-between h-full">
+          <div class="flex flex-col gap-2 h-full">
             <div>
               <div class="flex justify-between items-center">
               <p class="text-[20px] text-[#48545D] font-medium">{{ $t('profile') }}</p>
@@ -166,41 +166,44 @@ window.addEventListener('resize', updateIsOpenSubMenu)
 
               </div>
               <div
-                v-if="organizationStore!.organization?.logo"
+                v-if="organizationStore!.organization?.organization?.logo"
                 class="w-full h-[150px] border-[1px] border-[#DFE2E9] rounded-md my-6 flex justify-center"
               >
                 <VImg
-                  :src-from-local-server="!!organizationStore!.organization.logo"
+                  :src-from-local-server="!!organizationStore!.organization?.organization?.logo"
                   class="object-contain"
                   alt="organizationName"
-                  :src="organizationStore!.organization.logo"
+                  :src="organizationStore!.organization?.organization?.logo"
                 />
               </div>
 
               <p class="text-[#A2A5B9] mb-1">{{ $t('companyName') }}</p>
-              <p class="font-medium text-[#48545D]">{{ organizationStore!.organization?.name }}</p>
+              <p class="font-medium text-[#48545D]">{{ organizationStore!.organization?.organization?.name }}</p>
 
               <a-divider class="text-[#DFE2E9]" />
 
               <p class="text-[#A2A5B9]">{{ $t('fullName') }}</p>
               <p class="font-medium text-[#48545D]">
-                {{ organizationStore!.organization?.director.firstname + ' ' + organizationStore!.organization?.director?.middlename + ' ' + organizationStore!.organization?.director?.lastname }}
+                {{ organizationStore?.organization?.firstname + ' ' + organizationStore?.organization?.middlename + ' ' + organizationStore!.organization?.lastname }}
               </p>
 
-<!--              <p class="mt-4 text-[#A2A5B9]">{{ $t('user') }}</p>-->
-<!--              <p class="font-medium text-[#0096B2]">{{ organizationStore!.organization?.username }}</p>-->
+              <a-divider />
+                            <p class="mt-4 text-[#A2A5B9]">{{ $t('users') }}</p>
+                            <p class="font-medium text-[#0096B2]">{{ organizationStore!.organization?.username }}</p>
 
               <!--              <p class="capitalize mt-4 text-[#A2A5B9]">{{ $t('role') }}</p>-->
               <!--              <div class="flex gap-2">-->
               <!--                <p class="font-medium text-[#48545D]" v-for="role in user.roles">{{ role.name }}</p>-->
               <!--              </div>-->
-              <a-divider />
             </div>
+            <a-divider />
+
             <div
               class="w-full flex gap-2 items-center border-[1px] border-[#DFE2E9] py-2 px-3 rounded-md text-[#D65E81]"
               @click="handleLogout"
             >
               <Logout />
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none"><path stroke="#D65E81" stroke-linecap="round" stroke-linejoin="round" d="M5.6 13.475H1.925c-.371 0-.727-.152-.99-.421a1.46 1.46 0 0 1-.41-1.018V1.964c0-.382.148-.748.41-1.017.263-.27.619-.422.99-.422H5.6M9.976 10.5l3.5-3.5-3.5-3.5M13.475 7h-8.4"></path></svg>
               <p class="cursor-pointer">{{ $t('exitTheOffice') }}</p>
             </div>
           </div>
