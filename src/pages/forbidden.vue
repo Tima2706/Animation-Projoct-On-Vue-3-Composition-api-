@@ -12,9 +12,9 @@ const menus = { url: HEADER_CABINET, text: 'Kabinet' }
 <template>
   <DTHeader/>
   <div class="error_file">
-    <VText size="100" color="#48545D" weight="600">
-      403
-    </VText>
+<!--    <VText size="100" color="#48545D" weight="600">-->
+<!--      403-->
+<!--    </VText>-->
     <VText size="22" color="#A2A5B9" class="mb-6">
      У вас нет доступа !
     </VText>

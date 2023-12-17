@@ -158,7 +158,7 @@ window.addEventListener('resize', updateIsOpenSubMenu)
           :closable="false"
           :trigger="['click']"
         >
-          <div class="flex flex-col gap-2 h-full">
+          <div class="flex flex-col justify-between h-full">
             <div>
               <div class="flex justify-between items-center">
               <p class="text-[20px] text-[#48545D] font-medium">{{ $t('profile') }}</p>
@@ -191,13 +191,11 @@ window.addEventListener('resize', updateIsOpenSubMenu)
                             <p class="mt-4 text-[#A2A5B9]">{{ $t('users') }}</p>
                             <p class="font-medium text-[#0096B2]">{{ organizationStore!.organization?.username }}</p>
 
-              <!--              <p class="capitalize mt-4 text-[#A2A5B9]">{{ $t('role') }}</p>-->
+<!--                            <p class="capitalize mt-4 text-[#A2A5B9]">{{ $t('role') }}</p>-->
               <!--              <div class="flex gap-2">-->
               <!--                <p class="font-medium text-[#48545D]" v-for="role in user.roles">{{ role.name }}</p>-->
               <!--              </div>-->
             </div>
-            <a-divider />
-
             <div
               class="w-full flex gap-2 items-center border-[1px] border-[#DFE2E9] py-2 px-3 rounded-md text-[#D65E81]"
               @click="handleLogout"
