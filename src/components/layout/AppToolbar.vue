@@ -198,16 +198,30 @@ window.addEventListener('resize', updateIsOpenSubMenu)
                     organizationStore?.organization?.firstname + ' ' + organizationStore?.organization?.middlename + ' ' + organizationStore!.organization?.lastname
                   }}
                 </p>
-
-                <a-divider/>
                 <p class="mt-4 text-[#A2A5B9]">{{ $t('users') }}</p>
                 <p class="font-medium text-[#0096B2]">{{ organizationStore!.organization?.username }}</p>
 
-                <!--      <p class="capitalize mt-4 text-[#A2A5B9]">{{ $t('role') }}</p>-->
-                <!--              <div class="flex gap-2">-->
-                <!--                <p class="font-medium text-[#48545D]" v-for="role in user.roles">{{ role.name }}</p>-->
-                <!--              </div>-->
+                      <p class="capitalize mt-4 text-[#A2A5B9]">{{ $t('role') }}</p>
+                              <div class="flex ">
+                                <p class="font-medium text-[#48545D]" v-for="role in organizationStore!.organization?.roles">{{ role.module_id === 6 ? role.name : null }}</p>
+                              </div>
+
+                <p class="text-[#A2A5B9] mt-4">{{ $t('numberPhone') }}</p>
+                <p class="font-medium text-[#48545D]">
+                  {{
+                    organizationStore?.organization?.firstname ? organizationStore?.organization?.phone_number : '-'
+                  }}
+                </p>
+                <p class="text-[#A2A5B9] mt-4">{{ $t('email') }}</p>
+                <p class="font-medium text-[#48545D]">
+                  {{
+                    organizationStore?.organization?.email ?   organizationStore?.organization?.email : '-'
+                  }}
+                </p>
+                <a-divider class="text-[#DFE2E9]"/>
+
               </div>
+
               <div
                 class="w-full flex gap-2 items-center border-[1px] border-[#DFE2E9] py-2 px-3 rounded-md text-[#D65E81]"
                 @click="handleLogout"
