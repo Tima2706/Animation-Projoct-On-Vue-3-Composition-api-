@@ -189,6 +189,9 @@ window.addEventListener('resize', updateIsOpenSubMenu)
                   />
                 </div>
 
+
+
+
                 <p class="text-[#A2A5B9] mb-1">{{ $t('companyName') }}</p>
                 <p class="font-medium text-[#48545D]">{{ organizationStore!.organization?.organization?.name }}</p>
 

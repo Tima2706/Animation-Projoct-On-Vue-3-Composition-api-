@@ -182,7 +182,7 @@ balance: Баланс
 transactions: Транзакции
 operations: Операции
 remainBalance: Пустой остаток
-blockedBalance: Блокированный (дипозит)
+blockedBalance: Блокированный
 expenses: Расходы
 throughKlering: Через клиринг
 agree: Согласится
