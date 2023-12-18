@@ -359,3 +359,5 @@ cost: Cost
 modules: Modules
 forbiddenMessage: You do not have permission to access this page :(
 toHome: To home
+replenishmentBalance: Replenishment balance
+OperatorRequisitesFor: Operator's requisites for filling the balance

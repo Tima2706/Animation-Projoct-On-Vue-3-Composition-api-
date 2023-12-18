@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 // import AuthToolBar from '~/components/pages/auth/AuthToolBar.vue'
-import DTHeader from '@shohrux_saidov/dt-header'
-import '@shohrux_saidov/dt-header/dist/style.css'
+// import DTHeader from '@shohrux_saidov/dt-header'
+// import '@shohrux_saidov/dt-header/dist/style.css'
 </script>
 
 <template>

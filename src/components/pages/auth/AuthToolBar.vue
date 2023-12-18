@@ -1,8 +1,8 @@
 <script setup>
 import { ref } from 'vue'
 import { DT_HUB_URL } from '~/utils/constants'
-import DTHeader from "@shohrux_saidov/dt-header"
-import "@shohrux_saidov/dt-header/dist/style.css"
+// import DTHeader from "@shohrux_saidov/dt-header"
+// import "@shohrux_saidov/dt-header/dist/style.css"
 
 const isMoreMenu = ref(false)
 </script>

@@ -362,4 +362,6 @@ cost: Расходы
 modules: Модули
 forbiddenMessage: У вас нет доступа к этой странице :(
 toHome: На главную
+replenishmentBalance: Пополнение баланса
+OperatorRequisitesFor: Реквизиты оператора для пополнения баланса
 

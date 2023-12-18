@@ -1,8 +1,9 @@
 <script lang="ts" setup>
 import { formatMoney } from "~/utils/pureFunction";
 import type { TransactionBalance } from "~/services/dto/transcationBalance";
-import { isBoolean } from "@vueuse/core";
-
+import EmptyWallet from '~/assets/icons/empty-wallet-add.svg'
+import Info from '~/assets/icons/info.svg'
+import BalancleWallet from "~/components/pages/balance/BalancleWallet.vue";
 interface Props {
   info: TransactionBalance;
   loading: boolean;
@@ -34,6 +35,17 @@ function handleHideAmount(str) {
   if (typeof showTransactionBalance[str] !== "undefined")
     showTransactionBalance[str] = !showTransactionBalance[str];
 }
+
+const open = ref<boolean>(false);
+
+const showModal = () => {
+  open.value = true;
+};
+const close = () => {
+  open.value = false
+}
+
+
 </script>
 
 <template>
@@ -96,8 +108,45 @@ function handleHideAmount(str) {
           t("hideAmount")
         }}</a>
       </div>
+        <a-button
+          type="primary"
+          class="flex justify-center flex-col items-center gap-2"
+          style="height: 100%"
+          @click="showModal"
+        >
+          <EmptyWallet />
+          {{ t("replenishmentBalance") }}
+        </a-button>
     </div>
   </div>
+  <a-modal v-model:visible="open"  >
+    <template #footer>
+      <a-button style="background: #9EABBE; color: #FFFFFF" @click="close">Cancel</a-button>
+    </template>
+    <div class="mt-8 mb-3 flex justify-center">
+        <Info/>
+    </div>
+    <VText style="color: #48545D;font-size: 24px; font-weight: 500" class="text-center mb-4">{{$t("OperatorRequisitesFor")}}</VText>
+    <ACard style="background: #F9FBFE; border: 1px solid #DFE2E9">
+        <div class="flex gap-2">
+            <div class="flex items-end flex-col">
+              <v-text style="font-size: 18px">Operator: </v-text>
+              <v-text style="font-size: 18px">INN:</v-text>
+              <v-text style="font-size: 18px">MFO:</v-text>
+              <v-text style="font-size: 18px">Bank:</v-text>
+              <v-text style="font-size: 18px">H/r: </v-text>
+            </div>
+            <div>
+              <v-text style="color: #48545D; font-weight: 500;font-size: 18px">"DT ECOSYSTEM" MCHJ</v-text>
+              <v-text style="color: #48545D; font-weight: 500;font-size: 18px">302922171</v-text>
+              <v-text style="color: #48545D; font-weight: 500;font-size: 18px">00440</v-text>
+              <v-text style="color: #48545D; font-weight: 500;font-size: 18px">“O’zsanoatqurilishbank"</v-text>
+              <v-text style="color: #48545D; font-weight: 500;font-size: 18px">20208000300302392002</v-text>
+            </div>
+        </div>
+
+    </ACard>
+  </a-modal>
 </template>
 
 <style lang="scss" scoped>

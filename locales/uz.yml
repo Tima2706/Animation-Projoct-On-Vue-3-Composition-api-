@@ -358,6 +358,8 @@ cost: Xarajat
 modules: Modullar
 toHome: Bosh sahifaga
 forbiddenMessage: Sizda bu sahifaga ruhsat yo'q :(
+replenishmentBalance: Balansni to'ldiring
+OperatorRequisitesFor: Balans to'ldirish uchun Operatorning rekvizitlari
 
 
 

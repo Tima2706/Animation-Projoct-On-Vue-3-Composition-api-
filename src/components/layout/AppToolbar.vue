@@ -165,6 +165,7 @@ window.addEventListener('resize', updateIsOpenSubMenu)
             :open="sidebar"
             :closable="false"
             :trigger="['click']"
+
           >
             <div class="flex flex-col justify-between h-full">
               <div>
@@ -176,6 +177,7 @@ window.addEventListener('resize', updateIsOpenSubMenu)
 
                 </div>
                 <div
+                  style="height: 100px"
                   v-if="organizationStore!.organization?.organization?.logo"
                   class="w-full h-[150px] border-[1px] border-[#DFE2E9] rounded-md my-6 flex justify-center"
                 >
@@ -246,6 +248,9 @@ window.addEventListener('resize', updateIsOpenSubMenu)
 </template>
 
 <style lang="scss">
+.ant-drawer-content-wrapper{
+  width: 298px !important;
+}
 .ant-drawer-header {
   background: #FFFFFF;
 }
