@@ -200,7 +200,7 @@ window.addEventListener('resize', updateIsOpenSubMenu)
                 <p class="text-[#A2A5B9]">{{ $t('fullName') }}</p>
                 <p class="font-medium text-[#48545D]">
                   {{
-                    organizationStore?.organization?.firstname + ' ' + organizationStore?.organization?.middlename + ' ' + organizationStore!.organization?.lastname
+            organizationStore!.organization?.lastname +    organizationStore?.organization?.firstname + ' '  + organizationStore?.organization?.middlename + ' '
                   }}
                 </p>
                 <p class="mt-4 text-[#A2A5B9]">{{ $t('users') }}</p>
