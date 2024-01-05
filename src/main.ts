@@ -15,26 +15,25 @@ import {IS_DEV} from "~/utils/config";
 const routes = setupLayouts(generatedRoutes)
 const {  getToken, removeToken, handleLogout } = useToken()
 
+
+$http.interceptors.response.use(
+  (response) => {
+    return response
+  },
+  (error) => {
+    if (error.response.status === 401) {
+      removeToken()
+      handleLogout()
+    }
+
+    return Promise.reject(error)
+  }
+)
 export const createApp = ViteSSG(
   App,
   { routes, base: import.meta.env.BASE_URL },
   async (ctx) => {
     useMiddleware(ctx.router)
-
-    $http.interceptors.response.use(
-      (response) => {
-        return response
-      },
-      (error) => {
-        if (error.response.status === 401) {
-          removeToken()
-          handleLogout()
-        }
-
-        return Promise.reject(error)
-      }
-    )
-
 
     // install all modules under `modules/`
     Object.values(import.meta.glob<{ install: UserModule }>('./modules/*.ts', { eager: true }))
