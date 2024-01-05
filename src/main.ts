@@ -12,9 +12,8 @@ import router from '~/router'
 import { $http } from '~/services/baseHttp'
 import { useOrganizationStore } from '~/stores/organization'
 import { useToken } from '~/composables/useToken'
-
-
 import { IS_DEV } from '~/utils/config'
+
 
 
 const { removeToken, getToken, handleLogout } = useToken()
