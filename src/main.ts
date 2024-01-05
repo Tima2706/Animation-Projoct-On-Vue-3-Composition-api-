@@ -16,7 +16,6 @@ import { useToken } from '~/composables/useToken'
 
 import { IS_DEV } from '~/utils/config'
 
-import 'vue-select/dist/vue-select.css'
 
 const { removeToken, getToken, handleLogout } = useToken()
 
