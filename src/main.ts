@@ -14,15 +14,12 @@ import { useOrganizationStore } from '~/stores/organization'
 import { useToken } from '~/composables/useToken'
 import { IS_DEV } from '~/utils/config'
 
-
-
 const { removeToken, getToken, handleLogout } = useToken()
 
 const app = createApp(App)
 const token = getToken()
 if (!token)
   router.push('auth-login')
-
 
 $http.interceptors.response.use(
   (response) => {
