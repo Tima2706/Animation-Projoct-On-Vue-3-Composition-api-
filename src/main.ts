@@ -10,9 +10,10 @@ import { useMiddleware } from '~/router'
 import { $http } from '~/services/baseHttp'
 import { useOrganizationStore } from '~/stores/organization'
 import { useToken } from '~/composables/useToken'
+import {IS_DEV} from "~/utils/config";
 
 const routes = setupLayouts(generatedRoutes)
-const {  getToken } = useToken()
+const {  getToken, removeToken, handleLogout } = useToken()
 
 export const createApp = ViteSSG(
   App,
@@ -20,16 +21,20 @@ export const createApp = ViteSSG(
   async (ctx) => {
     useMiddleware(ctx.router)
 
-    $http.interceptors.response.use((response) => {
-      return response
-    }, (error) => {
-      if (error.response.status === 401) {
-        // removeToken()
-        // ctx.router.replace({ name: 'auth-login' })
-      }
+    $http.interceptors.response.use(
+      (response) => {
+        return response
+      },
+      (error) => {
+        if (error.response.status === 401) {
+          removeToken()
+          handleLogout()
+        }
 
-      return Promise.reject(error)
-    })
+        return Promise.reject(error)
+      }
+    )
+
 
     // install all modules under `modules/`
     Object.values(import.meta.glob<{ install: UserModule }>('./modules/*.ts', { eager: true }))
@@ -41,7 +46,12 @@ export const createApp = ViteSSG(
     if (token) {
       await getOrganization().catch(() => {
         // eslint-disable-next-line no-console
-        console.log('Token was expired')
+        if (!IS_DEV) {
+          setTimeout(() => {
+            handleLogout()
+            removeToken()
+          })
+        }
         // setTimeout(() => {
         //   ctx.router.replace({ name: 'auth-login' })
         //   removeToken()

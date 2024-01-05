@@ -1,6 +1,6 @@
 import type { CookieSetOptions } from 'universal-cookie'
 import Cookies from 'universal-cookie'
-import { IS_DEV, IDENTITY_SERVICE } from '~/utils/config'
+import {IS_DEV, IDENTITY_SERVICE, LOGOUT_URL} from '~/utils/config'
 export function useToken() {
   const cookies = new Cookies(null)
   const TOKEN_KEY = 'access-token'
@@ -46,9 +46,15 @@ export function useToken() {
     if (token)
       localStorage.setItem(TOKEN_KEY, token)
   }
+  const handleLogout = () => {
+    if (!IS_DEV) window.location.href = LOGOUT_URL
+    else window.location.href = '/auth/login'
+  }
+
 
 
   return {
+    handleLogout,
     setToken,
     getToken,
     removeToken,
