@@ -45,7 +45,6 @@ export const createApp = ViteSSG(
     const token = getToken()
     if (token) {
       await getOrganization().catch(() => {
-        // eslint-disable-next-line no-console
         if (!IS_DEV) {
           setTimeout(() => {
             handleLogout()
