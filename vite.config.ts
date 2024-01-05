@@ -1,4 +1,3 @@
-import vueDevTools from 'vite-plugin-vue-devtools'
 import path from 'path'
 import { defineConfig } from 'vite'
 // import Preview from 'vite-plugin-vue-component-preview'
@@ -25,7 +24,7 @@ export default defineConfig({
   },
 
   plugins: [
-    vueDevTools(),
+    // vueDevTools(),
 
     // Preview.default(),
     VueMacros({
@@ -56,7 +55,7 @@ export default defineConfig({
           && !routeName.includes('public')
           && !routeName.includes('register')
         )
-          // middleware.push('authMiddleware')
+        // middleware.push('authMiddleware')
 
         // middleware.push('organizationMiddleware')
         // middleware.push('permissionMiddleware')
@@ -65,7 +64,7 @@ export default defineConfig({
         // if (inlineMiddleware)
         //   middleware.push(...inlineMiddleware)
 
-        return routeWithMiddleware
+          return routeWithMiddleware
       },
     }),
 

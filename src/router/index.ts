@@ -1,7 +1,7 @@
-import type { Router } from 'vue-router'
+import { setupLayouts } from 'virtual:generated-layouts'
+import { createRouter, createWebHistory } from 'vue-router'
+import generatedRoutes from 'virtual:generated-pages'
 
-import * as NProgress from 'nprogress'
-import routes from 'pages-generated'
 import authMiddleware from './middleware/authMiddleware'
 import organizationMiddleware from './middleware/organizationMiddleware'
 import middlewarePipeline from './middlewarePipeline'
@@ -10,40 +10,41 @@ import { useUserStore } from '~/stores/user'
 import { useOrganizationStore } from '~/stores/organization'
 import permissionMiddleware from '~/router/middleware/permissionMiddleware'
 
-export function useMiddleware(router: Router) {
-  const middlewaresIndex: Record<TRouteMiddleware, any> = {
-    authMiddleware,
-    organizationMiddleware,
-    permissionMiddleware,
-  }
+const routes = setupLayouts(generatedRoutes)
 
-  router.beforeEach(async (to, from, next) => {
-    NProgress.start()
-    const middlewareList = to.meta.middleware as TRouteMiddleware[]
-    if (!middlewareList || !middlewareList.length) {
-      NProgress.done()
-      return next()
-    }
-    const middlewares = middlewareList.map((item) => {
-      return middlewaresIndex[item]
-    })
+const router = createRouter({
+  history: createWebHistory(),
+  routes,
+})
 
-    const context = {
-      to,
-      from,
-      next,
-      routeNext: next,
-      store: {
-        userStore: useUserStore(),
-        organizationStore: useOrganizationStore(),
-      },
-    }
-    NProgress.done()
-    return await middlewares[0]({
-      ...context,
-      next: middlewarePipeline(context, middlewares, 1),
-    })
+const middlewaresIndex: Record<TRouteMiddleware, any> = {
+  authMiddleware,
+  organizationMiddleware,
+  permissionMiddleware,
+}
+router.beforeEach(async (to, from, next) => {
+  const middlewareList = to.meta.middleware as TRouteMiddleware[]
+  if (!middlewareList || !middlewareList.length)
+    return next()
+
+  const middlewares = middlewareList.map((item) => {
+    return middlewaresIndex[item]
   })
 
-  return routes
-}
+  const context = {
+    to,
+    from,
+    next,
+    routeNext: next,
+    store: {
+      userStore: useUserStore(),
+      organizationStore: useOrganizationStore(),
+    },
+  }
+  return await middlewares[0]({
+    ...context,
+    next: middlewarePipeline(context, middlewares, 1),
+  })
+})
+
+export default router

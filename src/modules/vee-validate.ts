@@ -1,14 +1,20 @@
-import { ErrorMessage, Field, Form, configure, defineRule } from 'vee-validate'
 import { localize, setLocale } from '@vee-validate/i18n'
-import { email, length, max, min, required, url } from '@vee-validate/rules'
-import type { ViteSSGContext } from 'vite-ssg'
-import { LANGUAGES_KEY_FOR_STORAGE } from '~/utils/constants'
+import { email, length, max, max_value, min, min_value, required, url } from '@vee-validate/rules'
+import { ErrorMessage, Field, Form, configure, defineRule } from 'vee-validate'
+import type { App } from 'vue'
+import VeeValidateMessages from '../../locales/vee-validate-messages'
+import { useLanguage } from '~/composables/useLanguage'
+
+const { getLang } = useLanguage()
+
 defineRule('required', required)
 defineRule('max', max)
 defineRule('min', min)
 defineRule('email', email)
 defineRule('url', url)
 defineRule('length', length)
+defineRule('min_value', min_value)
+defineRule('max_value', max_value)
 
 defineRule('phone', (value: string) => {
   if (!value)
@@ -17,32 +23,16 @@ defineRule('phone', (value: string) => {
   return /^(\d{2})\d{3}\d{4}$/.test(value)
 })
 configure({
-  generateMessage: localize({
-    en: {
-      messages: {
-        required: 'The field is required',
-      },
-    },
-    ru: {
-      messages: {
-        required: 'Поле, обязательное для заполнения',
-      },
-    },
-    uz: {
-      messages: {
-        required: 'Ushbu maydonni to\'ldirilishi shart',
-      },
-    },
-  }),
+  generateMessage: localize(VeeValidateMessages),
 })
 
-const localizeFromStorage = localStorage.getItem(LANGUAGES_KEY_FOR_STORAGE)
+setLocale(getLang())
 
-if (localizeFromStorage)
-  setLocale(localizeFromStorage)
+export default {
+  install: (app: App) => {
+    app.component('Form', Form)
 
-export const install = ({ app }: ViteSSGContext) => {
-  app.component('Form', Form)
-  app.component('Field', Field)
-  app.component('ErrorMessage', ErrorMessage)
+    app.component('Field', Field)
+    app.component('ErrorMessage', ErrorMessage)
+  },
 }
