@@ -12,12 +12,12 @@ import router from '~/router'
 import { $http } from '~/services/baseHttp'
 import { useOrganizationStore } from '~/stores/organization'
 import { useToken } from '~/composables/useToken'
-// import { notification } from 'ant-design-vue'
-// import { notificationPlacement } from '~/utils/constants'
+
+
 import { IS_DEV } from '~/utils/config'
 
 import 'vue-select/dist/vue-select.css'
-// import vSelect from 'vue-select'
+
 const { removeToken, getToken, handleLogout } = useToken()
 
 const app = createApp(App)
@@ -25,12 +25,6 @@ const token = getToken()
 if (!token)
   router.push('auth-login')
 
-// app.component('VSelect', vSelect)
-//
-// notification.config({
-//   placement: notificationPlacement,
-//   duration: 3,
-// })
 
 $http.interceptors.response.use(
   (response) => {
