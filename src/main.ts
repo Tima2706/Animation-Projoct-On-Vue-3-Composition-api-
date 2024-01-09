@@ -18,42 +18,42 @@ const { removeToken, getToken, handleLogout } = useToken()
 
 const app = createApp(App)
 const token = getToken()
-if (!token)
-  router.push('auth-login')
-
-$http.interceptors.response.use(
-  (response) => {
-    return response
-  },
-  (error) => {
-    if (error.response.status === 401) {
-      removeToken()
-      handleLogout()
-    }
-
-    return Promise.reject(error)
-  },
-)
-
-app.use(DatePicker).use(Pinia).use(PWA).use(VeeValidate).use(I18n)
-const { getOrganization } = useOrganizationStore()
-
-if (token) {
-  getOrganization()
-    .catch(() => {
-      if (!IS_DEV) {
-        setTimeout(() => {
-          handleLogout()
-          removeToken()
-        })
-      }
-    })
-    .finally(() => {
-      app.use(router)
-      app.mount('#app')
-    })
-}
+if (!token) {  handleLogout() }
 else {
-  app.use(router)
-  app.mount('#app')
+  $http.interceptors.response.use(
+    (response) => {
+      return response
+    },
+    (error) => {
+      if (error.response.status === 401) {
+        removeToken()
+        handleLogout()
+      }
+
+      return Promise.reject(error)
+    },
+  )
+
+  app.use(DatePicker).use(Pinia).use(PWA).use(VeeValidate).use(I18n)
+  const { getOrganization } = useOrganizationStore()
+
+  if (token) {
+    getOrganization()
+      .catch(() => {
+        if (!IS_DEV) {
+          setTimeout(() => {
+            handleLogout()
+            removeToken()
+          })
+        }
+      })
+      .finally(() => {
+        app.use(router)
+        app.mount('#app')
+      })
+  }
+  else {
+    app.use(router)
+    app.mount('#app')
+  }
 }

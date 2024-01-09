@@ -11,8 +11,7 @@ import Blocked from '~/assets/icons/sidebar/blocked.svg'
 import ErrorTransaction from '~/assets/icons/sidebar/error-transaction.svg'
 import Expenses from '~/assets/icons/sidebar/expenses.svg'
 import { useAccess } from '~/composables/useAccess'
-import { PERMISSIONS } from '~/utils/constants'
-import {useOrganizationStore} from "~/stores/organization";
+import { useOrganizationStore } from '~/stores/organization'
 const { t } = useI18n({ useScope: 'local' })
 
 const collapsed = ref(false)
@@ -56,7 +55,7 @@ const navigations: {
     access: true,
     to: { name: 'erroneousTransactions' },
   },
-   {
+  {
     title: t('expenses'),
     icon: Expenses,
     access: true,
@@ -67,13 +66,13 @@ const navigations: {
 </script>
 
 <template>
-<!--  <div v-if="organization.organization">-->
-<!--  <a-layout>-->
-      <AppToolbar />
-    <div>
-<!--    <a-layout-header>-->
-<!--      <DTHeader/>-->
-<!--    </a-layout-header>-->
+  <!--  <div v-if="organization.organization"> -->
+  <!--  <a-layout> -->
+  <AppToolbar />
+  <div v-if="organization.organization">
+    <!--    <a-layout-header> -->
+    <!--      <DTHeader/> -->
+    <!--    </a-layout-header> -->
 
     <button
       class="sidebar__collapse-btn"
@@ -98,13 +97,12 @@ const navigations: {
         <RouterView />
       </a-layout-content>
     </a-layout>
-<!--  </a-layout>-->
-    </div>
-<!--  </div>-->
-<!--  <div style="display: flex; gap: 20px; justify-content: center; height: 100vh; align-items: center;" v-else>-->
-<!--    loading...-->
-<!--      <a-spin />-->
-<!--  </div>-->
+    <!--  </a-layout> -->
+  </div>
+  <div style="display: flex; gap: 20px; justify-content: center; height: 100vh; align-items: center;" v-else>
+      <a-spin />
+      <strong>   loading...</strong>
+  </div>
 </template>
 
 <style lang="scss">
