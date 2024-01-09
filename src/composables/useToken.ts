@@ -48,7 +48,7 @@ export function useToken() {
   }
   const handleLogout = () => {
     if (!IS_DEV) window.location.href = LOGOUT_URL
-    else window.location.href = '/auth/login'
+    else window.location.href = `${IDENTITY_SERVICE}?returnUrl=https://rkp.dt.uz`
   }
 
 

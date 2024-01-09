@@ -18,7 +18,7 @@ const { removeToken, getToken, handleLogout } = useToken()
 
 const app = createApp(App)
 const token = getToken()
-if (!token) { router.push('auth-login') }
+if (!token) {  handleLogout() }
 else {
   $http.interceptors.response.use(
     (response) => {
