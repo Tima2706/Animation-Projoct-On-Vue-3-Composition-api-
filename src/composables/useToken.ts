@@ -3,13 +3,13 @@ import Cookies from 'universal-cookie'
 import {IS_DEV, IDENTITY_SERVICE, LOGOUT_URL} from '~/utils/config'
 export function useToken() {
   const cookies = new Cookies(null)
-  const TOKEN_KEY = 'access-token'
+  const TOKEN_KEY = 'act'
   const setToken = (token: string, expires: number): string => {
     const options: CookieSetOptions = {
       path: '/',
     }
     if (!IS_DEV)
-      options.domain = '.dt.uz'
+      options.domain = '.dthub.uz'
 
     if (expires)
       options.expires = new Date(expires)

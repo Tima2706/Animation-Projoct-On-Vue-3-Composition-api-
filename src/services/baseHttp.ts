@@ -1,10 +1,10 @@
 import axios from 'axios'
 
 import {API_BASE_URL, API_USER_URL} from '~/utils/config'
-import { useToken } from '~/composables/useToken'
-import { IS_DEV } from '~/utils/config'
-const { getToken } = useToken()
-const { gotoLogin } = useToken()
+import {useToken} from '~/composables/useToken'
+import {IS_DEV} from '~/utils/config'
+
+const {getToken, gotoLogin} = useToken()
 
 declare module 'axios' {
   export interface AxiosRequestConfig {
@@ -22,10 +22,9 @@ $http.interceptors.response.use(
     if (error.response.status === 401) {
       if (!IS_DEV) {
         gotoLogin()
-
       }
-    }else if (error.response.status === 403) {
-      window.location.href='/forbidden'
+    } else if (error.response.status === 403) {
+      window.location.href = '/forbidden'
     }
     return Promise.reject(error)
   }
@@ -33,8 +32,8 @@ $http.interceptors.response.use(
 $http.interceptors.request.use((config) => {
   const token = getToken()
   if (token)
-    config.headers.Authorization = `Bearer ${token}`
-
+    config.headers.act = encodeURIComponent(token)
+  config.withCredentials = true
   return config
 })
 
@@ -44,7 +43,8 @@ export const $httpUser = axios.create({
 $httpUser.interceptors.request.use((config) => {
   const token = getToken()
   if (token)
-    config.headers.Authorization = `Bearer ${token}`
+    config.headers.act = encodeURIComponent(token)
+  config.withCredentials = true
 
   return config
 })
