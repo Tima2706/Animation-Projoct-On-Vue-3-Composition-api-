@@ -24,7 +24,7 @@ deploy:
     - project_test_230
  script:
     - docker container rm -f rkpdthubuz || true
-    - docker run -d -p 8080:80 --restart always -v /etc/localtime:/etc/localtime:ro --name rkpdthubuz rkp.dthub.uz
+    - docker run -d -p 7002:80 --restart always -v /etc/localtime:/etc/localtime:ro --name rkpdthubuz rkp.dthub.uz
  only:
     - test
 
