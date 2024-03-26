@@ -1,21 +1,26 @@
 <script setup lang="ts">
-import { ref, watch } from 'vue'
-import { useI18n } from 'vue-i18n'
+import {ref, watch} from 'vue'
+import {useI18n} from 'vue-i18n'
 import Cookies from 'universal-cookie'
 import AngleDownIcon from '~/assets/icons/angle-down.svg'
 import ClosePage from '~/assets/icons/close.svg'
-import { useToken } from '~/composables/useToken'
-import { useLanguage } from '~/composables/useLanguage'
-import { IS_DEV } from '~/utils/config'
+import {useToken} from '~/composables/useToken'
+import {useLanguage} from '~/composables/useLanguage'
+import {IS_DEV} from '~/utils/config'
+import {VITE_API_IMG_URL} from '~/utils/config'
 
+
+const organizationStore = useOrganizationStore()
+
+const imgURL = VITE_API_IMG_URL
 const open = ref<boolean>(false)
-
+const imgHash = ref(organizationStore!.organization?.logo_url)
 interface Language {
   value: string
   label: string
 }
 
-const cookies = new Cookies(null, { path: '/' })
+const cookies = new Cookies(null, {path: '/'})
 
 const sidebar = ref(false)
 
@@ -27,24 +32,23 @@ function sidebarClose() {
   sidebar.value = false
 }
 
-const { locale } = useI18n({ useScope: 'local' })
-const { setLang, getLang } = useLanguage()
+const {locale} = useI18n({useScope: 'local'})
+const {setLang, getLang} = useLanguage()
 
-const organizationStore = useOrganizationStore()
 
 const router = useRouter()
 // const { removeToken } = useToken()
 
-const { logout, removeToken } = useToken()
+const {logout, removeToken} = useToken()
 const isOpenSubMenu = ref(false)
 const menu1Ref = ref()
 const menu2Ref = ref()
 const menu2ChildRef = ref()
 
 const languageList = ref<Array<Language>>([
-  { value: 'uz', label: 'Uz' },
-  { value: 'en', label: 'En' },
-  { value: 'ru', label: 'Ru' },
+  {value: 'uz', label: 'Uz'},
+  {value: 'en', label: 'En'},
+  {value: 'ru', label: 'Ru'},
 ])
 const selectedLang = ref(getLang())
 
@@ -83,7 +87,7 @@ const changeLanguage = (lang: string) => {
 const handleLogout = () => {
   if (IS_DEV) {
     removeToken()
-    router.replace({ name: 'auth-login' })
+    router.replace({name: 'auth-login'})
     return
   }
   logout()
@@ -118,7 +122,7 @@ window.addEventListener('resize', updateIsOpenSubMenu)
             <p style="text-transform: capitalize" class="dropdown-trigger select-none">
               {{ selectedLang }}
 
-              <AngleDownIcon />
+              <AngleDownIcon/>
             </p>
             <template #overlay>
               <a-menu>
@@ -136,8 +140,8 @@ window.addEventListener('resize', updateIsOpenSubMenu)
             </template>
           </a-dropdown>
         </div>
-        <div class="dropdown-trigger-separator" />
-        <div v-if="organizationStore" class="action" />
+        <div class="dropdown-trigger-separator"/>
+        <div v-if="organizationStore" class="action"/>
         <div>
           <p class="dropdown-trigger select-none" @click="sidebarOpen">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -157,7 +161,7 @@ window.addEventListener('resize', updateIsOpenSubMenu)
             <span class="organization-organization__name">
               {{ $t('profile') }}
             </span>
-            <AngleDownIcon />
+            <AngleDownIcon/>
           </p>
           <a-drawer
             placement="right"
@@ -173,7 +177,7 @@ window.addEventListener('resize', updateIsOpenSubMenu)
                     {{ $t('profile') }}
                   </p>
                   <button @click="sidebarClose">
-                    <ClosePage />
+                    <ClosePage/>
                   </button>
                 </div>
                 <div
@@ -182,10 +186,9 @@ window.addEventListener('resize', updateIsOpenSubMenu)
                   class="w-full h-[150px] border-[1px] border-[#DFE2E9] rounded-md my-6 flex justify-center"
                 >
                   <VImg
-                    :src-from-local-server="!!organizationStore!.organization?.logo_url"
                     class="object-contain"
                     alt="organizationName"
-                    :src="organizationStore!.organization?.logo_url"
+                    :src="`${imgURL}${imgHash}`"
                   />
                 </div>
 
@@ -196,7 +199,7 @@ window.addEventListener('resize', updateIsOpenSubMenu)
                   {{ organizationStore!.organization?.name }}
                 </p>
 
-                <a-divider class="text-[#DFE2E9]" />
+                <a-divider class="text-[#DFE2E9]"/>
 
                 <p class="text-[#A2A5B9]">
                   {{ $t('fullName') }}
@@ -238,14 +241,14 @@ window.addEventListener('resize', updateIsOpenSubMenu)
                     organizationStore?.organization?.email ? organizationStore?.organization?.email : '-'
                   }}
                 </p>
-                <a-divider class="text-[#DFE2E9]" />
+                <a-divider class="text-[#DFE2E9]"/>
               </div>
 
               <div
                 class="w-full flex gap-2 items-center border-[1px] border-[#DFE2E9] py-2 px-3 rounded-md text-[#D65E81]"
                 @click="handleLogout"
               >
-                <Logout />
+                <Logout/>
                 <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none">
                   <path
                     stroke="#D65E81" stroke-linecap="round" stroke-linejoin="round"
@@ -267,9 +270,10 @@ window.addEventListener('resize', updateIsOpenSubMenu)
 </template>
 
 <style lang="scss">
-.ant-drawer-content-wrapper{
+.ant-drawer-content-wrapper {
   width: 298px !important;
 }
+
 .ant-drawer-header {
   background: #FFFFFF;
 }
@@ -283,7 +287,9 @@ window.addEventListener('resize', updateIsOpenSubMenu)
 .ant-drawer-title {
   color: #4A5C71 !important;
 }
-
+.object-contain{
+  object-fit: contain;
+}
 //::-webkit-scrollbar{
 //  width: 15px;
 //}
