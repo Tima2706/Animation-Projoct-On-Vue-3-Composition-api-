@@ -15,15 +15,14 @@ export function useToken() {
       options.expires = new Date(expires)
 
     cookies.set(TOKEN_KEY, token, options)
-    localStorage.setItem(TOKEN_KEY, token)
     return token
   }
   const logout = () => {
-    window.location.href = `${IDENTITY_SERVICE}/auth/logout`
+    window.location.href = `${IDENTITY_SERVICE}`
   }
 
   const gotoLogin = () => {
-    window.location.href = `${IDENTITY_SERVICE}?returnUrl=https://rkp.dt.uz`
+    window.location.href = `${IDENTITY_SERVICE}`
   }
 
 
@@ -36,19 +35,17 @@ export function useToken() {
       path: '/',
     }
     if (!IS_DEV)
-      options.domain = '.dt.uz'
+      options.domain = '.dthub.uz'
 
     cookies.remove(TOKEN_KEY, options)
 
-    localStorage.removeItem(TOKEN_KEY)
   }
   const setTokenFromCookie = (token?: string) => {
     if (token)
-      localStorage.setItem(TOKEN_KEY, token)
   }
   const handleLogout = () => {
     if (!IS_DEV) window.location.href = LOGOUT_URL
-    else window.location.href = `${IDENTITY_SERVICE}?returnUrl=https://rkp.dt.uz`
+    else window.location.href = `${IDENTITY_SERVICE}`
   }
 
 
