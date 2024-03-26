@@ -185,6 +185,7 @@ window.addEventListener('resize', updateIsOpenSubMenu)
                   style="height: 100px"
                   class="w-full h-[150px] border-[1px] border-[#DFE2E9] rounded-md my-6 flex justify-center"
                 >
+
                   <VImg
                     class="object-contain"
                     alt="organizationName"
