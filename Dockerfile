@@ -3,7 +3,7 @@ FROM node:18-alpine as build-stage
 WORKDIR /app
 RUN corepack enable
 
-COPY package.json ./
+COPY package.json .npmrc ./
 RUN pnpm install
 
 COPY . .
