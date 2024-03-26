@@ -40,9 +40,7 @@ export function useToken() {
     cookies.remove(TOKEN_KEY, options)
 
   }
-  const setTokenFromCookie = (token?: string) => {
-    if (token)
-  }
+
   const handleLogout = () => {
     if (!IS_DEV) window.location.href = LOGOUT_URL
     else window.location.href = `${IDENTITY_SERVICE}`
@@ -55,7 +53,6 @@ export function useToken() {
     setToken,
     getToken,
     removeToken,
-    setTokenFromCookie,
     TOKEN_KEY,
     logout,
     gotoLogin,
