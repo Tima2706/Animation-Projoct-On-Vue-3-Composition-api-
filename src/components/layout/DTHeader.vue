@@ -1,12 +1,15 @@
 <script setup lang="ts">
-import { IconEtm, IconKabinet, IconMarket, IconRkp, IconWms, Logo } from '~/assets/icons/header'
 import { ref } from 'vue'
+import { IconEtm, IconFindoc, IconInfo, IconKabinet, IconMarket, IconPost, IconRkp, IconWms, Logo } from '~/assets/icons/header'
 import {
-  HEADER_DTM,
-  HEADER_RKP,
-  HEADER_MARKET,
+  DT_INFO,
+  DT_POST,
   HEADER_CABINET,
-  VITE_HEADER_DWM
+  HEADER_DTM,
+  HEADER_MARKET,
+  HEADER_RKP,
+  VITE_FINDOC_URL,
+  VITE_HEADER_DWM,
 } from '~/utils/config'
 
 const currentProject = ref('rkp')
@@ -18,7 +21,15 @@ const menus = [
   { url: VITE_HEADER_DWM, text: 'DWM', icon: IconWms, name: 'wvm' },
   { url: HEADER_RKP, text: 'RKP', icon: IconRkp, name: 'rkp' },
   { url: HEADER_DTM, text: 'DTM', icon: IconEtm, name: 'dtm' },
-  { url: HEADER_CABINET, text: 'Kabinet', icon: IconKabinet, name: 'cabinet' }
+  { url: HEADER_CABINET, text: 'Kabinet', icon: IconKabinet, name: 'cabinet' },
+  {
+    url: VITE_FINDOC_URL,
+    text: 'FindDoc',
+    icon: IconFindoc,
+    name: 'finddoc',
+  },
+  { url: DT_INFO, text: 'Info', icon: IconInfo, name: 'info' },
+  { url: DT_POST, text: 'Info', icon: IconPost, name: 'post' },
 ]
 </script>
 
@@ -30,19 +41,19 @@ const menus = [
       </a>
       <nav class="dt-header__nav">
         <a
-          :key="menu.url"
           v-for="menu in menus"
+          :key="menu.url"
           :href="menu.url"
           class="dt-header__nav__item"
           :class="{ active: menu.name === currentProject }"
         >
-          <component class="dt-header__nav__item__icon" :is="menu.icon" />
+          <component :is="menu.icon" class="dt-header__nav__item__icon" />
           {{ menu.text }}
         </a>
       </nav>
       <div class="dt-header__navbar-menu" @click="isOpenMenu = !isOpenMenu">
         <button>
-          <slot name="modules"></slot>
+          <slot name="modules" />
         </button>
         <div class="arrow-down-icon" :class="{ opened: isOpenMenu }">
           <svg width="10" height="10" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
@@ -54,18 +65,18 @@ const menus = [
         </div>
       </div>
       <div class="dt-header__navbar-right">
-        <slot name="profile"></slot>
+        <slot name="profile" />
       </div>
     </header>
     <div class="dt-header__mobile" :class="{ open: isOpenMenu }">
       <a
-        :key="menu.url"
         v-for="menu in menus"
+        :key="menu.url"
         :href="menu.url"
         class="dt-header__nav__item"
         :class="{ active: menu.name === currentProject }"
       >
-        <component class="dt-header__nav__item__icon" :is="menu.icon" />
+        <component :is="menu.icon" class="dt-header__nav__item__icon" />
         {{ menu.text }}
       </a>
     </div>

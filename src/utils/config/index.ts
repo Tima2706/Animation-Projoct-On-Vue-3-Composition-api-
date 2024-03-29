@@ -18,5 +18,7 @@ export const HEADER_RKP = import.meta.env.VITE_RKP_URL
 export const HEADER_MARKET = import.meta.env.VITE_MARKET_URL
 export const HEADER_CABINET = import.meta.env.VITE_CABINET_URL
 export const VITE_HEADER_DWM = import.meta.env.VITE_DWM_URL
-
+export const VITE_FINDOC_URL  = import.meta.env.VITE_FINDOC_URL
+export const DT_INFO = import.meta.env.VITE_DT_INFO
+export const DT_POST = import.meta.env.VITE_DT_POST
 export const VITE_API_IMG_URL = import.meta.env.VITE_API_IMG_URL
