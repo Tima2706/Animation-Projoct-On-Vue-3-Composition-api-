@@ -22,6 +22,7 @@ const menus = [
   { url: HEADER_RKP, text: 'RKP', icon: IconRkp, name: 'rkp' },
   { url: HEADER_DTM, text: 'DTM', icon: IconEtm, name: 'dtm' },
   { url: HEADER_CABINET, text: 'Kabinet', icon: IconKabinet, name: 'cabinet' },
+
   {
     url: VITE_FINDOC_URL,
     text: 'FindDoc',
