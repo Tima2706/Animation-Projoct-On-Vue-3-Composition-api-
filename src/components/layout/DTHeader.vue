@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { IconEtm, IconFindoc, IconInfo, IconKabinet, IconMarket, IconPost, IconRkp, IconWms, Logo } from '~/assets/icons/header'
+import { IconBiznesApteka, IconEtm, IconFindoc, IconInfo, IconKabinet, IconMarket, IconPost, IconRkp, IconWms, Logo } from '~/assets/icons/header'
 import {
+  BIZNES_APTEKA_URL,
   DT_INFO,
   DT_POST,
   HEADER_CABINET,
@@ -17,20 +18,25 @@ const currentProject = ref('rkp')
 const isOpenMenu = ref(false)
 
 const menus = [
-  { url: HEADER_MARKET, text: 'Market', icon: IconMarket, name: 'market' },
-  { url: VITE_HEADER_DWM, text: 'DWM', icon: IconWms, name: 'wvm' },
-  { url: HEADER_RKP, text: 'RKP', icon: IconRkp, name: 'rkp' },
-  { url: HEADER_DTM, text: 'DTM', icon: IconEtm, name: 'dtm' },
   { url: HEADER_CABINET, text: 'Kabinet', icon: IconKabinet, name: 'cabinet' },
-
+  { url: HEADER_MARKET, text: 'Market', icon: IconMarket, name: 'market' },
   {
     url: VITE_FINDOC_URL,
     text: 'FindDoc',
     icon: IconFindoc,
     name: 'finddoc',
   },
+  { url: VITE_HEADER_DWM, text: 'DWM', icon: IconWms, name: 'dwm' },
+  { url: HEADER_RKP, text: 'RKP', icon: IconRkp, name: 'rkp' },
+  { url: HEADER_DTM, text: 'DTM', icon: IconEtm, name: 'dtm' },
+  {
+    url: BIZNES_APTEKA_URL,
+    text: 'Бизнес Аптека',
+    icon: IconBiznesApteka,
+    name: 'biznesApteka',
+  },
   { url: DT_INFO, text: 'Info', icon: IconInfo, name: 'info' },
-  { url: DT_POST, text: 'Info', icon: IconPost, name: 'post' },
+  { url: DT_POST, text: 'DT POS', icon: IconPost, name: 'post' },
 ]
 </script>
 
