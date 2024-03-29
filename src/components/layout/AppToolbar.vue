@@ -198,36 +198,38 @@ window.addEventListener('resize', updateIsOpenSubMenu)
 
                 <a-divider class="text-[#DFE2E9]" />
 
-                <p class="text-[#A2A5B9]">
-                  {{ $t('fullName') }}
-                </p>
-                <p class="font-medium text-[#48545D]">
-                  {{
-                    `${organizationStore!.organization?.lastname + organizationStore?.organization?.firstname} ${organizationStore?.organization?.middlename} `
-                  }}
-                </p>
-                <p class="mt-4 text-[#A2A5B9]">
-                  {{ $t('users') }}
-                </p>
-                <p class="font-medium text-[#0096B2]">
-                  {{ organizationStore!.organization?.username }}
-                </p>
+<!--                <p class="text-[#A2A5B9]">-->
+<!--                  {{ $t('fullName') }}-->
+<!--                </p>-->
+<!--                <p class="font-medium text-[#48545D]">-->
+<!--                  {{-->
+<!--                    `${organizationStore!.organization?.lastname + organizationStore?.organization?.firstname} ${organizationStore?.organization?.middlename} `-->
+<!--                  }}-->
+<!--                </p>-->
+<!--                <p class="mt-4 text-[#A2A5B9]">-->
+<!--                  {{ $t('users') }}-->
+<!--                </p>-->
+<!--                <p class="font-medium text-[#0096B2]">-->
+<!--                  {{ organizationStore!.organization?.username }}-->
+<!--                </p>-->
 
                 <p class="capitalize mt-4 text-[#A2A5B9]">
-                  {{ $t('role') }}
+                  {{ $t('address') }}
                 </p>
                 <div class="flex ">
-                  <p v-for="role in organizationStore!.organization?.roles" class="font-medium text-[#48545D]">
-                    {{ role.module_id === 6 ? role.name : null }}
-                  </p>
+                <p>
+                  {{
+                    organizationStore?.organization?.address ? organizationStore?.organization?.address : '-'
+                  }}
+                </p>
                 </div>
 
                 <p class="text-[#A2A5B9] mt-4">
                   {{ $t('numberPhone') }}
                 </p>
-                <p class="font-medium text-[#48545D]">
+                <p v-for="(item,index) in  organizationStore?.organization?.phone_numbers" :key="itendex" class="font-medium text-[#48545D]">
                   {{
-                    organizationStore?.organization?.firstname ? organizationStore?.organization?.phone_number : '-'
+                    item.number ? `+${item.number}` : '-'
                   }}
                 </p>
                 <p class="text-[#A2A5B9] mt-4">
@@ -236,6 +238,14 @@ window.addEventListener('resize', updateIsOpenSubMenu)
                 <p class="font-medium text-[#48545D]">
                   {{
                     organizationStore?.organization?.email ? organizationStore?.organization?.email : '-'
+                  }}
+                </p>
+                <p class="text-[#A2A5B9] mt-4">
+                  {{ $t('Website') }}
+                </p>
+                <p class="font-medium text-[#48545D]">
+                  {{
+                    organizationStore?.organization?.website ? organizationStore?.organization?.website : '-'
                   }}
                 </p>
                 <a-divider class="text-[#DFE2E9]" />
