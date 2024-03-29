@@ -1,4 +1,8 @@
 node_modules
 dist
 Dockerfile
+<<<<<<< HEAD
 .gitlab-ci
+=======
+.gitlab-ci.yml
+>>>>>>> origin/master
