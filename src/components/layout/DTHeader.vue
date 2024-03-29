@@ -43,7 +43,7 @@ const menus = [
 <template>
   <div class="dt-header_container">
     <header class="dt-header">
-      <a href="https://dt.uz" class="dt-header__logo">
+      <a href="https://dthub.uz" class="dt-header__logo">
         <Logo />
       </a>
       <nav class="dt-header__nav">
