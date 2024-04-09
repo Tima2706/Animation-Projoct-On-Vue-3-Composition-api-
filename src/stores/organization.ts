@@ -1,6 +1,6 @@
 import { acceptHMRUpdate, defineStore } from 'pinia'
 import type { Organization } from '~/types'
-import {getUserInfo} from "~/services/userInformation";
+import { getUserInfo } from '~/services/userInformation'
 
 export const useOrganizationStore = defineStore('organization', () => {
   const organization = ref<Organization | null>(null)

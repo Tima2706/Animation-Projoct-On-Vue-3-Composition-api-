@@ -1,20 +1,23 @@
 export interface Organization {
-  id: number
-  name: string
+  account_numbers: string[]
+  address: string
   business_category: string
-  director: {
-    firstname: string
-    lastname: string
-    middlename: string
-  }
-  logo?: string
-  address?: string
-  tin?: string
-  oked?: string
-  website: string
+  created_at: string
+  created_by: string
   email: string
-  phone_number: string
-  account_number: string
+  employees_count: number
+  id: string
+  latitude: string
+  logo_url: string
+  longitude: string
   mfo: string
-  director_tin: string
+  name: string
+  oked: string
+  phone_numbers: []
+  status: number
+  status_name: string
+  tin: string
+  updated_at: string
+  updated_by: string
+  website: string
 }

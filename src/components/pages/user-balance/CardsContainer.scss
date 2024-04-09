@@ -1,0 +1,95 @@
+@import '../../../assets/scss/mixins';
+
+.status {
+  &__block {
+    display: grid;
+    grid-gap: 12px;
+    grid-template-columns: repeat(auto-fill, minmax(225px, 1fr));
+    margin: 0 -12px;
+    padding: 12px;
+  }
+
+  &__item {
+    height: 79px;
+    background: #ffffff;
+    border: 1px solid #dfe2e9;
+    border-radius: 6px;
+    padding: 16px 18px;
+    position: relative;
+    justify-content: space-between;
+
+    span.self-end {
+      border: 1px solid red;
+      padding: 8px;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    //.abs_before {
+    //  width: 5px;
+    //  height: 86px;
+    //  position: absolute;
+    //  left: 0;
+    //  border-radius: 0 5px 5px 0;
+    //}
+
+    h1 {
+      font-weight: 500;
+      color: #48545d;
+      margin-bottom: 10px;
+      font-size: 12px;
+      line-height: 14px;
+    }
+
+    p {
+      font-family: 'Rubik', sans-serif;
+      font-size: 16px;
+      font-weight: 500;
+      line-height: 19px;
+      letter-spacing: 0em;
+      text-align: left;
+    }
+
+    span {
+      font-size: 15px;
+      margin-left: 6px;
+    }
+
+    a {
+      color: #0096b2;
+    }
+  }
+
+  .abs_bg_grey {
+    background: #f7f9fc;
+    box-shadow: 0px 4px 5px 0px #0000001f;
+  }
+  .abs_bg_yellow {
+    background: #d0f2e9;
+    box-shadow: 0px 4px 5px 0px #0000001f;
+  }
+  .abs_bg_red {
+    background: #f7f4f6;
+    box-shadow: 0px 4px 5px 0px #0000001f;
+  }
+  .abs_bg_black {
+    background: #eae9f4;
+    box-shadow: 0px 4px 5px 0px #0000001f;
+  }
+
+  .color_grey {
+    color: #456e4c;
+  }
+
+  .color_yellow {
+    color: #2f805e;
+  }
+
+  .color_red {
+    color: #b45050;
+  }
+
+  .color_black {
+    color: #574079;
+  }
+}

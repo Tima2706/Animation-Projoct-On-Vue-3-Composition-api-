@@ -1,14 +1,13 @@
 <script lang="ts" setup>
 import dayjs from 'dayjs'
+import { reactive, ref } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { DATE_TIME_FORMAT } from '~/utils/constants'
 import BalanceStatusForm from '~/components/pages/balance/BalanceStatusForm.vue'
 import { useFetchData } from '~/composables/useFetch'
 import type { TransactionBalance } from '~/services/dto/transcationBalance'
 import { getOperations, getTransactionBalance } from '~/services/transactionBalance'
-import HashtagIcon from '~/assets/icons/hashtag.svg'
 import FilterIcon from '~/assets/icons/filter.svg'
-import {ref, reactive, onMounted} from "vue";
-import { useI18n } from 'vue-i18n'
 
 const { t } = useI18n()
 const isFilterOpened = ref<boolean>(false)
@@ -44,6 +43,7 @@ const columns = [
 const lastPage = ref(1)
 const bankFilter = ref<any>({
   note: '',
+
   partner_organization_id: '',
   from_summa: null,
   to_summa: null,
@@ -58,17 +58,17 @@ const params = reactive({
 
 const { data: transactionBalance, loading: transactionBalanceLoading } = useFetchData<TransactionBalance>(async () => {
   const { data } = await getTransactionBalance()
-  return {data: data.data}
+  return { data: data.data }
 }, { immediately: true })
 
 const { data: operations, loading: operationsLoading, fetch } = useFetchData<any[]>(async () => {
-  const { data: { data, last_page } } = await getOperations({ ...params,   ...bankFilter.value })
+  const { data: { data, last_page } } = await getOperations({ ...params, ...bankFilter.value })
   lastPage.value = last_page
   return { data }
 }, { immediately: true })
 
 const onChangeFilter = (filter: any) => {
-  bankFilter.value = {...filter}
+  bankFilter.value = { ...filter }
   fetch()
 }
 
@@ -83,26 +83,26 @@ const onChangePage = () => {
       {{ t("balance") }}
     </VText>
     <BalanceStatusForm v-if="transactionBalance" :loading="transactionBalanceLoading" :info="transactionBalance" />
-      <ACard>
-          <div class="flex items-center justify-between">
-              <VText weight="600" size="18">
-                  {{ t("operations") }}
-              </VText>
-              <div class="flex gap-2 items-cente">
-              <AButton size="large" class="filter_btn "  @click="isFilterOpened = !isFilterOpened">
-                  <FilterIcon />
-                  {{ $t('filter') }}
-              </AButton>
-<!--              <AButton  size="large" class="filter_btn ml-4" >-->
-<!--                  <HashtagIcon style="fill: none;" />-->
-<!--                  {{ $t('exportToExel') }}-->
-<!--              </AButton>-->
-              </div>
-          </div>
-        <transition name="transition-effect" mode="out-in">
-          <BalanceFilterList :filter="bankFilter" @changed="onChangeFilter" :isFilterOpened="isFilterOpened" />
-        </transition>
-      </ACard>
+    <ACard>
+      <div class="flex items-center justify-between">
+        <VText weight="600" size="18">
+          {{ t("operations") }}
+        </VText>
+        <div class="flex gap-2 items-cente">
+          <AButton size="large" class="filter_btn" @click="isFilterOpened = !isFilterOpened">
+            <FilterIcon />
+            {{ t('filter') }}
+          </AButton>
+          <!--              <AButton  size="large" class="filter_btn ml-4" > -->
+          <!--                  <HashtagIcon style="fill: none;" /> -->
+          <!--                  {{ $t('exportToExel') }} -->
+          <!--              </AButton> -->
+        </div>
+      </div>
+      <transition name="transition-effect" mode="out-in">
+        <BalanceFilterList :filter="bankFilter" :is-filter-opened="isFilterOpened" @changed="onChangeFilter" />
+      </transition>
+    </ACard>
     <div>
       <a-spin :spinning="operationsLoading">
         <a-table :pagination="false" :data-source="operations ? operations : []" :columns="columns">
@@ -139,5 +139,4 @@ const onChangePage = () => {
     transform: translateY(30px);
   }
 }
-
 </style>

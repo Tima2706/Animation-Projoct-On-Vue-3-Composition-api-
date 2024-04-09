@@ -1,5 +1,21 @@
 RKP: RKP
 reset: Reset
+expense: Expense
+myCards: My cards
+personalAccount: Personal account
+detailedReport: Detailed report
+addCard: Add card
+cardNumber: Card number
+cardExpiredDate: Card expired date
+cardName: Card name
+topUpYourAccount: Top up your account
+linkCard: You need to link a card to top up your balance.
+enterConfirmationCode: Enter the confirmation code
+enterCode: Enter the code
+aVerificationCodeHasBeenSent: A verification code has been sent to your phone number
+сonfirm: Confirm
+writeAmount: Write amount
+tariffProfit: Tariff profit
 erroneousTransactions: Erroneous transactions
 withdraw: Withdraw
 blockedDeposit: Blocked

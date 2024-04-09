@@ -6,12 +6,11 @@ import { DATE_TIME_FORMAT } from '~/utils/constants'
 // import { getBanks } from '~/services/banking.js'
 import { useFetchData } from '~/composables/useFetch'
 import Filter from '~/assets/icons/filter.svg'
-import { getExpenses } from '~/services/transactionBalance'
+import { getBankingType } from '~/services/transactionBalance'
 
 const { t } = useI18n()
 const isFilterOpened = ref<boolean>(false)
 
-const value1 = ref('lucy')
 const columns = [
   {
     title: t('documentNumber'),
@@ -43,7 +42,11 @@ const columns = [
     dataIndex: 'summa',
     key: 'summa',
   },
-
+  {
+    title: t('status'),
+    dataIndex: 'status',
+    key: 'status',
+  },
 ]
 const lastPage = ref(1)
 const params = reactive({
@@ -67,7 +70,7 @@ const {
   async () => {
     const {
       data: { data, last_page },
-    } = await getExpenses({ ...params, ...bankFilter.value })
+    } = await getBankingType({ ...params, ...bankFilter.value })
     lastPage.value = last_page
     return { data }
   },
@@ -87,22 +90,22 @@ const onChangePage = () => {
 <template>
   <div>
     <VText weight="600" size="18" class="mb-4">
-      {{ t("expenses") }}
+      {{ t("banking") }}
     </VText>
     <a-card>
       <div class="flex justify-between">
         <div class="flex gap-2">
           <a-button
-            class="flex justify-center text-primary border-primary items-center gap-2"
+            class="flex justify-center items-center text-primary border-primary gap-2"
             @click="isFilterOpened = !isFilterOpened"
           >
             <Filter />
             {{ t("filter") }}
           </a-button>
           <!--          <a-button -->
-          <!--              type="primary" -->
-          <!--              ghost -->
-          <!--              class="flex justify-center items-center gap-2" -->
+          <!--            type="primary" -->
+          <!--            ghost -->
+          <!--            class="flex justify-center items-center gap-2" -->
           <!--          > -->
           <!--            <Hashtag /> -->
           <!--            {{ t("exportToExel") }} -->
@@ -164,6 +167,32 @@ const onChangePage = () => {
             </template>
             <template v-if="column.key === 'summa'">
               {{ record?.summa }}
+            </template>
+            <template v-if="column.key === 'status'">
+              <span>
+                <a-tag v-show="record.status === 1" color="green" class="green">
+                  {{ t("operationStatus.1") }}
+                </a-tag>
+                <a-tag v-show="record.status === 2" color="green" class="green">
+                  {{ t("operationStatus.2") }}
+                </a-tag>
+                <a-tag v-show="record.status === 3" color="green" class="green">
+                  {{ t("operationStatus.3") }}
+                </a-tag>
+                <a-tag v-show="record.status === 33" color="red" class="red">
+                  {{ t("operationStatus.33") }}
+                </a-tag>
+                <a-tag
+                  v-show="record.status === 22"
+                  color="red"
+                  class="red"
+                >
+                  {{ t("operationStatus.2") }}
+                </a-tag>
+                <a-tag v-show="record.status === 7" color="green" class="green">
+                  {{ t("operationStatus.7") }}
+                </a-tag>
+              </span>
             </template>
           </template>
         </a-table>

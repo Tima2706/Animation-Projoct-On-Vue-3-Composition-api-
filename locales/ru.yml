@@ -1,4 +1,12 @@
 RKP: РКП
+tariffProfit: Прибыль по тарифу
+detailedReport: Подробный отчет
+expense: Расход
+myCards: Мои карты
+personalAccount: Лицевой счет
+addCard: Добавить карту
+cardNumber: Номер карты
+cardExpiredDate: Срок годности карты
 reset: Сбросить
 erroneousTransactions: Ошибочные транзакции
 withdraw: Вывести
@@ -7,6 +15,14 @@ moderation: Модерация
 access: Доступ
 rolesAndAccess: Роли и доступы к модулям
 increase: В порядке возрастания цены
+cardName: Название карты
+writeAmount: Напишите сумму
+сonfirm: Подтвердить
+topUpYourAccount: Пополните счет
+linkCard: Вам необходимо привязать карту, чтобы пополнить баланс.
+enterConfirmationCode: Введите код подтверждения
+enterCode: Введите код
+aVerificationCodeHasBeenSent: Код подтверждения был отправлен на ваш номер телефона
 decrease: В порядке убывания цены
 products: Продукты
 seller: Продавец

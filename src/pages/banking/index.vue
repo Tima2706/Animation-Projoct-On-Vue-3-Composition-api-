@@ -1,68 +1,67 @@
 <script lang="ts" setup>
-import dayjs from "dayjs";
-import { useI18n } from "vue-i18n";
-import { ref } from "vue";
-import { DATE_TIME_FORMAT } from "~/utils/constants";
+import dayjs from 'dayjs'
+import { useI18n } from 'vue-i18n'
+import { ref } from 'vue'
+import { DATE_TIME_FORMAT } from '~/utils/constants'
 // import { getBanks } from '~/services/banking.js'
-import { useFetchData } from "~/composables/useFetch";
-import Filter from "~/assets/icons/filter.svg";
-import Hashtag from "~/assets/icons/hashtag.svg";
-import { getBankingType } from "~/services/transactionBalance";
+import { useFetchData } from '~/composables/useFetch'
+import Filter from '~/assets/icons/filter.svg'
+import { getBankingType } from '~/services/transactionBalance'
 
-const { t } = useI18n();
-const isFilterOpened = ref<boolean>(false);
+const { t } = useI18n()
+const isFilterOpened = ref<boolean>(false)
 
 const columns = [
   {
-    title: t("documentNumber"),
-    dataIndex: "doc_number",
-    key: "doc_number",
+    title: t('documentNumber'),
+    dataIndex: 'doc_number',
+    key: 'doc_number',
   },
   {
-    title: t("Transaction date"),
-    dataIndex: "date",
-    key: "date",
+    title: t('Transaction date'),
+    dataIndex: 'date',
+    key: 'date',
   },
   {
-    title: t("type"),
-    dataIndex: "type",
-    key: "type",
+    title: t('type'),
+    dataIndex: 'type',
+    key: 'type',
   },
   {
-    title: t("МФО"),
-    dataIndex: "organization_account",
-    key: "organization_account.bank.mfo",
+    title: t('МФО'),
+    dataIndex: 'organization_account',
+    key: 'organization_account.bank.mfo',
   },
   {
-    title: t("checkingAccount"),
-    dataIndex: "organization_account",
-    key: "organization_account.account",
+    title: t('checkingAccount'),
+    dataIndex: 'organization_account',
+    key: 'organization_account.account',
   },
   {
-    title: t("summa"),
-    dataIndex: "summa",
-    key: "summa",
+    title: t('summa'),
+    dataIndex: 'summa',
+    key: 'summa',
   },
   {
-    title: t("status"),
-    dataIndex: "status",
-    key: "status",
+    title: t('status'),
+    dataIndex: 'status',
+    key: 'status',
   },
-];
-const lastPage = ref(1);
+]
+const lastPage = ref(1)
 const params = reactive({
   page: 1,
-});
+})
 const bankFilter = ref<any>({
-  note: "",
-  partner_organization_id: "",
+  note: '',
+  partner_organization_id: '',
   from_summa: null,
   to_summa: null,
-  from_date: "",
-  to_date: "",
-  doc_number: "",
-  product_name: "",
-});
+  from_date: '',
+  to_date: '',
+  doc_number: '',
+  product_name: '',
+})
 const {
   data: banks,
   loading: bankingLoading,
@@ -71,21 +70,21 @@ const {
   async () => {
     const {
       data: { data, last_page },
-    } = await getBankingType({ ...params, ...bankFilter.value });
-    lastPage.value = last_page;
-    return { data };
+    } = await getBankingType({ ...params, ...bankFilter.value })
+    lastPage.value = last_page
+    return { data }
   },
-  { immediately: true }
-);
+  { immediately: true },
+)
 
 const onChangeFilter = (filter: any) => {
-  bankFilter.value = { ...filter };
-  fetch();
-};
+  bankFilter.value = { ...filter }
+  fetch()
+}
 
 const onChangePage = () => {
-  fetch();
-};
+  fetch()
+}
 </script>
 
 <template>
@@ -97,22 +96,20 @@ const onChangePage = () => {
       <div class="flex justify-between">
         <div class="flex gap-2">
           <a-button
-            type="primary"
-            ghost
-            class="flex justify-center items-center gap-2"
+            class="flex justify-center text-primary border-primary items-center gap-2"
             @click="isFilterOpened = !isFilterOpened"
           >
             <Filter />
             {{ t("filter") }}
           </a-button>
-<!--          <a-button-->
-<!--            type="primary"-->
-<!--            ghost-->
-<!--            class="flex justify-center items-center gap-2"-->
-<!--          >-->
-<!--            <Hashtag />-->
-<!--            {{ t("exportToExel") }}-->
-<!--          </a-button>-->
+          <!--          <a-button -->
+          <!--            type="primary" -->
+          <!--            ghost -->
+          <!--            class="flex justify-center items-center gap-2" -->
+          <!--          > -->
+          <!--            <Hashtag /> -->
+          <!--            {{ t("exportToExel") }} -->
+          <!--          </a-button> -->
         </div>
 
         <!--        <div class="flex items-center gap-2"> -->
@@ -185,11 +182,11 @@ const onChangePage = () => {
                 <a-tag v-show="record.status === 33" color="red" class="red">
                   {{ t("operationStatus.33") }}
                 </a-tag>
-                  <a-tag
-                      v-show="record.status === 22"
-                      color="red"
-                      class="red"
-                  >
+                <a-tag
+                  v-show="record.status === 22"
+                  color="red"
+                  class="red"
+                >
                   {{ t("operationStatus.2") }}
                 </a-tag>
                 <a-tag v-show="record.status === 7" color="green" class="green">

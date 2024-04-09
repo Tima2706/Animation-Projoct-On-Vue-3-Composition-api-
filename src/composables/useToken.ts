@@ -1,6 +1,6 @@
 import type { CookieSetOptions } from 'universal-cookie'
 import Cookies from 'universal-cookie'
-import {IS_DEV, IDENTITY_SERVICE, LOGOUT_URL} from '~/utils/config'
+import { IDENTITY_SERVICE, IS_DEV } from '~/utils/config'
 export function useToken() {
   const cookies = new Cookies(null)
   const TOKEN_KEY = 'act'
@@ -25,7 +25,6 @@ export function useToken() {
     window.location.href = `${IDENTITY_SERVICE}`
   }
 
-
   const getToken = (): string | null => {
     return cookies.get(TOKEN_KEY) || null
   }
@@ -38,15 +37,13 @@ export function useToken() {
       options.domain = '.dthub.uz'
 
     cookies.remove(TOKEN_KEY, options)
-
   }
 
   const handleLogout = () => {
-    if (!IS_DEV) window.location.href = LOGOUT_URL
-    else window.location.href = `${IDENTITY_SERVICE}`
+    if (!IS_DEV)
+      window.location.href = 'forbidden'
+    // else window.location.href = `${IDENTITY_SERVICE}`
   }
-
-
 
   return {
     handleLogout,

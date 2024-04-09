@@ -1,7 +1,23 @@
 RKP: RKP
 reset: Tozalash
+tariffProfit: Tarif buyicha daromad
+detailedReport: To'liq hisobot
+expense: Xarajat
 erroneousTransactions: Xato operatsiyalar
 withdraw: Chiqarish
+myCards: Mening kartalarim
+cardNumber: Karta raqami
+cardExpiredDate: Amal qilish muddati
+cardName: Karta nomi
+writeAmount: Summani kiriting
+personalAccount: Shaxsiy hisob
+topUpYourAccount: Hisobingizni to'ldiring
+linkCard: Balansni to'lash uchun kartangizni bog'lang
+enterConfirmationCode: Tasdiqlash kodi kiriting
+enterCode: Kodni kiriting
+aVerificationCodeHasBeenSent: Tasdiqlash kodi yuborildi
+сonfirm: Tasdiqlash
+addCard: Karta qo'shish
 blockedDeposit: Bloklangan
 increase: Narxning ushish tartibida
 decrease: Narxning kamayish tartibida
