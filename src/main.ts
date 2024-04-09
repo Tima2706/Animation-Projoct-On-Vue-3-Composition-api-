@@ -9,7 +9,7 @@ import Pinia from './modules/pinia'
 import PWA from './modules/pwa'
 import VeeValidate from './modules/vee-validate'
 import router from '~/router'
-import { $http } from '~/services/baseHttp'
+import { $individual } from '~/services/baseHttp'
 import { useOrganizationStore } from '~/stores/organization'
 import { useToken } from '~/composables/useToken'
 import { IS_DEV } from '~/utils/config'
@@ -18,9 +18,9 @@ const { removeToken, getToken, handleLogout } = useToken()
 
 const app = createApp(App)
 const token = getToken()
-if (!token) {  handleLogout() }
+if (!token) { handleLogout() }
 else {
-  $http.interceptors.response.use(
+  $individual.interceptors.response.use(
     (response) => {
       return response
     },

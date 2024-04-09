@@ -42,7 +42,7 @@ export function useToken() {
   const handleLogout = () => {
     if (!IS_DEV)
       window.location.href = 'forbidden'
-    // else window.location.href = `${IDENTITY_SERVICE}`
+    else window.location.href = `${IDENTITY_SERVICE}`
   }
 
   return {
