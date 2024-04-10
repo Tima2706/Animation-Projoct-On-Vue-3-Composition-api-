@@ -44,7 +44,7 @@ button?.addEventListener('click', onClickProfileIcon)
     :trigger="['click']"
     @close="onClickProfileIcon"
   >
-    <div v-if="!organization.organization.id" class="flex flex-col justify-between h-full">
+    <div v-if="!organization?.organization" class="flex flex-col justify-between h-full">
       <div class="flex flex-col gap-1">
         <div class="flex items-center justify-between">
           <div class="text-[20px] text-[1#48545D] font-medium">
@@ -58,14 +58,14 @@ button?.addEventListener('click', onClickProfileIcon)
           <VImg
             class="object-contain"
             alt="organizationName"
-            :src="`${imgURL}${organization?.logo_url}`"
+            :src="`${imgURL}${organization?.user.logo_url}`"
           />
         </div>
         <p class="text-[#A2A5B9] mt-6">
           {{ $t("companyName") }}
         </p>
         <p class="font-medium font-medium text-[#0096B2]">
-          {{ organization?.name }}
+          {{ organization?.user.name }}
         </p>
 
         <div class="bg-[#DFE2E9] w-full h-[0.5px] my-2" />
@@ -73,31 +73,31 @@ button?.addEventListener('click', onClickProfileIcon)
           {{ $t("tin") }}
         </p>
         <p class="font-medium text-[#0096B2]">
-          {{ organization?.tin ? organization?.tin : "-" }}
+          {{ organization?.user.tin ? organization?.user.tin : "-" }}
         </p>
-        <!--        <p class="text-[#A2A5B9]"> -->
-        <!--          {{ $t("fullName") }} -->
-        <!--        </p> -->
+        <p class="text-[#A2A5B9]">
+          {{ $t("fullName") }}
+        </p>
 
-        <!--        <p class="font-medium text-[#48545D] uppercase"> -->
-        <!--          &lt;!&ndash;          {{ userData?.first_name }} {{ userData?.middle_name }} {{ userData?.last_name }} &ndash;&gt; -->
-        <!--        </p> -->
+        <p class="font-medium text-[#0096B2] uppercase">
+          {{ organization?.user?.first_name }} {{ organization?.user?.middle_name }} {{ organization?.user?.last_name }}
+        </p>
         <p class="text-[#A2A5B9]">
           {{ $t("address") }}
         </p>
 
         <p class="font-medium text-[#0096B2] ">
-          {{ organization?.address }}
+          {{ organization?.user.address }}
         </p>
         <p class="mt-2 text-[#A2A5B9]">
           {{
             $t("numberPhone")
           }}
         </p>
-        <p v-for="(item, index) in organization?.phone_numbers" :key="index" class="font-medium text-[#0096B2]">
-          {{ item?.number ? item?.number : "-" }}
+        <p v-for="(item, index) in organization?.user?.phone_numbers" :key="index" class="font-medium text-[#0096B2]">
+          +{{ item?.number ? item?.number : "-" }}
         </p>
-        <div v-if="organization?.phone_numbers.length === 0">
+        <div v-if="organization?.user.phone_numbers.length === 0">
           <p class="font-medium text-[#0096B2]">
             -
           </p>
@@ -106,35 +106,35 @@ button?.addEventListener('click', onClickProfileIcon)
           {{ $t("email") }}
         </p>
         <p class="font-medium text-[#0096B2]">
-          {{ organization?.email ? organization?.email : "-" }}
+          {{ organization?.user.email ? organization?.user.email : "-" }}
         </p>
         <p class="mt-2 text-[#A2A5B9]">
           {{ $t("website") }}
         </p>
         <p class="font-medium text-[#0096B2]">
-          {{ organization?.website ? organization?.website : "-" }}
+          {{ organization?.user.website ? organization?.user.website : "-" }}
         </p>
 
-        <ul v-for="(item, index) in organization?.account_numbers" :key="index" class="font-medium text-[#0096B2] ">
-          <li class="py-1">
-            <p class="text-[#A2A5B9]">
-              {{ $t("bankName") }}
-            </p>
-            {{ item?.bank_name }}
-          </li>
-          <li class="py-1">
-            <p class="text-[#A2A5B9]">
-              {{ $t("mfo") }}
-            </p>
-            {{ item?.mfo }}
-          </li>
-          <li class="py-1">
-            <p class="text-[#A2A5B9]">
-              {{ $t("bankName") }}
-            </p>
-            {{ item?.account_number }}
-          </li>
-        </ul>
+        <!--        <ul v-for="(item, index) in organization?.user.account_numbers" :key="index" class="font-medium text-[#0096B2] "> -->
+        <!--          <li class="py-1"> -->
+        <!--            <p class="text-[#A2A5B9]"> -->
+        <!--              {{ $t("bankName") }} -->
+        <!--            </p> -->
+        <!--            {{ item?.bank_name }} -->
+        <!--          </li> -->
+        <!--          <li class="py-1"> -->
+        <!--            <p class="text-[#A2A5B9]"> -->
+        <!--              {{ $t("mfo") }} -->
+        <!--            </p> -->
+        <!--            {{ item?.mfo }} -->
+        <!--          </li> -->
+        <!--          <li class="py-1"> -->
+        <!--            <p class="text-[#A2A5B9]"> -->
+        <!--              {{ $t("bankName") }} -->
+        <!--            </p> -->
+        <!--            {{ item?.account_number }} -->
+        <!--          </li> -->
+        <!--        </ul> -->
         <div class="bg-[#DFE2E9] w-full h-[0.5px] my-2" />
       </div>
       <div

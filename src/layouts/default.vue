@@ -139,7 +139,7 @@ const navigationForUser = computed<{
               {{ t("RKP") }}
             </p>
           </div>
-          <AppNavigation v-if="!organization.organization.organization.id" :items="navigationForUser" />
+          <AppNavigation v-if="!organization?.organization?.organization" :items="navigationForUser" />
           <AppNavigation v-else :items="navigations" />
         </div>
       </a-layout-sider>
