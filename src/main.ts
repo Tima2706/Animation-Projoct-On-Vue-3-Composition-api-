@@ -10,7 +10,7 @@ import VeeValidate from './modules/vee-validate'
 import router from '~/router'
 import { useOrganizationStore } from '~/stores/organization'
 import { useToken } from '~/composables/useToken'
-import { IS_DEV } from '~/utils/config'
+import { IDENTITY_SERVICE, IS_DEV } from '~/utils/config'
 
 const app = createApp(App)
 
@@ -27,7 +27,8 @@ const { removeToken, getToken } = useToken()
 const token = getToken()
 
 function checkToken() {
-  // if (!token && !IS_DEV) window.location.href = VITE_IDENTITY_SERVICE;
+  if (!token && !IS_DEV)
+    window.location.href = IDENTITY_SERVICE
 }
 
 checkToken();
@@ -39,7 +40,7 @@ checkToken();
   catch (err: any) {
     if (!IS_DEV)
       removeToken()
-      // window.location.href = VITE_IDENTITY_SERVICE;
+    window.location.href = IDENTITY_SERVICE
   }
   finally {
     app.mount('#app')
