@@ -8,7 +8,7 @@ import { DATE_TIME_FORMAT } from '~/utils/constants'
 import FilterIcon from '~/assets/icons/filter.svg'
 
 const operationsLoading = ref(false)
-const { t } = useI18n()
+const { t, locale } = useI18n()
 const CardContainerRef = ref(null)
 const balance = ref()
 const operation = ref()
@@ -63,7 +63,7 @@ const getBalance = async () => {
 
 getBalance()
 
-const columns = [
+const columns = computed(() => [
   {
     title: t('id'),
     dataIndex: 'id',
@@ -80,17 +80,22 @@ const columns = [
     key: 'doc_number',
   },
   {
+    title: t('status'),
+    dataIndex: 'status_list',
+    key: 'status_list',
+  },
+  {
     title: t('NOTES'),
     dataIndex: 'note',
     key: 'note',
   },
 
   {
-    title: t('summa'),
+    title: t('total'),
     dataIndex: 'summa',
     key: 'summa',
   },
-]
+])
 
 const openModal = () => {
   CardContainerRef.value.openBalanceModal()
@@ -161,7 +166,11 @@ const onChangePage = () => {
           {{ dayjs(record.date).format(DATE_TIME_FORMAT) }}
         </template>
         <template v-if="column.key === 'summa'">
-          {{ record?.summa }}
+          {{ record?.summa }} {{ $t('sum') }}
+        </template>
+        <template v-if="column.key === 'status_list'">
+          <!--          {{ record?.status_list.name }} -->
+          {{ record?.status_list[`name_${locale}`] }}
         </template>
       </template>
     </a-table>

@@ -2,8 +2,8 @@
 import { A11y, Navigation, Pagination, Scrollbar } from 'swiper/modules'
 import { Swiper, SwiperSlide } from 'swiper/vue'
 import { notification } from 'ant-design-vue'
-import { Form } from 'vee-validate'
-import { ref } from 'vue'
+import { ErrorMessage, Form } from 'vee-validate'
+import { onMounted, ref } from 'vue'
 import { isAxiosError } from 'axios'
 import { formatMoney } from '~/utils/pureFunction'
 import IconWallet from '~/assets/icons/empty-wallet-add.svg'
@@ -24,13 +24,31 @@ import { DEFAULT_ERROR_MESSAGE } from '~/utils/constants'
 import type { CardDto } from '~/services/dto'
 import MaskInput from '~/components/base/MaskInput.vue'
 import VText from '~/components/base/VText.vue'
+import Subtract from '~/assets/icons/Subtract.svg'
 
 defineProps<Props>()
+
 const emits = defineEmits(['balanced'])
 const { t } = useI18n()
 const confirmation = ref(false)
 const modules = ref([Navigation, Pagination, Scrollbar, A11y])
 const isAddCard = ref(false)
+const remainingTime = ref('01:00')
+const timer = ref(null)
+const startTimer = () => {
+  // Update remaining time every second
+  timer.value = setInterval(() => {
+    const [minutes, seconds] = remainingTime.value.split(':').map(Number)
+    const totalSeconds = minutes * 60 + seconds - 1
+    if (totalSeconds < 0) {
+      clearInterval(timer.value)
+      return
+    }
+    const newMinutes = Math.floor(totalSeconds / 60)
+    const newSeconds = totalSeconds % 60
+    remainingTime.value = `${newMinutes.toString().padStart(2, '0')}:${newSeconds.toString().padStart(2, '0')}`
+  }, 1000) // Update every second
+}
 
 interface Props {
   balance: any
@@ -57,6 +75,7 @@ const form = ref<CardDto>({
   name: '',
   card_number: '',
   data_expired: '',
+  color: '',
 })
 const cardInfo = ref<any>({
   type: 4,
@@ -75,6 +94,7 @@ const rePayIt = async () => {
       message: t('PaymentSuccessful'),
     })
     balanceCardModal.value = false
+
     emits('balanced')
   }
   catch (e: any) {
@@ -113,7 +133,22 @@ const paySubmit = async (value) => {
     })
   }
 }
-
+const colorList = [
+  { color: '#3A4B5F' },
+  { color: '#69AF72' },
+  { color: '#0096B2' },
+  { color: '#2198F4' },
+  { color: '#FB922E' },
+  { color: 'linear-gradient(100.91deg, #FFA52E 1.72%, #EB4E2C 99.3%)' },
+  { color: 'linear-gradient(100.91deg, #34C1FD 1.72%, #14E5BB 99.3%)' },
+  { color: 'linear-gradient(100.91deg, #FE6CAC 1.72%, #7A67FB 99.3%)' },
+]
+const selectColor = (color: string) => {
+  form.value.color = color
+}
+const selectedScale = (item) => {
+  return form.value.color === item.color ? { transform: 'scale(1.3)' } : {}
+}
 const showTransactionBalance: TransactionBalance2 = reactive({
   balance: getBalanceShowCase('balance'),
   available: getBalanceShowCase('available'),
@@ -161,6 +196,24 @@ watch(showTransactionBalance, () => {
   }
 })
 
+const validateExpriedDate = () => {
+  const [month, year] = form.value.data_expired.split('/')
+  const currentYear = new Date().getFullYear() % 100
+  const currentMonth = new Date().getMonth() + 1
+  if (year.length === 2 && parseInt(year) >= currentYear) {
+    if (parseInt(year) === currentYear && parseInt(month) < currentMonth)
+      console.log('Invalid date')
+
+    else
+      console.log('Valid date')
+  }
+}
+function formatCardNumber(cardNumber: string) {
+  if (typeof cardNumber !== 'string')
+    return cardNumber
+
+  return `${cardNumber.slice(0, 4)} ${cardNumber.slice(4, 8)} ${cardNumber.slice(8, 12)} ${cardNumber.slice(12)}`
+}
 function getBalanceShowCase(str: string) {
   const balanceShowCase = localStorage.getItem(str)
   return !balanceShowCase
@@ -173,6 +226,22 @@ function handleHideAmount(str: string) {
 
 function cancelBalanceModal() {
   cardsModalActiveIndex.value = 0
+  form.value = {
+    name: '',
+    card_number: '',
+    data_expired: '',
+    color: '',
+  }
+  cardInfo.value = {
+    type: 4,
+    card_number: '',
+    amount: '',
+    date_expire: '',
+  }
+  isConfimationData.value = null
+  secretNumber.value = 0
+  remainingTime.value = '01:00'
+  clearInterval(this.timer)
 }
 
 const swiperChange = (swiper: any) => {
@@ -198,9 +267,19 @@ const inputPhoneMaskOption = {
   mask: Number,
   thousandsSeparator: ' ',
 }
+
 const isOpenCard = () => {
   isAddCard.value = true
 }
+
+onMounted(() => {
+  isAddCard.value = false
+  watch(isConfimationData, () => {
+    if (isConfimationData.value !== null)
+      startTimer()
+  })
+})
+
 defineExpose({
   openBalanceModal,
 })
@@ -326,7 +405,7 @@ defineExpose({
                 :key="card.card_number"
                 class="swiperSlide swiper-slide"
               >
-                <CreditCard :key="card.card_number" :card="card" />
+                <CreditCard :key="card.card_number" :card="card" :no-sitting="true" @updatedCard="getCards" />
               </SwiperSlide>
             </Swiper>
           </div>
@@ -375,6 +454,23 @@ defineExpose({
                 {{ t('addCard') }}
               </h2>
             </div>
+            <div :style="{ background: form.color }" class="card-custom mx-auto my-10">
+              <div class="name_cardHolder">
+                <p>{{ form.name ? form.name : 'example' }}</p>
+              </div>
+              <div class="card_number">
+                <p>{{ form.card_number ? formatCardNumber(form.card_number.toString()) : '**** **** **** ****' }}</p>
+              </div>
+              <div class="flex justify-between items-center">
+                <p>{{ form.data_expired ? `${form.data_expired.slice(0, 2)}/${form.data_expired.slice(2, 4)}` : '00/00' }}</p>
+                <Subtract />
+              </div>
+            </div>
+            <div class="py-5 flex justify-between">
+              <div v-for="(item, index) in colorList" :key="index">
+                <p class="roller cursor-pointer" :style="{ background: item.color, ...selectedScale(item) }" @click="selectColor(item.color, item)" />
+              </div>
+            </div>
             <div>
               <p class="formLabel">
                 {{ t('cardNumber') }}
@@ -396,35 +492,32 @@ defineExpose({
                   <ErrorMessage name="card_number" />
                 </div>
               </Field>
-              <div class="grid grid-cols-2">
+              <div>
                 <p class="formLabel">
                   {{ t('cardExpiredDate') }}
                 </p>
+                <Field
+                  v-slot="{ errors }"
+                  name="card_expired_month"
+                  :model-value="form.data_expired"
+                >
+                  <MaskInput
+                    v-model="form.data_expired"
+                    placeholder="MM/YY"
+                    :options="{ mask: '00/00', lazy: true }"
+                    :class="{ 'has-error': errors.length }"
+                    style=" text-align: center"
+                    @input="validateExpriedDate"
+                  />
+                </Field>
+                <div class="helper-message">
+                  <ErrorMessage name="card_expired_month" />
+                </div>
+              </div>
+              <div>
                 <p class="formLabel">
                   {{ t('cardName') }}
                 </p>
-                <div>
-                  <div class="flex items-center justify-start gap-3">
-                    <Field
-                      v-slot="{ errors }"
-                      name="card_expired_month"
-                      :model-value="form.data_expired"
-                      rules="required|length:4"
-                    >
-                      <MaskInput
-                        v-model="form.data_expired"
-                        placeholder="MM|YY"
-                        :options="{ mask: '00/00', lazy: true }"
-                        :class="{ 'has-error': errors.length }"
-                        style="width: 80px; text-align: center"
-                        @input="validateExpriedDate"
-                      />
-                    </Field>
-                    <div class="helper-message">
-                      <ErrorMessage name="card_expired_month" />
-                    </div>
-                  </div>
-                </div>
                 <div>
                   <Field
                     v-slot="{ errors }"
@@ -445,10 +538,7 @@ defineExpose({
                 </div>
               </div>
 
-              <div class="flex justify-between gap-14">
-                <AButton class="text-gray-300" @click="() => { isAddCard = false }">
-                  {{ t('back') }}
-                </AButton>
+              <div class="text-right">
                 <AButton html-type="submit" type="primary" block>
                   {{ t('save') }}
                 </AButton>
@@ -456,7 +546,7 @@ defineExpose({
             </div>
           </Form>
         </div>
-        <div v-else ref="confirmation">
+        <div v-else>
           <p class="text-center text-2xl py-5 text-[#48545D] font-bold">
             {{ $t('enterConfirmationCode') }}
           </p>
@@ -464,14 +554,13 @@ defineExpose({
             {{ t('aVerificationCodeHasBeenSent') }}:
             <VText>{{ isConfimationData?.phone_masked }}</VText>
           </p>
-          <p class="text-[#48545D] font-medium">
+          <p class="text-[#48545D] py-2 font-medium">
             {{ t('enterCode') }}
           </p>
           <Field
             v-slot="{ errors }"
             name="card_expired_month"
             :model-value="secretNumber"
-            rules="required|length:6"
           >
             <MaskInput
               v-model="secretNumber"
@@ -485,9 +574,20 @@ defineExpose({
           <div class="helper-message">
             <ErrorMessage name="card_expired_month" />
           </div>
-          <a-button class="w-full" type="primary" @click="rePayIt">
-            {{ $t('сonfirm') }}
-          </a-button>
+          <p class="time pb-3">
+            {{ t('timeLeft') }}: <span class="font-bold"> {{ remainingTime }}</span>
+          </p>
+          <p v-if="remainingTime === '00:00'" class="text-danger pt-1 pb-3">
+            {{ t('resendCode') }}
+          </p>
+          <div class="flex justify-between gap-14">
+            <a-button class="w-full bg-[#9eabbe] text-[#fff]" @click="isConfimationData = null">
+              {{ $t('back') }}
+            </a-button>
+            <a-button class="w-full" type="primary" @click="rePayIt">
+              {{ $t('сonfirm') }}
+            </a-button>
+          </div>
         </div>
       </Form>
       <template #footer>
@@ -505,8 +605,9 @@ defineExpose({
               <ErrorMessage name="topBalance" />
             </Field>
           </div>
+
           <a-button
-            v-if="isAddCard === false && isConfimationData === null "
+            v-if=" isConfimationData === null "
             key="submit"
             class="py-5 buttonNext"
             type="primary"
@@ -591,5 +692,47 @@ defineExpose({
   line-height: 16.59px;
   text-align: left;
   color: #48545d;
+}
+.card-custom {
+  padding: 17px 16px;
+  border-radius: 12px;
+  background-color: #3a4b5f;
+  color: #fff;
+  max-width: 257px;
+  box-shadow: 0px 1px 2px 0px #0d1c2b1a;
+
+  .name_cardHolder {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    p {
+      font-size: 13px;
+      font-weight: 400;
+      line-height: 15px;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+    }
+  }
+
+  .card_number {
+    margin-bottom: 26px;
+    margin-top: 14px;
+    p {
+      font-size: 12px;
+      font-weight: 300;
+      line-height: 14px;
+    }
+  }
+}
+.roller{
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: #3A4B5F;
+  box-shadow: 0px 1px 2px 0px #0D1C2B1A;
+}
+.active {
+  border: 2px solid red;
 }
 </style>

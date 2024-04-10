@@ -16,7 +16,9 @@ linkCard: Balansni to'lash uchun kartangizni bog'lang
 enterConfirmationCode: Tasdiqlash kodi kiriting
 enterCode: Kodni kiriting
 aVerificationCodeHasBeenSent: Tasdiqlash kodi yuborildi
+resendCode: Kodni qayta yuborish
 сonfirm: Tasdiqlash
+timeLeft: Qolgan vaqt
 addCard: Karta qo'shish
 blockedDeposit: Bloklangan
 increase: Narxning ushish tartibida

@@ -14,7 +14,9 @@ enterConfirmationCode: Enter the confirmation code
 enterCode: Enter the code
 aVerificationCodeHasBeenSent: A verification code has been sent to your phone number
 сonfirm: Confirm
+timeLeft: Time left
 writeAmount: Write amount
+resendCode: Return and resend the code
 tariffProfit: Tariff profit
 erroneousTransactions: Erroneous transactions
 withdraw: Withdraw

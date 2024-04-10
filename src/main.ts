@@ -5,7 +5,7 @@ import './styles/main.scss'
 import DatePicker from './modules/datepicker'
 import I18n from './modules/i18n'
 import Pinia from './modules/pinia'
-import PWA from './modules/pwa'
+// import PWA from './modules/pwa'
 import VeeValidate from './modules/vee-validate'
 import router from '~/router'
 import { useOrganizationStore } from '~/stores/organization'
@@ -18,7 +18,7 @@ app.use(VeeValidate)
 app.use(Pinia)
 app.use(I18n)
 app.use(router)
-app.use(PWA)
+// app.use(PWA)
 app.use(DatePicker)
 
 const { getOrganization } = useOrganizationStore()

@@ -8,7 +8,6 @@ import Layouts from 'vite-plugin-vue-layouts'
 import Components from 'unplugin-vue-components/vite'
 import AutoImport from 'unplugin-auto-import/vite'
 import Markdown from 'vite-plugin-vue-markdown'
-import { VitePWA } from 'vite-plugin-pwa'
 import VueI18n from '@intlify/unplugin-vue-i18n/vite'
 // import Inspect from 'vite-plugin-inspect'
 // import Inspector from 'vite-plugin-vue-inspector'
@@ -108,33 +107,33 @@ export default defineConfig({
     }),
 
     // https://github.com/antfu/vite-plugin-pwa
-    VitePWA({
-      registerType: 'autoUpdate',
-      includeAssets: ['favicon.svg', 'logo.svg'],
-      manifest: {
-        name: 'DT',
-        short_name: 'DT',
-        theme_color: '#ffffff',
-        icons: [
-          {
-            src: '/logo.svg',
-            sizes: '192x192',
-            type: 'image/svg',
-          },
-          {
-            src: '/logo.svg',
-            sizes: '512x512',
-            type: 'image/svg',
-          },
-          {
-            src: '/logo.svg',
-            sizes: '512x512',
-            type: 'image/svg',
-            purpose: 'any maskable',
-          },
-        ],
-      },
-    }),
+    // VitePWA({
+    //   registerType: 'autoUpdate',
+    //   includeAssets: ['favicon.svg', 'logo.svg'],
+    //   manifest: {
+    //     name: 'DT',
+    //     short_name: 'DT',
+    //     theme_color: '#ffffff',
+    //     icons: [
+    //       {
+    //         src: '/logo.svg',
+    //         sizes: '192x192',
+    //         type: 'image/svg',
+    //       },
+    //       {
+    //         src: '/logo.svg',
+    //         sizes: '512x512',
+    //         type: 'image/svg',
+    //       },
+    //       {
+    //         src: '/logo.svg',
+    //         sizes: '512x512',
+    //         type: 'image/svg',
+    //         purpose: 'any maskable',
+    //       },
+    //     ],
+    //   },
+    // }),
     // https://www.npmjs.com/package/vite-svg-loader
     svgLoader(),
 

@@ -8,6 +8,7 @@ import { deletePersonalUserCard } from '~/services/individual/user-balance'
 
 defineProps<{
   card: CardModel
+  noSitting: boolean
 }>()
 const emit = defineEmits(['openCardSettings, updatedCard, updatedCard'])
 
@@ -50,16 +51,15 @@ function formatCardNumber(cardNumber: string) {
         </a>
         <template #overlay>
           <a-menu>
-            <a-menu-item key="0">
-              <span @click="openCardSettings(card)">{{ $t('edit') }}</span>
+            <a-menu-item key="0" @click="openCardSettings(card)">
+              <span v-if="!noSitting">{{ $t('edit') }}</span>
             </a-menu-item>
-            <a-menu-item key="1">
-              <span @click="handleDelete(card.id)">{{ $t('delete') }}</span>
+            <a-menu-item key="1" @click="handleDelete(card.id)">
+              <span>{{ $t('delete') }}</span>
             </a-menu-item>
           </a-menu>
         </template>
       </a-dropdown>
-      <!--      @click="openCardSettings(card)" -->
     </div>
     <div class="card_number">
       <p>{{ formatCardNumber(card.card_number.toString()) }}</p>

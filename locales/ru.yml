@@ -17,7 +17,9 @@ rolesAndAccess: Роли и доступы к модулям
 increase: В порядке возрастания цены
 cardName: Название карты
 writeAmount: Напишите сумму
+resendCode: Вернитесь и повторно отправьте код
 сonfirm: Подтвердить
+timeLeft: Осталось времени
 topUpYourAccount: Пополните счет
 linkCard: Вам необходимо привязать карту, чтобы пополнить баланс.
 enterConfirmationCode: Введите код подтверждения
