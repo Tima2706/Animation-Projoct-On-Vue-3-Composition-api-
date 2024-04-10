@@ -100,7 +100,10 @@ const columns = computed(() => [
 const openModal = () => {
   CardContainerRef.value.openBalanceModal()
 }
-
+const isUpdated = () => {
+  getBalance()
+  getOperation()
+}
 // const { data: any, fetch } = useFetchData<any[]>(async () => {
 //   const { data: { data, last_page, loading: operationsLoading } } = await getOperationList({ ...params, ...bankFilter.value })
 //   lastPage.value = last_page
@@ -138,7 +141,7 @@ const onChangePage = () => {
         </div>
       </div>
     </a-card>
-    <CardsContainer ref="CardContainerRef" :loading="false" :balance="balance" @balanced="getBalance" />
+    <CardsContainer ref="CardContainerRef" :loading="false" :balance="balance" @balanced="isUpdated" />
     <ACard>
       <div class="flex items-center justify-between">
         <VText weight="600" size="18">
