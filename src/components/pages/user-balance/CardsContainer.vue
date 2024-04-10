@@ -449,11 +449,7 @@ defineExpose({
             {{ t('addCard') }}
           </h2>
           <Form ref="FormRef" @submit="submit">
-            <div class="flex flex-col">
-              <h2 class="addCardTitle">
-                {{ t('addCard') }}
-              </h2>
-            </div>
+            <div class="flex flex-col" />
             <div :style="{ background: form.color }" class="card-custom mx-auto my-10">
               <div class="name_cardHolder">
                 <p>{{ form.name ? form.name : 'example' }}</p>
