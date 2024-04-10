@@ -74,7 +74,7 @@ function formatCardNumber(cardNumber: string) {
 <style lang="scss" scoped>
 .card {
   padding: 17px 16px;
-  border-radius: 12px;
+  border-radius: 8px;
   background-color: #3a4b5f;
   color: #fff;
   min-width: 257px;
