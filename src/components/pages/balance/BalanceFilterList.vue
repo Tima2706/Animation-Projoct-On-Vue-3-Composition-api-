@@ -39,6 +39,9 @@ const DEFAULT_FILTER_DATA = {
 }
 const reset = () => {
   filterData.value = { ...DEFAULT_FILTER_DATA }
+  emit('changed', {
+    ...filterData.value,
+  })
 }
 
 const filterData = ref<any>({ ...DEFAULT_FILTER_DATA })

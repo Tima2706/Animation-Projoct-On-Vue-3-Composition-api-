@@ -15,6 +15,7 @@ const operation = ref()
 const isFilterOpened = ref<boolean>(false)
 const params = reactive({
   page: 1,
+  per_page: 15,
 })
 const lastPage = ref(1)
 const bankFilter = ref<any>({
@@ -177,7 +178,7 @@ const onChangePage = () => {
         </template>
       </template>
     </a-table>
-    <a-pagination v-model:current="params.page" :total="10 * lastPage" show-less-items hide-on-single-page @change="onChangePage" />
+    <a-pagination v-model:current="params.page" :show-size-changer="false" :total="10 * lastPage" show-less-items hide-on-single-page @change="onChangePage" />
   </a-spin>
 </template>
 
