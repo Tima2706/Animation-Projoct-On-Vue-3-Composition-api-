@@ -137,7 +137,7 @@ const onChangePage = () => {
             {{ t('personalAccount') }}:
           </p>
           <p class="personal-account-number cursor-pointer" @click="openModal">
-            12345678901234567890
+            {{ balance?.account }}
           </p>
         </div>
       </div>
@@ -156,7 +156,7 @@ const onChangePage = () => {
         </div>
       </div>
       <transition name="transition-effect" mode="out-in">
-        <BalanceFilterList :filter="bankFilter" :is-filter-opened="isFilterOpened" @changed="onChangeFilter" />
+        <BalanceFilterList :filter="bankFilter" :is-close="true" :is-filter-opened="isFilterOpened" @changed="onChangeFilter" />
       </transition>
     </ACard>
   </div>

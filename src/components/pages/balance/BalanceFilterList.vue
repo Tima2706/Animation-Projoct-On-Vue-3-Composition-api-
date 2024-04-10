@@ -10,6 +10,9 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
+  isClose: {
+    type: Boolean,
+  },
   filter: {
     type: Object,
     default: () => ({}),
