@@ -36,7 +36,7 @@ const isAddCard = ref(false)
 const remainingTime = ref('01:00')
 const timer = ref(null)
 const startTimer = () => {
-  // Update remaining time every second
+  clearInterval(timer.value)
   timer.value = setInterval(() => {
     const [minutes, seconds] = remainingTime.value.split(':').map(Number)
     const totalSeconds = minutes * 60 + seconds - 1
@@ -241,7 +241,7 @@ function cancelBalanceModal() {
   isConfimationData.value = null
   secretNumber.value = 0
   remainingTime.value = '01:00'
-  clearInterval(this.timer)
+  clearInterval(timer.value)
 }
 
 const swiperChange = (swiper: any) => {
@@ -271,15 +271,20 @@ const inputPhoneMaskOption = {
 const isOpenCard = () => {
   isAddCard.value = true
 }
-
+watch(isConfimationData, (newVal, oldVal) => {
+  if (newVal !== null && oldVal === null)
+    clearInterval(timer.value)
+  startTimer()
+})
 onMounted(() => {
   isAddCard.value = false
-  watch(isConfimationData, () => {
-    if (isConfimationData.value !== null)
-      startTimer()
-  })
 })
-
+const clearDateThenOpen = () => {
+  isConfimationData.value = null
+  balanceModalVisible.value = true
+  clearInterval(timer.value)
+  startTimer()
+}
 defineExpose({
   openBalanceModal,
 })
@@ -571,13 +576,13 @@ defineExpose({
             <ErrorMessage name="card_expired_month" />
           </div>
           <p class="time pb-3">
-            {{ t('timeLeft') }}: <span class="font-bold"> {{ remainingTime }}</span>
+            {{ t('timeLeft') }}: <span class="font-bold"> {{ remainingTime }} </span>
           </p>
           <p v-if="remainingTime === '00:00'" class="text-danger pt-1 pb-3">
             {{ t('resendCode') }}
           </p>
           <div class="flex justify-between gap-14">
-            <a-button class="w-full bg-[#9eabbe] text-[#fff]" @click="isConfimationData = null">
+            <a-button class="w-full bg-[#9eabbe] text-[#fff]" @click="clearDateThenOpen">
               {{ $t('back') }}
             </a-button>
             <a-button class="w-full" type="primary" @click="rePayIt">
