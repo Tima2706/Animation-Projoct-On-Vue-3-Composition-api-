@@ -6,7 +6,7 @@ const organization = useOrganizationStore()
 
 const router = useRouter()
 onMounted(() => {
-  if (!organization.organization.organization.id)
+  if (!organization.organization.organization)
     router.replace({ name: 'user-balance' })
   else
     router.replace({ name: 'balance' })

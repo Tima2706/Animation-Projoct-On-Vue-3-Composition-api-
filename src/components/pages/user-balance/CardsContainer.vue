@@ -360,12 +360,14 @@ defineExpose({
           <EyeIcon v-else class="color_black cursor-pointer select-none" />
         </span>
       </div>
-      <div class="p-0 h-[79px] status__item abs_bg_primary" @click="balanceCardModal = true">
-        <div class="text-center">
-          <IconWallet class="mx-auto" />
-          <p>{{ t('replenishmentBalance') }}</p>
-        </div>
-      </div>
+      <AButton
+        type="primary"
+        class="h-full flex items-center flex-col gap-2 justify-center"
+        @click="balanceCardModal = true"
+      >
+        <IconWallet />
+        <p>{{ t('replenishmentBalance') }}</p>
+      </AButton>
     </div>
     <a-modal
       v-model:open="balanceCardModal"
