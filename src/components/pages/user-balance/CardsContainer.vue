@@ -57,7 +57,7 @@ interface Props {
   balance: any
   loading: boolean
 }
-const secretNumber = ref(0)
+const secretNumber = ref(null)
 interface TransactionBalance2 {
   balance: boolean
   available: boolean
@@ -286,6 +286,7 @@ const clearDateThenOpen = () => {
 }
 defineExpose({
   openBalanceModal,
+
 })
 </script>
 
@@ -582,7 +583,7 @@ defineExpose({
             <a-button class="w-full bg-[#9eabbe] text-[#fff]" @click="clearDateThenOpen">
               {{ $t('back') }}
             </a-button>
-            <a-button class="w-full" type="primary" @click="rePayIt">
+            <a-button class="w-full" type="primary" :disabled="remainingTime === '00:00' || secretNumber === 0" @click="rePayIt">
               {{ $t('сonfirm') }}
             </a-button>
           </div>
