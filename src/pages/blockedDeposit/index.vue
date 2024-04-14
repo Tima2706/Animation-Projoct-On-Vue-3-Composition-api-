@@ -2,9 +2,8 @@
 import dayjs from 'dayjs'
 import { useI18n } from 'vue-i18n'
 import { DATE_TIME_FORMAT } from '~/utils/constants'
-import { getBanks } from '~/services/banking.js'
 import { useFetchData } from '~/composables/useFetch'
-import {getBlockedBalance} from "~/services/transactionBalance";
+import { getBlockedBalance } from '~/services/transactionBalance'
 
 const { t } = useI18n()
 
@@ -65,8 +64,6 @@ const {
 const onChangePage = () => {
   fetch()
 }
-
-
 </script>
 
 <template>
@@ -86,7 +83,7 @@ const onChangePage = () => {
               {{ record.organization_account?.bank?.mfo }}
             </template>
             <template v-if="column.key === 'type'">
-              {{ record.type === 10 ? $t('withdraw'): $t('contractLocker') }}
+              {{ record.type === 10 ? $t('withdraw') : $t('contractLocker') }}
             </template>
 
             <template v-if="column.key === 'organization_account.account'">
@@ -103,6 +100,7 @@ const onChangePage = () => {
         <a-pagination
           v-model:current="params.page"
           :total="10 * lastPage"
+          :show-size-changer="false"
           show-less-items
           hide-on-single-page
           @change="onChangePage"

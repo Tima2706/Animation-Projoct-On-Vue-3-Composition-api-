@@ -170,6 +170,7 @@ const onChangePage = () => {
         <a-pagination
           v-model:current="params.page"
           :total="10 * lastPage"
+          :show-size-changer="false"
           show-less-items
           hide-on-single-page
           @change="onChangePage"

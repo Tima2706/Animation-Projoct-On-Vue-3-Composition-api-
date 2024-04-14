@@ -61,6 +61,7 @@ const navigations = computed<{
       access: true,
       to: { name: 'expenses' },
     },
+
     // {
     //   title: t('tariffProfit'),
     //   icon: Tariff,
@@ -87,12 +88,12 @@ const navigationForUser = computed<{
       access: true,
       to: { name: 'user-banking' },
     },
-    {
-      title: t('withdraw'),
-      icon: Withdraw,
-      access: true,
-      to: { name: 'user-withdraw' },
-    },
+    // {
+    //   title: t('withdraw'),
+    //   icon: Withdraw,
+    //   access: true,
+    //   to: { name: 'user-withdraw' },
+    // },
     {
       title: t('blockedDeposit'),
       icon: Blocked,

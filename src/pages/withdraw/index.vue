@@ -1,12 +1,11 @@
 <script lang="ts" setup>
 import dayjs from 'dayjs'
 import { useI18n } from 'vue-i18n'
-import type { FormInstance } from 'ant-design-vue'
+import { ref } from 'vue'
 import { DATE_TIME_FORMAT } from '~/utils/constants'
 import { useFetchData } from '~/composables/useFetch'
-import {getWithdrawal} from "~/services/transactionBalance";
-import WithdrawFilterList from "~/components/pages/WithdrawFilterList.vue";
-import {ref} from "vue";
+import { getWithdrawal } from '~/services/transactionBalance'
+import WithdrawFilterList from '~/components/pages/WithdrawFilterList.vue'
 
 const { t } = useI18n()
 
@@ -60,7 +59,6 @@ const columns = [
   },
 ]
 
-
 const {
   data: banks,
   loading: bankingLoading,
@@ -69,19 +67,16 @@ const {
   async () => {
     const {
       data: { data, last_page },
-    } = await getWithdrawal({...params, ...withdrawFilter})
+    } = await getWithdrawal({ ...params, ...withdrawFilter })
     lastPage.value = last_page
     return { data }
   },
   { immediately: true },
 )
 
-
 const onChangePage = () => {
   fetch()
 }
-
-
 </script>
 
 <template>
@@ -89,7 +84,7 @@ const onChangePage = () => {
     <VText weight="600" size="18" class="mb-4">
       {{ t("withdraw") }}
     </VText>
-    <WithdrawFilterList @changed="useFetchData"  />
+    <WithdrawFilterList @changed="useFetchData" />
     <div>
       <a-spin :spinning="bankingLoading">
         <a-table
@@ -124,11 +119,11 @@ const onChangePage = () => {
                 <a-tag v-show="record.status === 33" color="red" class="red">
                   {{ t("operationStatus.33") }}
                 </a-tag>
-                   <a-tag
-                       v-show="record.status === 22"
-                       color="red"
-                       class="red"
-                   >
+                <a-tag
+                  v-show="record.status === 22"
+                  color="red"
+                  class="red"
+                >
                   {{ t("operationStatus.22") }}
                 </a-tag>
                 <a-tag v-show="record.status === 7" color="green" class="green">
@@ -136,11 +131,11 @@ const onChangePage = () => {
                 </a-tag>
               </span>
             </template>
-
           </template>
         </a-table>
         <a-pagination
           v-model:current="params.page"
+          :show-size-changer="false"
           :total="10 * lastPage"
           show-less-items
           hide-on-single-page

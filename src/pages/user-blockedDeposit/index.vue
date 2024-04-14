@@ -2,9 +2,8 @@
 import dayjs from 'dayjs'
 import { useI18n } from 'vue-i18n'
 import { DATE_TIME_FORMAT } from '~/utils/constants'
-import { getBanks } from '~/services/banking.js'
 import { useFetchData } from '~/composables/useFetch'
-import {getBlockedBalance} from "~/services/transactionBalance";
+import { getUserBlockedBalance } from '~/services/user-blocked'
 
 const { t } = useI18n()
 
@@ -55,7 +54,7 @@ const {
   async () => {
     const {
       data: { data, last_page },
-    } = await getBlockedBalance(params)
+    } = await getUserBlockedBalance(params)
     lastPage.value = last_page
     return { data }
   },
@@ -65,8 +64,6 @@ const {
 const onChangePage = () => {
   fetch()
 }
-
-
 </script>
 
 <template>
@@ -86,7 +83,7 @@ const onChangePage = () => {
               {{ record.organization_account?.bank?.mfo }}
             </template>
             <template v-if="column.key === 'type'">
-              {{ record.type === 10 ? $t('withdraw'): $t('contractLocker') }}
+              {{ record.type === 10 ? $t('withdraw') : $t('contractLocker') }}
             </template>
 
             <template v-if="column.key === 'organization_account.account'">
@@ -102,6 +99,7 @@ const onChangePage = () => {
         </a-table>
         <a-pagination
           v-model:current="params.page"
+          :show-size-changer="false"
           :total="10 * lastPage"
           show-less-items
           hide-on-single-page

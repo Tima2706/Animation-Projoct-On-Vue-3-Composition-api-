@@ -72,6 +72,7 @@ const columns = computed(() => {
           />
           <a-pagination
             show-less-items
+            :show-size-changer="false"
             hide-on-single-page
           />
         </div>

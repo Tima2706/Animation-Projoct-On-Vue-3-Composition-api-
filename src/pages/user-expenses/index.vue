@@ -3,10 +3,9 @@ import dayjs from 'dayjs'
 import { useI18n } from 'vue-i18n'
 import { ref } from 'vue'
 import { DATE_TIME_FORMAT } from '~/utils/constants'
-// import { getBanks } from '~/services/banking.js'
 import { useFetchData } from '~/composables/useFetch'
 import Filter from '~/assets/icons/filter.svg'
-import { getExpenses } from '~/services/transactionBalance'
+import { getUserExpenses } from '~/services/user-expenses'
 
 const { t } = useI18n()
 const isFilterOpened = ref<boolean>(false)
@@ -67,7 +66,7 @@ const {
   async () => {
     const {
       data: { data, last_page },
-    } = await getExpenses({ ...params, ...bankFilter.value })
+    } = await getUserExpenses({ ...params, ...bankFilter.value })
     lastPage.value = last_page
     return { data }
   },
@@ -169,6 +168,7 @@ const onChangePage = () => {
         </a-table>
         <a-pagination
           v-model:current="params.page"
+          :show-size-changer="false"
           :total="10 * lastPage"
           show-less-items
           hide-on-single-page
