@@ -20,7 +20,6 @@ import {
   createPersonalUserCard,
   getPersonalUserCard,
 } from '~/services/individual/user-balance'
-import { DEFAULT_ERROR_MESSAGE } from '~/utils/constants'
 import type { CardDto } from '~/services/dto'
 import MaskInput from '~/components/base/MaskInput.vue'
 import VText from '~/components/base/VText.vue'
@@ -37,6 +36,10 @@ const remainingTime = ref('01:00')
 const timer = ref(null)
 const startTimer = () => {
   clearInterval(timer.value)
+  if (timer.value) {
+    clearInterval(timer.value)
+    timer.value = null
+  }
   timer.value = setInterval(() => {
     const [minutes, seconds] = remainingTime.value.split(':').map(Number)
     const totalSeconds = minutes * 60 + seconds - 1
@@ -94,19 +97,20 @@ const rePayIt = async () => {
       message: t('PaymentSuccessful'),
     })
     balanceCardModal.value = false
-
+    cancelBalanceModal()
+    clearTimer()
     emits('balanced')
   }
   catch (e: any) {
-    if (isAxiosError(e)) {
-      notification.error({
-        message: t('AnErrorOccurred'),
-      })
-      return
-    }
     notification.error({
-      message: e?.response?.data?.message || DEFAULT_ERROR_MESSAGE,
+      message: t('operationStatus[33]'),
     })
+  }
+}
+const clearTimer = () => {
+  if (timer.value) {
+    clearInterval(timer.value)
+    timer.value = null // Reset timer to null
   }
 }
 
@@ -122,14 +126,8 @@ const paySubmit = async (value) => {
     isConfimationData.value = data.data
   }
   catch (e: any) {
-    if (isAxiosError(e)) {
-      notification.error({
-        message: t('AnErrorOccurred'),
-      })
-      return
-    }
     notification.error({
-      message: e?.response?.data?.message || DEFAULT_ERROR_MESSAGE,
+      message: t('operationStatus[22]'),
     })
   }
 }
@@ -240,8 +238,8 @@ function cancelBalanceModal() {
   }
   isConfimationData.value = null
   secretNumber.value = 0
-  remainingTime.value = '01:00'
-  clearInterval(timer.value)
+  remainingTime.value = '00:59'
+  clearTimer()
 }
 
 const swiperChange = (swiper: any) => {
@@ -273,17 +271,18 @@ const isOpenCard = () => {
 }
 watch(isConfimationData, (newVal, oldVal) => {
   if (newVal !== null && oldVal === null)
-    clearInterval(timer.value)
+    remainingTime.value = '00:59'
+  clearTimer()
   startTimer()
 })
 onMounted(() => {
   isAddCard.value = false
 })
 const clearDateThenOpen = () => {
+  isAddCard.value = false
   isConfimationData.value = null
-  balanceModalVisible.value = true
-  clearInterval(timer.value)
-  startTimer()
+  cancelBalanceModal()
+  clearTimer()
 }
 defineExpose({
   openBalanceModal,
