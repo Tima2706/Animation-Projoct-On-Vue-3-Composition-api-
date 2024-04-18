@@ -9,7 +9,7 @@ build:
   tags:
     - project_test_230
   before_script:
-      - echo $env > .env
+      - cat $env > .env
   script:
     - docker build -t rkp.dthub.uz .
   only:
