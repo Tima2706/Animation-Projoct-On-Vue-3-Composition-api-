@@ -11,8 +11,7 @@ build:
 #  services:
 #    - docker:dind
   before_script:
-      - apk add --update curl
-      - 'curl --header "PRIVATE-TOKEN: glpat-7_sMR2ytLdHX7CsFL13h" --output .env https://git.dthub.uz/api/v4/projects/38/repository/files/rkp%2F.env_test/raw?ref=main'
+      - echo $env > .env
   script:
     - docker build -t rkp.dthub.uz .
   only:
