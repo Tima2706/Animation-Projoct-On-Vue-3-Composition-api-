@@ -10,7 +10,7 @@ const fetchData = async (endDate?: string, startDate?: string) => {
   try {
     const {
       data,
-    } = await getAnalyticsIncome({ from_date: 'Thu, 11 Apr 2024 14:34:15 GMT', to_date: 'Fri, 12 Apr 2024 14:34:20 GMT' })
+    } = await getAnalyticsIncome({ from_date: 'Thu, 11 Apr 2024 14:34:15 GMT', to_date: 'Sat, 13 Apr 2024 15:34:04 GMT' })
     analyticsList.value = data
     updateChart(analyticsList.value)
   }
@@ -51,20 +51,38 @@ const options = {
     categories: [1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998],
   },
 }
-
 const updateChart = (list: []) => {
   const options = chartRef.value.options
+  const thatValue = list
+    .reduce((accumulator, item) => {
+      const xDate = dayjs(item.date).format('YYYY-MM-DD')
+
+      if (!accumulator.includes(xDate))
+        accumulator.push(xDate)
+      return accumulator
+    }, []).map(item => dayjs(item).format('DD-MMMM'))
+
   options.series = [
     {
       name: t('document'),
-      data: list?.map((item: any) => item.summa),
+      data: list.reduce((accumulator, item) => {
+        const summa = +item.summa
+        const xDate = dayjs(item.date).format('YYYY-MM-DD')
+        const existingItem = accumulator.find(accItem => accItem.xDate === xDate)
+        if (existingItem)
+          existingItem.summa += summa
+        else
+          accumulator.push({ xDate, summa })
+
+        return accumulator
+      }, []).map(item => +item.summa),
     },
   ]
-  options.xaxis.categories = list?.map((item: any) => dayjs(item.date).format('DD-MMMM'))
-
+  options.xaxis.categories = thatValue
   chartRef.value.updateOptions(options, true)
   chartRef.value.updateSeries(options.series, options.xaxis.categories, false, true)
 }
+
 fetchData()
 </script>
 

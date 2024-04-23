@@ -66,9 +66,9 @@ getBalance()
 
 const columns = computed(() => [
   {
-    title: t('id'),
-    dataIndex: 'id',
-    key: 'id',
+    title: t('№'),
+    dataIndex: 'index',
+    key: 'index',
   },
   {
     title: t('DATA'),
@@ -162,7 +162,10 @@ const onChangePage = () => {
   </div>
   <a-spin :spinning="operationsLoading">
     <a-table :pagination="false" :data-source="operation ? operation : []" :columns="columns">
-      <template #bodyCell="{ column, record }">
+      <template #bodyCell="{ column, record, index }">
+        <template v-if="column.key === 'index'">
+          {{ index + 1 }}
+        </template>
         <template v-if="column.key === 'status'">
           {{ t(`operationStatus.${record.status}`) }}
         </template>
@@ -173,8 +176,7 @@ const onChangePage = () => {
           {{ record?.summa }} {{ $t('sum') }}
         </template>
         <template v-if="column.key === 'status_list'">
-          <!--          {{ record?.status_list.name }} -->
-          {{ record?.status_list[`name_${locale}`] }}
+          {{ record?.status_list ? record?.status_list[`name_${locale}`] : '' }}
         </template>
       </template>
     </a-table>
