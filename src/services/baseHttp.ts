@@ -13,19 +13,6 @@ export const $http = axios.create({
   baseURL: API_BASE_URL,
 })
 
-$individual.interceptors.response.use(
-  response => response,
-  (error) => {
-    if (error.response.status === 401) {
-      if (!IS_DEV)
-        gotoLogin()
-    }
-    else if (error.response.status === 403) {
-      // window.location.href = '/forbidden'
-    }
-    return Promise.reject(error)
-  },
-)
 $individual.interceptors.request.use((config) => {
   const token = getToken()
   if (token)

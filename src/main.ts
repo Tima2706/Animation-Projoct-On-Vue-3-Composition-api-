@@ -11,9 +11,11 @@ import router from '~/router'
 import { useOrganizationStore } from '~/stores/organization'
 import { useToken } from '~/composables/useToken'
 import { IDENTITY_SERVICE, IS_DEV } from '~/utils/config'
+import VueApexCharts from 'vue3-apexcharts'
 
 const app = createApp(App)
 
+app.use(VueApexCharts)
 app.use(VeeValidate)
 app.use(Pinia)
 app.use(I18n)

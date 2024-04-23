@@ -10,6 +10,7 @@ import Withdraw from '~/assets/icons/sidebar/withdraw.svg'
 import Blocked from '~/assets/icons/sidebar/blocked.svg'
 import ErrorTransaction from '~/assets/icons/sidebar/error-transaction.svg'
 import Expenses from '~/assets/icons/sidebar/expenses.svg'
+import Analytic from '~/assets/icons/sidebar/status-up.svg'
 import { useAccess } from '~/composables/useAccess'
 import { useOrganizationStore } from '~/stores/organization'
 const organization = useOrganizationStore()
@@ -25,6 +26,12 @@ const navigations = computed<{
   to: RouteLocationRaw
 }[]>(() => {
   return [
+    {
+      title: t('analytics'),
+      icon: Analytic,
+      access: true,
+      to: { name: 'analytic' },
+    },
     {
       title: t('balance'),
       icon: Balance,
@@ -76,6 +83,12 @@ const navigationForUser = computed<{
   to: RouteLocationRaw
 }[]>(() => {
   return [
+    {
+      title: t('analytics'),
+      icon: Analytic,
+      access: true,
+      to: { name: 'analytic' },
+    },
     {
       title: t('balance'),
       icon: Balance,

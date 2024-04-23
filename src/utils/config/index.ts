@@ -17,5 +17,4 @@ export const DT_INFO = import.meta.env.VITE_DT_INFO
 export const DT_POST = import.meta.env.VITE_DT_POST
 export const VITE_API_IMG_URL = import.meta.env.VITE_API_IMG_URL
 export const BIZNES_APTEKA_URL = import.meta.env.VITE_BIZNES_APTEKA_URL
-
 export const API_BASE_INDIVIDUAL_URL = import.meta.env.VITE_API_BASE_INDIVIDUAL_URL
