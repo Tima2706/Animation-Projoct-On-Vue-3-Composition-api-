@@ -9,6 +9,8 @@ const { t } = useI18n()
 const typeStatus = ref(null)
 const typeStatusOutgo = ref(null)
 const spinning = ref(false)
+const startDate = ref()
+const endDate = ref()
 const analyticsList = ref<AnalyticsDto>({})
 const filteredList = ref<AnalyticsIncomeDto>({})
 const filteredListOutgo = ref<AnalyticsIncomeDto>({})
@@ -106,7 +108,11 @@ const filterByTypeOutgo = (value: string) => {
   loadOutgoData(null, null,typeStatusOutgo.value as number)
 }
 
-
+const filterByTimePicker = () => {
+  loadData(startDate.value, endDate.value, null)
+  loadOutgoData(startDate.value, endDate.value, null)
+  fetchData(startDate.value, endDate.value, null)
+}
 </script>
 
 <template>
@@ -157,6 +163,11 @@ const filterByTypeOutgo = (value: string) => {
           >
             {{ t('year') }}
           </a-button>
+        </div>
+        <div class="flex gap-2">
+          <a-date-picker v-model:value="startDate" />
+          <a-date-picker v-model:value="endDate" />
+          <a-button :disabled="!startDate || !endDate" type="primary" @click="filterByTimePicker">{{t('select')}}</a-button>
         </div>
       </div>
     </a-card>
