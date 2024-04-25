@@ -87,7 +87,7 @@ const navigationForUser = computed<{
       title: t('analytics'),
       icon: Analytic,
       access: true,
-      to: { name: 'analytic' },
+      to: { name: 'user-analytic' },
     },
     {
       title: t('balance'),

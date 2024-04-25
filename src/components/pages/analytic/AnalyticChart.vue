@@ -104,7 +104,7 @@ watch(() => props.analyticsList, () => {
 <template>
   <div id="chart">
     <div class="flex justify-between items-top">
-      <p class="text-[#4A5C71] mb-5 text-[16px] font-medium">{{ t('income') }}</p>
+      <p class="text-[#4A5C71] mb-5 text-[16px] font-bold">{{ t('income') }}</p>
       <a-select v-model:value="selectedStatus" class="w-[200px]">
         <template #placeholder>
         <span class="text-[#000] font-bold">

@@ -1,4 +1,12 @@
 RKP: РКП
+Mon: Пн
+Tue: Вт
+Wed: Ср
+Thu: Чт
+Fri: Пт
+Sat: Сб
+Sun: Вс
+duringAllThisTime: За все время
 efficiency: Эффективность
 tariffProfit: Прибыль по тарифу
 detailedReport: Подробный отчет
@@ -196,7 +204,8 @@ payment: Оплата
 revert_minus: Возврат минус
 pay_penalty: Платить штраф
 contract-price-pay: Оплата по цене контракта
-rate_payment: Оплата по тарифу
+rate_payment: Расходы по тарифу
+bcv: БРВ
 today: Сегодня
 week: Неделя
 month: Месяц

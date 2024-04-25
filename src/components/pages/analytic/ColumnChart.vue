@@ -1,26 +1,31 @@
 <template>
   <div id="chart">
-    <p class="text-[#4A5C71] text-[16px] font-medium">{{$t('newDocuments')}}</p>
+    <div>
+    <p class="text-[#4A5C71] text-[16px] font-bold">{{$t('rate_payment')}}</p>
+    <p class="py-2 text-[16px] font-medium text-gray-300"><span class="text-[#FF826E] ">{{formatMoney(analyticsList?.rate_payment)}} {{$t('sum')}}</span>  {{$t('duringAllThisTime')}}</p>
+    </div>
     <apexchart ref="chartRef"  type="bar" :options="options" :series="options.series"></apexchart>
   </div>
 </template>
 
 <script setup lang="ts">
 import dayjs from "dayjs";
+import { AnalyticsDto } from '~/services/dto/analytics.dto'
+import { formatMoney } from '../../../utils/pureFunction'
 
 const {t} = useI18n()
-const props = defineProps<{ analyticsList?: [] }>()
+const props = defineProps<{ analyticsList?: AnalyticsDto }>()
 const chartRef = ref();
 const options = {
   chart: {
     type: 'bar',
     width: '100%',
-    height: 300,
+    height: 322,
   },
-  colors: ['#59A7FF'],
+  colors: ['#FF826E'],
   plotOptions: {
     bar: {
-      columnWidth: '30%',
+      columnWidth: '15%',
       borderRadius: 7,
     }
   },
@@ -40,31 +45,36 @@ const options = {
 watch(() => props.analyticsList, () => {
   updateChart();
 });
+
 const chartData = computed(() => {
-  // Transform `props.analyticsList` into the required chart data format
-  return props.analyticsList.map((item: any) => ({
-    x: t(dayjs(item.date).format('ddd')), // Format the date and translate the day
-    y: item.count // Use `item.count` as the `y` value
-  }));
+  return props?.analyticsList?.tenant_rate_info?.reduce((acc: any, item: any) => {
+    const dateFormatted = dayjs(item.registration_date).format('ddd');
+    const existingItem = acc.find((dataItem: any) => dataItem.x === dateFormatted);
+
+    if (existingItem) {
+      existingItem.y += item.rate_bcv;
+    } else {
+      acc.push({ x: dateFormatted, y: item.rate_bcv });
+    }
+
+    return acc;
+  }, []).reverse()
 });
 
 const updateChart = () => {
   const options = chartRef.value.options;
   options.series = [
     {
-      name: t('newDocument'),
-      data: chartData.value
+      name: t('bcv'),
+      data: chartData.value.map((item: any) => {
+        return {
+          x: t(item.x),
+          y: item.y
+        }
+      })
     }
   ];
-  // options.series = [
-  //   {
-  //     name: t('newDocument'),
-  //     data: props.analyticsList.map((item: any) => ({
-  //       x: t(dayjs(item.date).format('ddd')),
-  //       y: item.count
-  //     }))
-  //   }
-  // ];
+
 
 
   chartRef.value.updateOptions(options, true);

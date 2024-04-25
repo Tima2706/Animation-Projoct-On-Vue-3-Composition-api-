@@ -1,4 +1,12 @@
 RKP: RKP
+Mon: Mon
+Tue: Tue
+Wed: Wed
+Thu: Thu
+Fri: Fri
+Sat: Sat
+Sun: Sun
+duringAllThisTime: During all this time
 income: Income
 outgo: Outgoing
 efficiency: Efficiency
@@ -9,6 +17,7 @@ payment: Payment
 revert_minus: Revert minus
 pay_penalty: Pay penalty
 contract-price-pay: Contract price pay
+bcv: BCV
 rate_payment: Rate payment
 today: Today
 week: Week

@@ -1,6 +1,6 @@
 <template>
   <div id="chart">
-    <p class="text-[#4A5C71] mb-5 text-[16px] font-medium">{{ t('efficiency') }}</p>
+    <p class="text-[#4A5C71] mb-5 text-[16px] font-bold">{{ t('efficiency') }}</p>
     <apexchart ref="chartRef" type="donut" :options="options" :series="options.series"></apexchart>
   </div>
 </template>
@@ -21,7 +21,7 @@ const options = ref({
   chart: {
     type: 'donut',
     width: '100%',
-    height: '350px'
+    height: 392
   },
   dataLabels: {
     enabled: true,
@@ -52,22 +52,22 @@ watch(() => props.filteredListOutgo, () => {
   updateChart()
 })
 const updateChart = () => {
-  let income = Array.isArray(props.filteredListOutgo) ? props.filteredListOutgo.map((item: any) => Number(item.summa)).reduce((sum, item) => sum + item, 0) : 0
-  let outgo = Array.isArray(props.analyticsList) ? props.analyticsList.map((item: any) => Number(item.summa)).reduce((sum, item) => sum + item, 0) : 0
+  let income = Array.isArray(props.analyticsList) ? props.analyticsList.map((item: any) => Number(item.summa)).reduce((sum, item) => sum + item, 0) : 0
+  let outgo = Array.isArray(props.filteredListOutgo) ? props.filteredListOutgo.map((item: any) => Number(item.summa)).reduce((sum, item) => sum + item, 0) : 0
   const updatedSeries = [
-    outgo,
-    income
+    income,
+    outgo
   ]
 
   options.value.series = updatedSeries
 
   options.value.labels = [
-    `${t('outgo')} ${formatMoney(outgo)}`,
-    `${t('income')} ${formatMoney(income)}`
+    `${t('income')} ${formatMoney(income)}`,
+    `${t('outgo')} ${formatMoney(outgo)}`
   ]
 
-  const backgroundColors = ['#0096B2', '#FF826E']
-  const markerColors = ['#0096B2', '#FF826E']
+  const backgroundColors = ['#FF826E', '#0096B2' ]
+  const markerColors = [ '#FF826E', '#0096B2']
 
   options.value.legend = {
     position: 'bottom'

@@ -7,12 +7,11 @@ const organization = useOrganizationStore()
 const router = useRouter()
 onMounted(() => {
   if (!organization.organization.organization)
-    router.replace({ name: 'user-balance' })
+    router.replace({ name: 'user-analytic' })
   else
-    router.replace({ name: 'balance' })
+    router.replace({ name: 'analytic' })
 })
 </script>
 
 <template>
-  <h3>Welcome to cabinet</h3>
 </template>
