@@ -168,7 +168,7 @@ const filterByTimePicker = () => {
         <div class="flex gap-2">
           <a-date-picker :placeholder="t('from')" v-model:value="startDate" />
           <a-date-picker :placeholder="t('before')" v-model:value="endDate" />
-          <a-button :disabled="!startDate || !endDate"   class="bg-[#0096B2] text-[#fff]" @click="filterByTimePicker">{{t('search')}}</a-button>
+          <a-button :disabled="!startDate || !endDate"  style="border: 1px solid #0096B2"  class="bg-[#fff] text-[#0096B2]" @click="filterByTimePicker">{{t('search')}}</a-button>
         </div>
       </div>
     </a-card>
