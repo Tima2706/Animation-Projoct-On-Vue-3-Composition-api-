@@ -1,4 +1,5 @@
 RKP: РКП
+efficiency: Эффективность
 tariffProfit: Прибыль по тарифу
 detailedReport: Подробный отчет
 expense: Расход
@@ -186,6 +187,20 @@ comment: Комментарий
 offerDifferentAmount: Уважаемый клиент, мы не удовлетворены вашим предложением. Я предложу вам разумную цену
 offerPrice: Предложить цену
 primary: Начальной
+income: Доход
+outgo: Расход
+deposit: Депозит
+deposit_penalty: Депозитный штраф
+contract_price_deposit: Депозит по цене контракта
+payment: Оплата
+revert_minus: Возврат минус
+pay_penalty: Платить штраф
+contract-price-pay: Оплата по цене контракта
+rate_payment: Оплата по тарифу
+today: Сегодня
+week: Неделя
+month: Месяц
+year: Год
 proposed: Предложенной
 supplierAgreesWithOfferedPrice: Поставщик согласен с предложенной ценой
 canceledOrder: Отменить заказ

@@ -1,8 +1,23 @@
 RKP: RKP
+efficiency: Effektivlik
+deposit: Depozit
+deposit_penalty: Depozit jarimi
+contract_price_deposit: Shartnoma narxi depoziti
+payment: To'lov
+revert_minus: Hisob raqamiga qaytarilgan
+pay_penalty: Jarima uchun to'lov
+contract-price-pay: Shartnoma narxi to'lovi
+income: Daromad
+outgo: Xarajat
 reset: Tozalash
 tariffProfit: Tarif buyicha daromad
 detailedReport: To'liq hisobot
 expense: Xarajat
+today: Bugun
+week: Hafta
+month: Oy
+year: Yil
+rate_payment: Tarif to'lovi
 erroneousTransactions: Xato operatsiyalar
 withdraw: Chiqarish
 myCards: Mening kartalarim

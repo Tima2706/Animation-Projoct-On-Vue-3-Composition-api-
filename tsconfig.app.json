@@ -1,0 +1,25 @@
+{
+  "extends": "@vue/tsconfig/tsconfig.dom.json",
+  "include": ["env.d.ts", "src/**/*.ts", "src/**/*.vue","src/**/*.json", "vite.config.ts"],
+  "files": [
+    "shims.d.ts",
+    "src/components.d.ts",
+    "src/auto-imports.d.ts",
+  ],
+  "exclude": ["src/**/__tests__/*"],
+  "compilerOptions": {
+    "strictNullChecks": false,
+    "types": ["vite/client", "vite-plugin-pwa/vanillajs"],
+    "module": "esnext",
+    "lib": ["DOM", "esnext", "WebWorker"],
+    "target": "ESNext",
+    "composite": true,
+    "allowJs": true,
+    "baseUrl": ".",
+    "verbatimModuleSyntax": false,
+    "declaration": false,
+    "paths": {
+      "~/*": ["./src/*"]
+    }
+  },
+}

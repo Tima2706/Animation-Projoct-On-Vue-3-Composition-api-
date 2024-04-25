@@ -1,4 +1,19 @@
 RKP: RKP
+income: Income
+outgo: Outgoing
+efficiency: Efficiency
+deposit: Deposit
+deposit_penalty: Deposit penalty
+contract_price_deposit: Contract price deposit
+payment: Payment
+revert_minus: Revert minus
+pay_penalty: Pay penalty
+contract-price-pay: Contract price pay
+rate_payment: Rate payment
+today: Today
+week: Week
+month: Month
+year: Year
 reset: Reset
 expense: Expense
 myCards: My cards

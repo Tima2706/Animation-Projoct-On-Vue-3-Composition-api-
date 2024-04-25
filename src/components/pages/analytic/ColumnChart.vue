@@ -1,7 +1,7 @@
 <template>
   <div id="chart">
     <p class="text-[#4A5C71] text-[16px] font-medium">{{$t('newDocuments')}}</p>
-    <apexchart ref="chartRef" width="500" type="bar" :options="options" :series="options.series"></apexchart>
+    <apexchart ref="chartRef"  type="bar" :options="options" :series="options.series"></apexchart>
   </div>
 </template>
 
@@ -15,7 +15,7 @@ const options = {
   chart: {
     type: 'bar',
     width: '100%',
-    height: '117%'
+    height: 300,
   },
   colors: ['#59A7FF'],
   plotOptions: {
@@ -80,5 +80,10 @@ onMounted(() => {
 </script>
 
 <style scoped>
-
+#chart {
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
 </style>

@@ -1,11 +1,11 @@
 import { $individual } from '~/services/baseHttp'
+import { createAnalyticsIncomeDto } from '~/services/dto/analytics.dto'
 
-export const getAnalytics = async (params: any) => {
-  return await $individual.get('/statistic', { params })
+export const getAnalytics = async () => {
+  return await $individual.get('/statistic')
 }
-export const getAnalyticsOutgoing = async () => {
-  return await $individual.get('/statistic-outgo')
-}
-export const getAnalyticsIncome = async (params: any) => {
+
+export const getAnalyticsIncome = async (params: createAnalyticsIncomeDto) => {
   return await $individual.get('/statistic-income', { params })
 }
+

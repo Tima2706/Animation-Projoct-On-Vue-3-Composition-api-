@@ -3,14 +3,14 @@ import dayjs from 'dayjs'
 import { AnalyticsIncomeDto } from '~/services/dto/analytics.dto'
 
 const spinning = ref(false)
-const emit = defineEmits(['filteredStatus'])
+const emit = defineEmits(['filteredStatusOutgoing'])
 const props = defineProps<{
   analyticsList: AnalyticsIncomeDto
 }>()
 const { t } = useI18n()
 const selectedStatus = ref(null)
 watch(() => selectedStatus.value, () => {
-  emit('filteredStatus', selectedStatus.value)
+  emit('filteredStatusOutgoing', selectedStatus.value)
 })
 
 const statusList = ref([
@@ -19,17 +19,22 @@ const statusList = ref([
     value: null
   },
   {
-    label: t('deposit'),
-    value: '4'
+    label: t('payment'),
+    value: '1'
   },
   {
-    label: t('deposit_penalty'),
-    value: '7'
+    label: t('revert_minus'),
+    value: '13'
   },
   {
-    label: t('contract_price_deposit'),
-    value: '9'
+    label: t('pay_penalty'),
+    value: '6'
   },
+  {
+    label: t('contract-price-pay'),
+    value: '8'
+  }
+
 ])
 
 
@@ -40,17 +45,16 @@ const options = {
     width: '100%',
     height: 350
   },
-
   dataLabels: {
     enabled: false
   },
   stroke: {
     curve: 'smooth',
-    colors: ['#0096B2']
+    colors: ['#FF826E']
   },
   fill: {
     type: 'gradient',
-    colors: [ '#0096B2']
+    colors: [ '#FF826E']
   },
   series: [
     {
@@ -103,8 +107,9 @@ watch(() => props.analyticsList, () => {
 
 <template>
   <div id="chart">
+
     <div class="flex justify-between items-top">
-      <p class="text-[#4A5C71] mb-5 text-[16px] font-medium">{{ t('income') }}</p>
+      <p class="text-[#4A5C71] mb-5 text-[16px] font-medium">{{ t('outgo') }}</p>
       <a-select v-model:value="selectedStatus" class="w-[200px]">
         <template #placeholder>
         <span class="text-[#000] font-bold">

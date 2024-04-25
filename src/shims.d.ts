@@ -1,4 +1,4 @@
-import {ErrorMessage, Field, Form} from "vee-validate";
+// import {ErrorMessage, Field, Form} from "vee-validate";
 
 declare module 'vue3-pdfjs/esm' {
   interface pdf {
@@ -26,13 +26,13 @@ declare module '*.vue' {
 }
 
 
-declare module '@vue/runtime-core' {
-  export interface GlobalComponents {
-    ErrorMessage: typeof ErrorMessage
-    Field: typeof Field
-    Form: typeof Form
-  }
-}
+// declare module '@vue/runtime-core' {
+//   export interface GlobalComponents {
+//     ErrorMessage: typeof ErrorMessage
+//     Field: typeof Field
+//     Form: typeof Form
+//   }
+// }
 
 
 

@@ -1,79 +1,110 @@
 <script lang="ts" setup>
 import { useI18n } from 'vue-i18n'
-import { ref } from 'vue'
-import { getAnalytics } from '~/services/analytics'
-import type { AnalyticsDto } from '~/services/dto/analytics.dto'
+import dayjs from 'dayjs'
+import { getAnalytics, getAnalyticsIncome, } from '~/services/analytics'
+import { AnalyticsDto, AnalyticsIncomeDto } from '~/services/dto/analytics.dto'
+import AnalyticChartOutgo from '~/components/pages/analytic/AnalyticChartOutgo.vue'
+import { getAnalyticsOutgoing } from '~/services/outgoing'
 
-const emit = defineEmits(['handleClick'])
-const selectedDetailDocument = ref([])
 const { t } = useI18n()
-const typeTemplate = ref(null)
+const typeStatus = ref(null)
+const typeStatusOutgo = ref(null)
 const spinning = ref(false)
 const analyticsList = ref<AnalyticsDto>({})
-const params = ref({
-  documentType: typeTemplate.value,
-  startDate: null,
-  endDate: null,
-})
+const filteredList = ref<AnalyticsIncomeDto>({})
+const filteredListOutgo = ref<AnalyticsIncomeDto>({})
 const selectedFilter = ref('isWeek')
-const selectedPlaceDocument = ref([])
+const loading = ref(false)
+const filterByTime = (value: string) => {
+  selectedFilter.value = value
+  if (value === 'isWeek') {
+    const startDate = dayjs().subtract(1, 'week').toISOString()
+    const endDate = dayjs().format('ddd, DD MMM YYYY HH:mm:ss [GMT]')
+    const formattedDate = dayjs(startDate).format('ddd, DD MMM YYYY HH:mm:ss [GMT]')
+    loadOutgoData(formattedDate, endDate, null)
+    loadData(formattedDate, endDate, null)
 
-// const filterByTime = (value: string) => {
-//   selectedFilter.value = value
-//   if (value === 'isWeek') {
-//     const startDate = dayjs().subtract(1, 'week').toISOString()
-//     const endDate = dayjs().format('YYYY-MM-DD')
-//     const formattedDate = dayjs(startDate).format('YYYY-MM-DD')
-//     fetchData(endDate, formattedDate)
-//   }
-//   else if (value === 'isMonth') {
-//     const startDate = dayjs().subtract(1, 'month').toISOString()
-//     const endDate = dayjs().format('YYYY-MM-DD')
-//     const formattedDate = dayjs(startDate).format('YYYY-MM-DD')
-//     fetchData(endDate, formattedDate)
-//   }
-//   else if (value === 'isYear') {
-//     const startDate = dayjs().subtract(1, 'year').toISOString()
-//     const endDate = dayjs().format('YYYY-MM-DD')
-//     const formattedDate = dayjs(startDate).format('YYYY-MM-DD')
-//     fetchData(endDate, formattedDate)
-//   }
-//   else {
-//     fetchData()
-//   }
-// }
-// onMounted(() => {
-//   filterByTime(selectedFilter.value)
-// })
-const fetchData = async (endDate?: string, startDate?: string) => {
+  } else if (value === 'isMonth') {
+    const startDate = dayjs().subtract(1, 'month').toISOString()
+    const endDate = dayjs().format('ddd, DD MMM YYYY HH:mm:ss [GMT]')
+    const formattedDate = dayjs(startDate).format('ddd, DD MMM YYYY HH:mm:ss [GMT]')
+    loadData(formattedDate, endDate, null)
+    loadOutgoData(formattedDate, endDate, null)
+
+  } else if (value === 'isYear') {
+    const startDate = dayjs().subtract(1, 'year').toISOString()
+    const endDate = dayjs().format('ddd, DD MMM YYYY HH:mm:ss [GMT]')
+    const formattedDate = dayjs(startDate).format('ddd, DD MMM YYYY HH:mm:ss [GMT]')
+    loadData(formattedDate, endDate, null)
+    loadOutgoData(formattedDate, endDate, null)
+  } else {
+    loadData(null, null, null)
+    loadOutgoData(null, null, null)
+  }
+}
+onMounted(() => {
+  filterByTime(selectedFilter.value)
+})
+const fetchData = async () => {
   spinning.value = true
   try {
     const {
-      data,
-    } = await getAnalytics({ documentType: typeTemplate.value, startDate, endDate })
+      data
+    } = await getAnalytics()
     analyticsList.value = data
-  }
-  catch (err) {
+  } catch (err) {
     console.error(err)
-  }
-  finally {
+  } finally {
     spinning.value = false
   }
 }
-// watch(() => typeTemplate.value, () => {
-//   fetchData()
-// })
-const selectedData = (value: [], details: []) => {
-  selectedDetailDocument.value = value || []
-  selectedPlaceDocument.value = details || []
+
+const loadData = async (endDate?: string, startDate?: string, status?: number) => {
+  spinning.value = true
+  try {
+    const {
+      data
+    } = await getAnalyticsIncome({ from_date: endDate, to_date: startDate, type:status !== 0 ? [status] : null})
+    filteredList.value = data
+  } catch (err) {
+    console.error(err)
+  } finally {
+    spinning.value = false
+  }
 }
-fetchData()
+const loadOutgoData = async (endDate?: string, startDate?: string, status?: number) => {
+  loading.value = true
+  try {
+    const {
+      data
+    } = await getAnalyticsOutgoing({ from_date: endDate, to_date: startDate, type: status !== 0 ? [status] : null})
+    filteredListOutgo.value = data
+  }catch (err) {
+    console.error(err)
+  } finally {
+    loading.value = false
+  }
+}
+
+
+const filterByType = (value: string) => {
+  typeStatus.value = value
+  loadData(null, null, typeStatus.value as number)
+}
+const filterByTypeOutgo = (value: string) => {
+  typeStatusOutgo.value = value
+  loadOutgoData(null, null,typeStatusOutgo.value as number)
+}
+
+onMounted(() => {
+  fetchData()
+})
 </script>
 
 <template>
   <div class="h-100vh">
     <VText weight="600" size="18" class="mb-4">
-      {{ t("analytics") }}
+      {{ t('analytics') }}
     </VText>
     <a-card>
       <div class="flex justify-between">
@@ -86,7 +117,7 @@ fetchData()
             }"
             @click="filterByTime('isDay')"
           >
-            {{ $t('today') }}
+            {{ t('today') }}
           </a-button>
           <a-button
             class="bg-[#E8EEF7] border-none text-[#849AA9] analytic"
@@ -96,7 +127,7 @@ fetchData()
             }"
             @click="filterByTime('isWeek')"
           >
-            {{ $t('week') }}
+            {{ t('week') }}
           </a-button>
           <a-button
             class="bg-[#E8EEF7] border-none text-[#849AA9] analytic"
@@ -106,7 +137,7 @@ fetchData()
             }"
             @click="filterByTime('isMonth')"
           >
-            {{ $t('month') }}
+            {{ t('month') }}
           </a-button>
           <a-button
             class="bg-[#E8EEF7] border-none text-[#849AA9] analytic"
@@ -116,36 +147,30 @@ fetchData()
             }"
             @click="filterByTime('isYear')"
           >
-            {{ $t('year') }}
+            {{ t('year') }}
           </a-button>
         </div>
       </div>
     </a-card>
-    <CardAnalytic :analytics-list="analyticsList" @handle-click="selectedData" />
+    <CardAnalytic  :analytics-list="analyticsList" />
     <a-divider />
     <div class="mt-5 analytic-status-upper">
-      <div class="analytic-status-upper__block">
-        <a-card>
-          <AnalyticChart />
-        </a-card>
-      </div>
-    </div>
-    <div class="mt-5 analytic-status">
-      <div class="analytic-status__block">
-        <a-card>
-          <!--          <PieChart :analytics-list="selectedDetailDocument" /> -->
-        </a-card>
-      </div>
-      <div class="analytic-status__block">
-        <a-card>
-          <!--          <ColumnChart :analytics-list="selectedDetailDocument" /> -->
-        </a-card>
-      </div>
-      <div class="analytic-status__block">
-        <a-card>
-          <!--          <VueDonutChart :analytics-list="selectedDetailDocument" /> -->
-        </a-card>
-      </div>
+      <a-row :gutter="16">
+        <a-col :span="12">
+          <AnalyticChart @filteredStatus="filterByType" :analyticsList="filteredList" />
+        </a-col>
+        <a-col :span="12">
+          <AnalyticChartOutgo @filteredStatusOutgoing="filterByTypeOutgo" :analytics-list="filteredListOutgo" />
+        </a-col>
+      </a-row>
+      <a-row :gutter="16">
+<!--        <a-col :span="12">-->
+<!--          <ColumnChart  />-->
+<!--        </a-col>-->
+        <a-col :span="12">
+          <VueDonutChart :analyticsList="filteredList" :filteredListOutgo="filteredListOutgo"  />
+        </a-col>
+      </a-row>
     </div>
   </div>
 </template>
@@ -182,29 +207,35 @@ fetchData()
   padding: 12px;
 
 }
-.analytic-status-upper{
+
+.analytic-status-upper {
   display: grid;
   grid-gap: 12px;
   margin: 0 -12px;
   grid-template-columns: repeat(auto-fit, 1fr);
   padding: 12px;
-  &__block:first-child{
+
+  &__block:first-child {
     grid-column: 1 / 3;
   }
-  &__block:last-child{
+
+  &__block:last-child {
     grid-column: 3 / 3;
   }
 }
+
 @media (max-width: 989px) {
   .analytic-status {
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   }
-  .analytic-status-upper{
+  .analytic-status-upper {
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    &__block:first-child{
+
+    &__block:first-child {
       grid-column: 3 / 3;
     }
-    &__block:last-child{
+
+    &__block:last-child {
       grid-column: 3 / 3;
     }
   }

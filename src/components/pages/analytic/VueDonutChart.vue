@@ -1,80 +1,103 @@
 <template>
-  <div>
-    <p class="text-[#4A5C71] mb-5 text-[16px] font-medium">{{ $t('statusOfContracts') }}</p>
-    <apexchart ref="chartRef" width="500" type="donut" :options="options" :series="options.series"></apexchart>
+  <div id="chart">
+    <p class="text-[#4A5C71] mb-5 text-[16px] font-medium">{{ t('efficiency') }}</p>
+    <apexchart ref="chartRef" type="donut" :options="options" :series="options.series"></apexchart>
   </div>
 </template>
 
 <script setup lang="ts">
-const {t} = useI18n()
-const chartRef = ref();
+import { AnalyticsIncomeDto } from '~/services/dto/analytics.dto'
+import { formatMoney } from '~/utils/pureFunction'
 
-const props = defineProps<{ analyticsList?: [] }>()
+const { t } = useI18n()
+const chartRef = ref<any>(null) // Initialize with null
+
+const props = defineProps<{
+  analyticsList?: AnalyticsIncomeDto;
+  filteredListOutgo?: AnalyticsIncomeDto;
+}>() // Ensure props are arrays
+
 const options = ref({
   chart: {
     type: 'donut',
     width: '100%',
-    height: 422,
+    height: '350px'
+  },
+  dataLabels: {
+    enabled: true,
+    formatter: function(val: any) {
+      return `${val.toFixed(2)}%`
+    }
   },
   labels: ['Created', 'The supplier signed the contract', 'The customer signed the contract', 'Canceled', 'Both confirmed'],
-  series: [44, 55, 13, 33],
+  series: [44, 55, 13, 33]
+})
 
+const x = ref(0)
+const y = ref(0)
+
+onMounted(() => {
+  if (Array.isArray(props.filteredListOutgo)) {
+    x.value = props.filteredListOutgo.map((item: any) => Number(item.summa)).reduce((sum, item) => sum + item, 0)
+  }
+  if (Array.isArray(props.analyticsList)) {
+    y.value = props.analyticsList.map((item: any) => Number(item.summa)).reduce((sum, item) => sum + item, 0)
+  }
 })
 
 watch(() => props.analyticsList, () => {
-  updateChart();
-});
-
+  updateChart()
+})
+watch(() => props.filteredListOutgo, () => {
+  updateChart()
+})
 const updateChart = () => {
-  const options = chartRef.value.options;
-
-  options.series =  [
-    props.analyticsList.filter((item: any) => item.status === 9 || item.status === 5 || item.status === 11 ).reduce((sum, item) => sum + item.count, 0),
-    props.analyticsList.filter((item: any) => item.status === 10 || item.status === 6 ).reduce((sum, item) => sum + item.count, 0),
-    props.analyticsList.filter((item: any) => item.status === 1).reduce((sum, item) => sum + item.count, 0),
+  let income = Array.isArray(props.filteredListOutgo) ? props.filteredListOutgo.map((item: any) => Number(item.summa)).reduce((sum, item) => sum + item, 0) : 0
+  let outgo = Array.isArray(props.analyticsList) ? props.analyticsList.map((item: any) => Number(item.summa)).reduce((sum, item) => sum + item, 0) : 0
+  const updatedSeries = [
+    outgo,
+    income
   ]
 
-  options.labels = [
-    `${t('signed')} (${props.analyticsList.filter((item: any) => item.status === 9 || item.status === 5 || item.status === 11).reduce((sum, item) => sum + item.count, 0)})`,
-    `${t('canceled')} (${props.analyticsList.filter((item: any) => item.status === 10 || item.status === 6).reduce((sum, item) => sum + item.count, 0)})`,
-    `${t('notSigned')} (${props.analyticsList.filter((item: any) => item.status === 1).reduce((sum, item) => sum + item.count, 0)})`,
+  options.value.series = updatedSeries
+
+  options.value.labels = [
+    `${t('outgo')} ${formatMoney(outgo)}`,
+    `${t('income')} ${formatMoney(income)}`
   ]
 
+  const backgroundColors = ['#0096B2', '#FF826E']
+  const markerColors = ['#0096B2', '#FF826E']
 
-  const backgroundColors = [
-    '#0096B2',
-    '#FF826E',
-    '#DDCB2C',
-  ]
-  const markerColors = [
-    '#0096B2',
-    '#FF826E',
-    '#DDCB2C',
-  ]
-  options.legend = {
-    position: 'bottom',
-
-  }
-  options.legend.markers = {
-    fillColors: markerColors,
-
+  options.value.legend = {
+    position: 'bottom'
   }
 
+  options.value.legend.markers = {
+    fillColors: markerColors
+  }
 
-  options.fill = {
-    colors: backgroundColors,
-  };
+  options.value.fill = {
+    colors: backgroundColors
+  }
 
-  chartRef.value.updateOptions(options, true);
-  chartRef.value.updateSeries(options.series, false, true);
-};
+  chartRef.value.updateOptions(options.value, true)
+  chartRef.value.updateSeries(options.value.series, false, true)
+}
+
 onMounted(() => {
   setTimeout(() => {
-    updateChart();
-  }, 100);
+    updateChart()
+  }, 100)
 })
 </script>
 
-<style scoped>
 
+<style scoped>
+#chart {
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
 </style>
