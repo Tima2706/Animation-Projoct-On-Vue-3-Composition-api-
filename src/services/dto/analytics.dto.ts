@@ -1,7 +1,15 @@
 export interface AnalyticsDto {
-  income: number
-  outgo: number
+  income: IncomeDto
+  outgo: OutgoDto
   rate_payment: number
+}
+export interface OutgoDto {
+  percent: number
+  summa: number
+}
+export interface IncomeDto {
+  percent: number
+  summa: number
 }
 
 export interface AnalyticsIncomeDto {

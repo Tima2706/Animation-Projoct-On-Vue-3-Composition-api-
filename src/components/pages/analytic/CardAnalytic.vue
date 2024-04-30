@@ -4,7 +4,6 @@ import type { AnalyticsDto } from '~/services/dto/analytics.dto'
 import { formatMoney } from '~/utils/pureFunction'
 const props = defineProps<{ analyticsList?: AnalyticsDto }>()
 const { t } = useI18n()
-const selectedCard = ref('contractors')
 </script>
 
 <template>
@@ -21,13 +20,13 @@ const selectedCard = ref('contractors')
         <CardDocument />
       </div>
       <div class="flex justify-between pt-5  items-center ">
-        <span style="font-size: 21px" class="text-[#4A5C71] font-bold">{{ formatMoney(analyticsList?.income) }}</span>
+        <span style="font-size: 21px" class="text-[#4A5C71] font-bold">{{ formatMoney(analyticsList?.income?.summa) }}</span>
         <span
-          :style="`color: ${analyticsList?.contracts_count_changes > 0 ? '#0096B2' : '#FF4D4F'}`"
+          :style="`color: ${analyticsList?.income?.percent > 0 ? '#0096B2' : '#FF4D4F'}`"
           class="text-[#4A5C71] font-bold"
         >{{
-          analyticsList?.contracts_count_changes !== 0 ? analyticsList?.contracts_count_changes?.toFixed(2) : ''
-        }}{{ analyticsList?.contracts_count_changes ? '%' : '' }}</span>
+          analyticsList?.income?.percent !== 0 ? analyticsList?.income?.percent?.toFixed(2) : ''
+        }}{{ analyticsList?.income?.percent ? '%' : '' }}</span>
       </div>
     </div>
     <div
@@ -42,12 +41,12 @@ const selectedCard = ref('contractors')
         <CardDocument />
       </div>
       <div class="flex justify-between pt-5  items-center ">
-        <span style="font-size: 21px" class="text-[#4A5C71] font-bold">{{ analyticsList?.outgo }}</span>
+        <span style="font-size: 21px" class="text-[#4A5C71] font-bold">{{ formatMoney(analyticsList?.outgo?.summa) }}</span>
         <span
           class="text-[#4A5C71] font-bold"
         >{{
-          analyticsList?.invoices_count_changes !== 0 ? analyticsList?.invoices_count_changes?.toFixed(2) : ''
-        }}{{ analyticsList?.invoices_count_changes ? '%' : '' }}</span>
+          analyticsList?.outgo?.percent !== 0 ? analyticsList?.outgo?.percent?.toFixed(2) : ''
+        }}{{ analyticsList?.outgo?.percent ? '%' : '' }}</span>
       </div>
     </div>
     <div
@@ -62,12 +61,8 @@ const selectedCard = ref('contractors')
         <CardDocument />
       </div>
       <div class="flex justify-between pt-5  items-center ">
-        <span style="font-size: 21px" class="text-[#4A5C71] font-bold">{{ analyticsList?.rate_payment }}</span>
-        <span
-          class="text-[#4A5C71] font-bold"
-        >{{
-          analyticsList?.acts_count_changes !== 0 ? analyticsList?.acts_count_changes?.toFixed(2) : ''
-        }}{{ analyticsList?.acts_count_changes ? '%' : '' }}</span>
+        <span style="font-size: 21px" class="text-[#4A5C71] font-bold">{{ formatMoney(analyticsList?.rate_payment) }}</span>
+
       </div>
     </div>
   </div>
