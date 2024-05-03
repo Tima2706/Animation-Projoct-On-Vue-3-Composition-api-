@@ -51,8 +51,8 @@ function formatCardNumber(cardNumber: string) {
         </a>
         <template #overlay>
           <a-menu>
-            <a-menu-item key="0" @click="openCardSettings(card)">
-              <span v-if="!noSitting">{{ $t('edit') }}</span>
+            <a-menu-item v-if="!noSitting" key="0" @click="openCardSettings(card)">
+              <span >{{ $t('edit') }}</span>
             </a-menu-item>
             <a-menu-item key="1" @click="handleDelete(card.id)">
               <span>{{ $t('delete') }}</span>
