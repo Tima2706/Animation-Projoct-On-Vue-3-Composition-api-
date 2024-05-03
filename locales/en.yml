@@ -7,6 +7,9 @@ Fri: Fri
 Sat: Sat
 Sun: Sun
 duringAllThisTime: During all this time
+uDontHaveAccess: You don't have access
+RCPModule: You need to enter your PINFL to access your balance
+enterYourPINFL: Enter your PINFL
 income: Income
 outgo: Outgoing
 efficiency: Efficiency

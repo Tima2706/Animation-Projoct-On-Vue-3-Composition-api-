@@ -1,4 +1,5 @@
 export interface Organization {
+  user: object
   account_numbers: string[]
   address: string
   business_category: string
