@@ -10,6 +10,7 @@ build:
     - project_test_230
   before_script:
       - cat $env_test > .env
+      - cat .env
   script:
     - docker build -t rkp.dthub.uz .
   only:
