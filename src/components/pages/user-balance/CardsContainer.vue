@@ -104,6 +104,7 @@ const rePayIt = async () => {
   }
   catch (e: any) {
     balanceCardModal.value = false
+    cancelBalanceModal()
     const data = e.response.data
     errorMessage.value = data.error_message
     errorModal.value = true
