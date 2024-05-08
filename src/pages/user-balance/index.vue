@@ -103,7 +103,13 @@ const openModal = () => {
 const isUpdated = () => {
   getBalance()
   getOperation()
+
 }
+const forUpdatePage = () => {
+  window.location.reload()
+
+}
+
 // const { data: any, fetch } = useFetchData<any[]>(async () => {
 //   const { data: { data, last_page, loading: operationsLoading } } = await getOperationList({ ...params, ...bankFilter.value })
 //   lastPage.value = last_page
@@ -122,7 +128,7 @@ const onChangePage = () => {
     {{ t('balance') }}
   </p>
   <a-card v-if="!organization.user.pinfl" class="my-5">
-    <NoPINFL />
+    <NoPINFL @update:visible="forUpdatePage" />
   </a-card>
   <div v-else>
     <div  class="balance-page">

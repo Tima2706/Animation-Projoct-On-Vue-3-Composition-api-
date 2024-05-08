@@ -58,6 +58,7 @@ declare module '@vue/runtime-core' {
     ImageUploader: typeof import('./components/base/ImageUploader.vue')['default']
     MapChart: typeof import('./components/pages/analytic/MapChart.vue')['default']
     MaskInput: typeof import('./components/base/MaskInput.vue')['default']
+    NoPINFL: typeof import('./components/pages/no-role-balance/NoPINFL.vue')['default']
     PDFViewer: typeof import('./components/base/PDFViewer.vue')['default']
     PieChart: typeof import('./components/pages/analytic/PieChart.vue')['default']
     README: typeof import('./components/README.md')['default']

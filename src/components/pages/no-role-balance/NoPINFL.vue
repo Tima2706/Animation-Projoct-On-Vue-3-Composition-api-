@@ -51,6 +51,7 @@ const fetchData = async () => {
     loading.value = false
   }
 }
+const emits = defineEmits(['update:visible'])
 const DEFAULT_DATA = {
   user_id: '',
   is_director: false,
@@ -103,6 +104,7 @@ const submit = async () => {
     submitLoading.value = true
     try {
       await updateUserInfo({ ...form.value, pinfl: isEditPinfl.value })
+      emits('update:visible')
       notification.success({
         message: SAVED_SUCCESSFULLY
       })

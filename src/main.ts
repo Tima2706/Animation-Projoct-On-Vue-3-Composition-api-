@@ -33,7 +33,7 @@ function checkToken() {
     window.location.href = IDENTITY_SERVICE
 }
 
-checkToken();
+// checkToken();
 
 (async function fetchDate() {
   try {

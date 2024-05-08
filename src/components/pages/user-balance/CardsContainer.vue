@@ -24,12 +24,12 @@ import type { CardDto } from '~/services/dto'
 import MaskInput from '~/components/base/MaskInput.vue'
 import VText from '~/components/base/VText.vue'
 import Subtract from '~/assets/icons/Subtract.svg'
-
+import { ErrorDto } from '~/services/dto/error.dto'
 defineProps<Props>()
 
 const emits = defineEmits(['balanced'])
 const { t } = useI18n()
-const confirmation = ref(false)
+const errorModal = ref(false)
 const modules = ref([Navigation, Pagination, Scrollbar, A11y])
 const isAddCard = ref(false)
 const remainingTime = ref('01:00')
@@ -58,6 +58,7 @@ interface Props {
   loading: boolean
 }
 const secretNumber = ref(null)
+const errorMessage = ref<ErrorDto>()
 interface TransactionBalance2 {
   balance: boolean
   available: boolean
@@ -83,7 +84,7 @@ const form = ref<CardDto>({
 const cardInfo = ref<any>({
   type: 4,
   card_number: '',
-  amount: '',
+  amount: '0',
   date_expire: '',
 })
 const rePayIt = async () => {
@@ -102,9 +103,10 @@ const rePayIt = async () => {
     emits('balanced')
   }
   catch (e: any) {
-    notification.error({
-      message: t('operationStatus[33]'),
-    })
+    balanceCardModal.value = false
+    const data = e.response.data
+    errorMessage.value = data.error_message
+    errorModal.value = true
   }
 }
 const clearTimer = () => {
@@ -113,7 +115,6 @@ const clearTimer = () => {
     timer.value = null // Reset timer to null
   }
 }
-
 const paySubmit = async (value) => {
   const floatAmount = parseFloat(cardInfo.value.amount).toFixed(2)
   try {
@@ -126,9 +127,11 @@ const paySubmit = async (value) => {
     isConfimationData.value = data.data
   }
   catch (e: any) {
-    notification.error({
-      message: t('operationStatus[22]'),
-    })
+    balanceCardModal.value = false
+    cancelBalanceModal()
+    const data = e.response.data
+    errorMessage.value = data.error_message
+    errorModal.value = true
   }
 }
 const colorList = [
@@ -233,7 +236,7 @@ function cancelBalanceModal() {
   cardInfo.value = {
     type: 4,
     card_number: '',
-    amount: '',
+    amount: '0',
     date_expire: '',
   }
   isConfimationData.value = null
@@ -621,6 +624,22 @@ defineExpose({
       </template>
     </a-modal>
   </div>
+  <a-modal  v-model:open="errorModal" centered>
+    <p class="text-center font-medium text-xl ">{{ errorMessage.title }}</p>
+    <p class="mb-8 text-center text-[#48545d]">{{ errorMessage.description }}</p>
+    <template #footer>
+      <div class="flex justify-between">
+      <a-button   @click="errorModal = false">
+        {{ t('back') }}
+      </a-button>
+      <a :href="errorMessage.redirect_url" target="_blank" >
+        <a-button type="primary"  @click="errorModal = false">
+          {{ t('writeToTheOperator') }}
+        </a-button>
+      </a>
+      </div>
+    </template>
+  </a-modal>
 </template>
 
 <style lang="scss" scoped>

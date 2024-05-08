@@ -19,7 +19,7 @@ const columns = [
     key: 'doc_number',
   },
   {
-    title: t('Transaction date'),
+    title: t('TransactionDate'),
     dataIndex: 'date',
     key: 'date',
   },
