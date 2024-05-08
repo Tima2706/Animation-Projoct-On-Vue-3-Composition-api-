@@ -161,7 +161,7 @@ button?.addEventListener('click', onClickProfileIcon)
           <VImg
             class="object-contain"
             alt="organizationName"
-            :src="`${imgURL}${organization?.organization.director.logo_url}`"
+            :src="`${imgURL}${organization?.organization.logo_url}`"
           />
         </div>
         <p class="text-[#A2A5B9] mt-6">
