@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { VITE_API_IMG_URL } from '~/utils/config'
+import { ENV_MODE, VITE_API_IMG_URL } from '~/utils/config'
 import { useLanguage } from '~/composables/useLanguage'
 import { useToken } from '~/composables/useToken'
 import Logout from '~/assets/icons/logout.svg'
@@ -16,7 +16,7 @@ $loadDtHeader({
   position: 'auto',
   activeModule: 'rkp',
   enableProfileIcon: true,
-  mode: 'dev',
+  mode: ENV_MODE,
   enableLanguageSwitcher: true,
 
   onSelectLanguage: (lang: string) => {

@@ -1,7 +1,7 @@
 stages:
   - build
   - deploy
-#  - cleanup
+  - cleanup
 
 build:
 
@@ -26,11 +26,11 @@ deploy:
  only:
     - test
 
-#cleanup:
-# stage: cleanup
-# tags:
-#    - project_test_251
-# script:
-#    - docker system prune --volumes -f
-# only:
-#    - test
+cleanup:
+ stage: cleanup
+ tags:
+    - project_test_251
+ script:
+   - docker rmi $(docker images --filter 'dangling=true' -q --no-trunc)
+ only:
+    - test
