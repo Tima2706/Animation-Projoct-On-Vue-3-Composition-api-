@@ -18,3 +18,4 @@ export const DT_POST = import.meta.env.VITE_DT_POST
 export const VITE_API_IMG_URL = import.meta.env.VITE_API_IMG_URL
 export const BIZNES_APTEKA_URL = import.meta.env.VITE_BIZNES_APTEKA_URL
 export const API_BASE_INDIVIDUAL_URL = import.meta.env.VITE_API_BASE_INDIVIDUAL_URL
+export const ENV_MODE = import.meta.env.VITE_ENV_MODE
