@@ -8,7 +8,7 @@ import { deletePersonalUserCard } from '~/services/individual/user-balance'
 
 defineProps<{
   card: CardModel
-  noSitting: boolean
+  noSitting?: boolean
 }>()
 const emit = defineEmits(['openCardSettings, updatedCard, updatedCard'])
 

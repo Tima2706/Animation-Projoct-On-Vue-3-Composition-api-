@@ -100,7 +100,7 @@ const selectColor = (color: string) => {
 const selectedScale = (item) => {
   return form.value.color === item.color ? { transform: 'scale(1.3)' } : {}
 }
-const openCardSettings = (card: any) => {
+const openCardSettings = (card?: any) => {
   addCardModalVisible.value = true
   currentCardId.value = card.id
   form.value = {

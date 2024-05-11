@@ -9,6 +9,7 @@ import { formatMoney } from '~/utils/pureFunction'
 import IconWallet from '~/assets/icons/empty-wallet-add.svg'
 import EyeIcon from '~/assets/icons/eye-line.svg'
 import EyeOffIcon from '~/assets/icons/visibility_off.svg'
+import StateHuman from '~/assets/icons/empty-state-concept.svg'
 
 import 'swiper/css'
 import 'swiper/css/navigation'
@@ -103,11 +104,18 @@ const rePayIt = async () => {
     emits('balanced')
   }
   catch (e: any) {
-    balanceCardModal.value = false
-    cancelBalanceModal()
     const data = e.response.data
-    errorMessage.value = data.error_message
-    errorModal.value = true
+    if (data.error_message.error_code === 906) {
+      errorMessage.value = data.error_message
+    }
+    else {
+      balanceCardModal.value = false
+      cancelBalanceModal()
+      errorMessage.value = data.error_message
+      errorModal.value = true
+    }
+
+    // errorModal.value = true
   }
 }
 const clearTimer = () => {
@@ -576,7 +584,12 @@ defineExpose({
           </Field>
           <div class="helper-message">
             <ErrorMessage name="card_expired_month" />
+
+
           </div>
+          <p v-if="errorMessage" style="color: red">
+            {{errorMessage.description}}
+          </p>
           <p class="time pb-3">
             {{ t('timeLeft') }}: <span class="font-bold"> {{ remainingTime }} </span>
           </p>
@@ -626,11 +639,14 @@ defineExpose({
     </a-modal>
   </div>
   <a-modal  v-model:open="errorModal" centered>
-    <p class="text-center font-medium text-xl ">{{ errorMessage.title }}</p>
-    <p class="mb-8 text-center text-[#48545d]">{{ errorMessage.description }}</p>
+    <div class="flex justify-center my-5">
+    <StateHuman/>
+    </div>
+    <p class="text-center text-[#48545D] font-bold text-3xl ">{{ errorMessage.title }}</p>
+    <p class="mb-8 text-center text-[#7A889B] text-lg">{{ errorMessage.description }}</p>
     <template #footer>
-      <div class="flex justify-between">
-      <a-button   @click="errorModal = false">
+      <div class="flex justify-center gap-5">
+      <a-button class="bg-[#7A889B] text-[#fff]"   @click="errorModal = false">
         {{ t('back') }}
       </a-button>
       <a :href="errorMessage.redirect_url" target="_blank" >
