@@ -114,7 +114,7 @@ const rePayIt = async () => {
       errorMessage.value = data.error_message
       errorModal.value = true
     }
-
+    emits('balanced')
     // errorModal.value = true
   }
 }
