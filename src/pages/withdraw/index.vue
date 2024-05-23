@@ -6,6 +6,7 @@ import { DATE_TIME_FORMAT } from '~/utils/constants'
 import { useFetchData } from '~/composables/useFetch'
 import { getWithdrawal } from '~/services/transactionBalance'
 import WithdrawFilterList from '~/components/pages/WithdrawFilterList.vue'
+import ChangeWithdrawPage from '~/components/pages/withdraw/ChangeWithdrawPage.vue'
 
 const { t } = useI18n()
 
@@ -74,6 +75,9 @@ const {
   { immediately: true },
 )
 
+// const handleSelect = () => {
+//   expand.value = !expand.value
+// }
 const onChangePage = () => {
   fetch()
 }
@@ -84,8 +88,12 @@ const onChangePage = () => {
     <VText weight="600" size="18" class="mb-4">
       {{ t("withdraw") }}
     </VText>
-    <WithdrawFilterList @changed="useFetchData" />
-    <div>
+<!--    <div class="flex gap-2 status__change">-->
+<!--    <button style="cursor: pointer" @click="handleSelect">{{$t('byAmount')}}</button>-->
+<!--    <button  style="cursor: pointer" @click="handleSelect">{{$t('byTransaction')}}</button>-->
+<!--    </div>-->
+<!--    <change-withdraw-page />-->
+    <WithdrawFilterList @changed="fetch" />
       <a-spin :spinning="bankingLoading">
         <a-table
           :pagination="false"
@@ -142,10 +150,21 @@ const onChangePage = () => {
           @change="onChangePage"
         />
       </a-spin>
-    </div>
   </div>
 </template>
 
 <style lang="scss" scoped>
-
+.status__change{
+  button{
+    transform: translateY(1px);
+    z-index: 1;
+    border-top: 1px solid #DFE2E9 !important;
+    border-right: 1px solid #DFE2E9 !important;
+    border-left: 1px solid #DFE2E9 !important;
+    background-color: #FFFFFF;
+    padding: 10px 12px;
+    border-radius: 6px 6px 0 0;
+    border-bottom: none;
+  }
+}
 </style>

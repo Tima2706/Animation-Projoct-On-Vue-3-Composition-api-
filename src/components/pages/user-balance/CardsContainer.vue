@@ -83,16 +83,16 @@ const form = ref<CardDto>({
   color: '',
 })
 const cardInfo = ref<any>({
-  type: 4,
+  type: 18,
   card_number: '',
-  amount: '0',
+  summa: '0',
   date_expire: '',
 })
 const rePayIt = async () => {
   try {
     await createPayment({
       order_id: isConfimationData.value.order_id,
-      type: 14,
+      type: 19,
       confirm_code: Number(secretNumber.value),
     })
     notification.success({
@@ -125,13 +125,13 @@ const clearTimer = () => {
   }
 }
 const paySubmit = async (value) => {
-  const floatAmount = parseFloat(cardInfo.value.amount).toFixed(2)
+  const floatAmount = parseFloat(cardInfo.value.summa).toFixed(2)
   try {
     const data = await createClaim({
       ...cardInfo.value,
-      amount: Number(floatAmount),
+      summa: Number(floatAmount),
       date_expire: value.data_expired,
-      card_number: value.card_number,
+      card_number: String(value.card_number),
     })
     isConfimationData.value = data.data
   }
@@ -243,9 +243,9 @@ function cancelBalanceModal() {
     color: '',
   }
   cardInfo.value = {
-    type: 4,
+    type: 18,
     card_number: '',
-    amount: '0',
+    summa: '0',
     date_expire: '',
   }
   isConfimationData.value = null
@@ -325,7 +325,9 @@ defineExpose({
         <div>
           <h1>{{ t('remainBalance') }}</h1>
           <p class="mb-1 color_yellow">
+
             {{
+
               showTransactionBalance.available ? formatMoney(balance?.available) : '*** ***'
             }}<span>{{ t('sum') }}</span>
           </p>
@@ -612,9 +614,9 @@ defineExpose({
             <p class="topBalance">
               {{ t('writeAmount') }}
             </p>
-            <Field v-model="cardInfo.amount" name="topBalance" rules="required">
+            <Field v-model="cardInfo.summa" name="topBalance" rules="required">
               <MaskInput
-                v-model="cardInfo.amount"
+                v-model="cardInfo.summa"
                 :options="inputPhoneMaskOption"
                 class="text-center"
               />

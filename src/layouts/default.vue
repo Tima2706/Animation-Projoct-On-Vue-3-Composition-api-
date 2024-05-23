@@ -144,7 +144,7 @@ const navigationForUser = computed<{
     >
       <AngleLeftIcon width="10" />
     </button>
-    <a-layout>
+    <a-layout class="layout-page pt-14">
       <a-layout-sider :collapsed-width="0" :collapsed="collapsed" width="268px">
         <div class="sidebar">
           <div class="sidebar__header">
@@ -183,4 +183,5 @@ const navigationForUser = computed<{
     transform: translateY(30px);
   }
 }
+
 </style>

@@ -50,6 +50,7 @@ declare module '@vue/runtime-core' {
     CardAnalytic: typeof import('./components/pages/analytic/CardAnalytic.vue')['default']
     CardCarousel: typeof import('./components/pages/user-balance/CardCarousel.vue')['default']
     CardsContainer: typeof import('./components/pages/user-balance/CardsContainer.vue')['default']
+    ChangeWithdrawPage: typeof import('./components/pages/withdraw/ChangeWithdrawPage.vue')['default']
     ColumnChart: typeof import('./components/pages/analytic/ColumnChart.vue')['default']
     CreditCard: typeof import('./components/pages/user-balance/CreditCard.vue')['default']
     DTHeader: typeof import('./components/layout/DTHeader.vue')['default']

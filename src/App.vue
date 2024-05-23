@@ -13,7 +13,7 @@ const { handleLogout, removeToken } = useToken()
 
 $loadDtHeader({
   currentLang: locale.value,
-  position: 'auto',
+  position: 'fixed',
   activeModule: 'rkp',
   enableProfileIcon: true,
   mode: ENV_MODE,

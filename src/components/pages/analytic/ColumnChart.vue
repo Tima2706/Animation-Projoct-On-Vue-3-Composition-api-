@@ -56,7 +56,6 @@ const chartData = computed(() => {
     } else {
       acc.push({ x: dateFormatted, y: item.rate_bcv });
     }
-
     return acc;
   }, []).reverse()
 });
@@ -66,7 +65,7 @@ const updateChart = () => {
   options.series = [
     {
       name: t('bcv'),
-      data: chartData.value.map((item: any) => {
+      data: chartData?.value.map((item?: any) => {
         return {
           x: t(item.x),
           y: item.y

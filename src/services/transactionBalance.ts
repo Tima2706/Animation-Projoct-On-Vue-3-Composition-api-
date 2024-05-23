@@ -5,7 +5,7 @@ import type { TransactionBalance } from '~/services/dto/transcationBalance'
 export const getTransactionBalance = (params: Record<any, any>): Promise<
   AxiosResponse<TransactionBalance>
 > => {
-  return $http.get('organization-balances')
+  return $http.get('balances')
 }
 
 export const getOrganizationPartner = () => {
@@ -47,3 +47,10 @@ export const getExpenses = (params: Record<string, number>, id: string) => {
 }
 export const postOrganizationWithdrawal = (form: any) => {
     return $http.post('operations', form) }
+
+
+export const getTransactions = (params: Record<string, number>, id: string) => {
+  return $http.get('to-transactions', {
+    params
+  })
+}

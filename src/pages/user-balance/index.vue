@@ -49,7 +49,7 @@ getOperation()
 const getBalance = async () => {
   try {
     const { data } = await getUserBalance({})
-    balance.value = data
+    balance.value = data.data
   } catch (e: any) {
     if (isAxiosError(e)) {
       notification.error({

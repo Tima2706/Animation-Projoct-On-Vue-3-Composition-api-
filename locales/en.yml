@@ -12,6 +12,8 @@ RCPModule: You need to enter your PINFL to access your balance
 enterYourPINFL: Enter your PINFL
 TransactionDate: Transaction date
 writeToTheOperator: Write to the operator
+byAmount: By amount
+byTransaction: By transaction
 income: Income
 outgo: Outgoing
 efficiency: Efficiency

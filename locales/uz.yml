@@ -11,6 +11,8 @@ RCPModule: Balansingizga kirish uchun PINFL-ni kiritishingiz kerak
 enterYourPINFL: PINFL-ni kiriting
 TransactionDate: Bitim sanasi
 writeToTheOperator: Operatorga yozing
+byAmount: Miqdori bo'yicha
+byTransaction: Bitim bo'yicha
 duringAllThisTime: Barcha vaqtlarda
 efficiency: Effektivlik
 deposit: Depozit

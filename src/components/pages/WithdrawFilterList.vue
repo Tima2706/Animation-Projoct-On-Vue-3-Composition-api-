@@ -1,35 +1,37 @@
 <script lang="ts" setup>
-import {useI18n} from "vue-i18n";
-import {defineProps, defineEmits, ref} from "vue";
-import {organizationWuthdrawal, postOrganizationWithdrawal} from "~/services/transactionBalance";
-import {notification} from "ant-design-vue";
-import {useServerError} from '~/services/useServerError'
-import {DEFAULT_ERROR_MESSAGE, SAVED_SUCCESSFULLY} from '~/utils/constants'
-import {Field, Form, ErrorMessage} from 'vee-validate';
-import {formatMoney} from "~/utils/pureFunction";
+import { useI18n } from 'vue-i18n'
+import { defineProps, defineEmits, ref } from 'vue'
+import { organizationWuthdrawal, postOrganizationWithdrawal } from '~/services/transactionBalance'
+import { notification } from 'ant-design-vue'
+import { useServerError } from '~/services/useServerError'
+import { SAVED_SUCCESSFULLY } from '~/utils/constants'
+import { Field, Form, ErrorMessage } from 'vee-validate'
+import { formatMoney } from '~/utils/pureFunction'
+import StateHuman from '~/assets/icons/empty-state-concept.svg'
 
 
 const visible = ref(false)
-const {t} = useI18n()
+const { t } = useI18n()
 const loading = ref(false)
 const organizations = ref<any>([])
 const formRef = ref()
 const submitLoading = ref(false)
-const {getFieldErrors} = useServerError()
-
+const { getFieldErrors } = useServerError()
+const errorModal = ref(false)
 const filterOption = (input: string, option: any) => {
-  return option?.account.toLowerCase().includes(input.toLowerCase());
-};
+  return option?.account.toLowerCase().includes(input.toLowerCase())
+}
+const errorData = ref({})
 const disabled = ref(false)
 const props = defineProps({
   isFilterOpened: {
     type: Boolean,
-    default: false,
+    default: false
   },
   filter: {
     type: Object,
-    default: () => ({}),
-  },
+    default: () => ({})
+  }
 })
 const emit = defineEmits(['changed'])
 
@@ -38,15 +40,15 @@ const DEFAULT_FILTER_DATA = {
   type: 5,
   summa: '',
   account: '',
-  note: '',
+  note: ''
 }
 
 
-const form = ref<any>({...DEFAULT_FILTER_DATA})
+const form = ref<any>({ ...DEFAULT_FILTER_DATA })
 
 const getOrganizationForSearch = async () => {
-  const {data} = await organizationWuthdrawal()
-  organizations.value = {data}
+  const { data } = await organizationWuthdrawal()
+  organizations.value = { data }
 
 }
 
@@ -58,38 +60,36 @@ const checkSumma = (value) => {
   } else if (value > organizations.value.data?.available_balance) {
     return t('notEnoughMoney')
   } else {
-    return true;
+    return true
   }
 
 }
 
 
 const submit = async () => {
-  const validate = await formRef.value.validate();
+  const validate = await formRef.value.validate()
   if (validate && validate.valid) {
-    submitLoading.value = true;
+    submitLoading.value = true
     try {
-      await postOrganizationWithdrawal({...form.value});
+      await postOrganizationWithdrawal({ ...form.value })
+      emit('changed')
       notification.success({
-        message: SAVED_SUCCESSFULLY,
-      });
-      emit('changed');
+        message: SAVED_SUCCESSFULLY
+      })
 
-
-      form.value = {...DEFAULT_FILTER_DATA};
+      form.value = { ...DEFAULT_FILTER_DATA }
       setTimeout(() => {
-        formRef.value.resetForm();
+        formRef.value.resetForm()
       })
     } catch (err: any) {
-      notification.error({
-        message: DEFAULT_ERROR_MESSAGE,
-      });
-      formRef.value.setErrors(getFieldErrors(err));
+      errorModal.value = true
+      errorData.value = err.response.data.error_message
+      formRef.value.setErrors(getFieldErrors(err))
     } finally {
-      submitLoading.value = false;
+      submitLoading.value = false
     }
   }
-};
+}
 
 
 getOrganizationForSearch()
@@ -105,13 +105,15 @@ getOrganizationForSearch()
             <div class="withdraw-filter__lside flex gap-5 justify-between">
               <div style="width: 50%">
                 <p style="padding-bottom: 8px">{{ $t('tin') }}</p>
-                <div class="mb-5 withdraw-filter__lside__item" style=" padding: 10px; border-radius: 12px; background: #F0F4F9; ">
+                <div class="mb-5 withdraw-filter__lside__item"
+                     style=" padding: 10px; border-radius: 12px; background: #F0F4F9; ">
                   <VText class="text-dark"> {{ organizations?.data?.tin }}</VText>
                 </div>
               </div>
               <div style="width: 50%">
                 <p style="padding-bottom: 8px">{{ $t('name') }}</p>
-                <div class="mb-5 withdraw-filter__lside__item" style=" padding: 10px; border-radius: 12px; background: #F0F4F9;">
+                <div class="mb-5 withdraw-filter__lside__item"
+                     style=" padding: 10px; border-radius: 12px; background: #F0F4F9;">
                   <VText class="text-dark"> {{ organizations?.data?.name }}</VText>
                 </div>
               </div>
@@ -119,54 +121,54 @@ getOrganizationForSearch()
           </a-col>
           <a-col :span="24">
             <div class="withdraw-filter__lside flex justify-between gap-5 items-start">
-              <div   style="width: 50%">
-            <VText size="12" weight="400" class="mb-2">
-              {{ $t('checkingAccount') }}
-            </VText>
-            <Field  :model-value="form.account" name="account">
-              <a-select
-                v-model:value="form.account"
-                show-search
-                allow-clear
-                class="withdraw-filter__select"
-                style="width: 100%"
-                :field-names="{ label: 'account', value: 'account' }"
-                :options="organizations?.data?.items"
-                :filter-option="filterOption"
-              />
-              <div class="helper-message">
-                <ErrorMessage name="account"/>
+              <div style="width: 50%">
+                <VText size="12" weight="400" class="mb-2">
+                  {{ $t('checkingAccount') }}
+                </VText>
+                <Field :model-value="form.account" name="account">
+                  <a-select
+                    v-model:value="form.account"
+                    show-search
+                    allow-clear
+                    class="withdraw-filter__select"
+                    style="width: 100%"
+                    :field-names="{ label: 'account', value: 'account' }"
+                    :options="organizations?.data?.items"
+                    :filter-option="filterOption"
+                  />
+                  <div class="helper-message">
+                    <ErrorMessage name="account" />
+                  </div>
+                </Field>
               </div>
-            </Field>
-              </div>
-              <div  style="width: 50%">
-            <VText size="12" weight="400" class="mb-2">
-              {{ $t('transactionAmount') }}
-            </VText>
-            <Field
-              v-slot="{ errors, value }"
-              :model-value="form.summa"
-              name="summa"
-              :rules="checkSumma"
-            >
-              <a-input-number
-                type="number"
-                style="width: 100%"
-                class="withdraw-filter__select"
-                :placeholder="$t('summa')"
-                v-model:value="form.summa"
-                :class="{ 'has-error': errors.length }"
-              />
-              <v-text class="pt-2 can-be-withdrawn"><span style="font-weight: 500">{{ $t('canBeWithdrawn') }}</span>:
-                <span style="font-weight: 600">{{
-                    organizations?.data?.available_balance ? formatMoney(organizations.data.available_balance.replace(/\s/g, ' ')) : '0'
-                  }}
+              <div style="width: 50%">
+                <VText size="12" weight="400" class="mb-2">
+                  {{ $t('transactionAmount') }}
+                </VText>
+                <Field
+                  v-slot="{ errors }"
+                  :model-value="form.summa"
+                  name="summa"
+                  :rules="checkSumma"
+                >
+                  <a-input-number
+                    type="number"
+                    style="width: 100%"
+                    class="withdraw-filter__select"
+                    :placeholder="$t('summa')"
+                    v-model:value="form.summa"
+                    :class="{ 'has-error': errors.length }"
+                  />
+                  <v-text class="pt-2 can-be-withdrawn"><span style="font-weight: 500">{{ $t('canBeWithdrawn') }}</span>:
+                    <span style="font-weight: 600">{{
+                        organizations?.data?.available_balance ? formatMoney(organizations.data.available_balance.replace(/\s/g, ' ')) : '0'
+                      }}
               {{ $t('sum') }} </span>
-              </v-text>
-              <div class="helper-message">
-                <ErrorMessage name="summa"/>
-              </div>
-            </Field>
+                  </v-text>
+                  <div class="helper-message">
+                    <ErrorMessage name="summa" />
+                  </div>
+                </Field>
               </div>
             </div>
 
@@ -180,7 +182,7 @@ getOrganizationForSearch()
                 :rows="4"
               />
               <div class="helper-message">
-                <ErrorMessage :name="$t('note')"/>
+                <ErrorMessage :name="$t('note')" />
               </div>
             </Field>
           </a-col>
@@ -195,8 +197,25 @@ getOrganizationForSearch()
       </Form>
     </div>
   </a-card>
-
-
+  <a-modal
+    v-model:visible="errorModal"
+    :footer="null"
+  >
+    <div class="flex mt-8 items-center justify-center">
+      <StateHuman />
+    </div>
+    <p style="font-size: 24px" class="text-center font-[600] text-[#48545D] my-4" v-html="errorData.title"></p>
+    <p style="font-size: 18px" class="text-[#90A5BE] text-center" v-html="errorData.description"></p>
+    <a-divider />
+    <div class="flex items-center justify-center gap-3 ">
+      <a-button class="text-[#fff] bg-[#9EABBE]" @click="errorModal = false">{{ $t('close') }}</a-button>
+      <a target="_blank" :href="errorData.redirect_url">
+        <a-button @click="errorModal = false" type="primary">
+          {{ errorData.button }}
+        </a-button>
+      </a>
+    </div>
+  </a-modal>
 </template>
 
 
@@ -227,17 +246,19 @@ getOrganizationForSearch()
     color: #FFFFFF;
   }
 }
+
 @media (max-width: 1000px) {
-  .withdraw-filter__select{
+  .withdraw-filter__select {
     width: 200% !important;
   }
-  .withdraw-filter__lside{
+  .withdraw-filter__lside {
     flex-wrap: wrap;
-    &__item{
+
+    &__item {
       width: 200%;
     }
   }
-  .can-be-withdrawn{
+  .can-be-withdrawn {
     width: 200%;
   }
 }

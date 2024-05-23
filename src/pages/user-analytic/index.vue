@@ -1,10 +1,9 @@
 <script lang="ts" setup>
 import { useI18n } from 'vue-i18n'
 import dayjs from 'dayjs'
-import { getAnalytics, getAnalyticsIncome, } from '~/services/analytics'
 import { AnalyticsDto, AnalyticsIncomeDto } from '~/services/dto/analytics.dto'
 import AnalyticChartOutgo from '~/components/pages/analytic/AnalyticChartOutgo.vue'
-import { getAnalyticsOutgoing } from '~/services/outgoing'
+import { getAnalyticsIncomeUser, getAnalyticsOutgoingUser, getAnalyticsUser } from '~/services/user-analytics'
 
 const { t } = useI18n()
 const typeStatus = ref(null)
@@ -63,7 +62,7 @@ const fetchData = async (endDate?: string, startDate?: string, status?: number) 
   try {
     const {
       data
-    } = await getAnalytics({ from_date: endDate, to_date: startDate, type: status !== 0 ? [status] : null})
+    } = await getAnalyticsUser({ from_date: endDate, to_date: startDate, type: status !== 0 ? [status] : null})
     analyticsList.value = data
   } catch (err) {
     console.error(err)
@@ -77,7 +76,7 @@ const loadData = async (endDate?: string, startDate?: string, status?: number) =
   try {
     const {
       data
-    } = await getAnalyticsIncome({ from_date: endDate, to_date: startDate, type: status !== 0 ? [status] : null})
+    } = await  getAnalyticsIncomeUser({ from_date: endDate, to_date: startDate, type: status !== 0 ? [status] : null})
     filteredList.value = data
   } catch (err) {
     console.error(err)
@@ -90,7 +89,7 @@ const loadOutgoData = async (endDate?: string, startDate?: string, status?: numb
   try {
     const {
       data
-    } = await getAnalyticsOutgoing({ from_date: endDate, to_date: startDate, type: status !== 0 ? [status] : null})
+    } = await getAnalyticsOutgoingUser({ from_date: endDate, to_date: startDate, type: status !== 0 ? [status] : null})
     filteredListOutgo.value = data
   }catch (err) {
     console.error(err)
