@@ -33,7 +33,7 @@ rolesAndAccess: Роли и доступы к модулям
 increase: В порядке возрастания цены
 cardName: Название карты
 writeAmount: Напишите сумму
-resendCode: Вернитесь и повторно отправьте код
+resendCode: Нажмите кнопку «Назад» и повторно отправьте код.
 сonfirm: Подтвердить
 timeLeft: Осталось времени
 topUpYourAccount: Пополните счет

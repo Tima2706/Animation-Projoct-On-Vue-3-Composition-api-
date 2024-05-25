@@ -12,7 +12,7 @@ export const getOrganizationPartner = () => {
     return $http.get('organizations')
 }
 export const organizationWuthdrawal = (id: string) => {
-    return $http.get('organization-bank-accounts-search')
+    return $http.get('accounts-search')
 }
 export const getBlockedBalance = (params: Record<string, number>, id: string) => {
     return $http.get('operations-search?type[]=2&type[]=10&status=0', {
