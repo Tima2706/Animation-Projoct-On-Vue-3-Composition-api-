@@ -235,6 +235,12 @@ blockedBalance: Блокированный
 expenses: Расходы
 throughKlering: Через клиринг
 agree: Согласится
+balanceStatus:
+    11: Отправлен в банк
+    13: Операция заблокирована
+    14: Проведен в счет
+    15: Ошибка в Банк
+    16: Техническая ошибка
 operationTypes:
   TYPE_PAYMENT: Абонентская оплата
   TYPE_PLEDGE_BLOCK: Блок для залога
@@ -245,6 +251,7 @@ operationTypes:
   TYPE_DEPOSIT_PENALTY: Пополнения по штрафу
   TYPE_CONTRACT_PRICE_PAY: Оплата по контракту
   TYPE_CONTRACT_PRICE_DEPOSIT: Оплата за депозит контракта
+
 operationStatus:
   1: Отправлен в клиринг
   2: Отправлен в банк

@@ -81,8 +81,8 @@ const columns = computed(() => [
   },
   {
     title: t('status'),
-    dataIndex: 'status_list',
-    key: 'status_list'
+    dataIndex: 'status',
+    key: 'status'
   },
   {
     title: t('NOTES'),
@@ -176,7 +176,7 @@ const onChangePage = () => {
             {{ index + 1 }}
           </template>
           <template v-if="column.key === 'status'">
-            {{ t(`operationStatus.${record.status}`) }}
+            {{ t(`balanceStatus.${record.status}`) }}
           </template>
           <template v-if="column.key === 'date'">
             {{ dayjs(record.date).format(DATE_TIME_FORMAT) }}

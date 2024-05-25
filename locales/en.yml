@@ -6,6 +6,12 @@ Thu: Thu
 Fri: Fri
 Sat: Sat
 Sun: Sun
+balanceStatus:
+  11: Sent to bank
+  13: The operation blocked
+  14: Posted into account
+  15: Error in Bank
+  16: Technical error
 duringAllThisTime: During all this time
 uDontHaveAccess: You don't have access
 RCPModule: You need to enter your PINFL to access your balance

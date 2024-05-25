@@ -108,7 +108,7 @@ const onChangePage = () => {
         <a-table :pagination="false" :data-source="operations ? operations : []" :columns="columns">
           <template #bodyCell="{ column, record }">
             <template v-if="column.key === 'status'">
-              {{ t(`operationStatus.${record.status}`) }}
+              {{ t(`balanceStatus.${record.status}`) }}
             </template>
             <template v-if="column.key === 'date'">
               {{ dayjs(record.date).format(DATE_TIME_FORMAT) }}

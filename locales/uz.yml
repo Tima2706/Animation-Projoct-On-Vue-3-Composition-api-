@@ -49,6 +49,12 @@ enterCode: Kodni kiriting
 aVerificationCodeHasBeenSent: Tasdiqlash kodi yuborildi
 resendCode: Orqaga tugmasini bosing va kodni qayta yuboring.
 сonfirm: Tasdiqlash
+balanceStatus:
+  11: Bankga yuborildi
+  13: Operatsiya bloklandi
+  14: Hisob raqamiga tushgan
+  15: Bankda xato
+  16: Texnik xato
 timeLeft: Qolgan vaqt
 addCard: Karta qo'shish
 blockedDeposit: Bloklangan
