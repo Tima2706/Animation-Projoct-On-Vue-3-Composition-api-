@@ -7,6 +7,15 @@ Fri: Fri
 Sat: Sat
 Sun: Sun
 balanceStatus:
+  1: Sent to clearing
+  2: Sent to bank
+  3: Transferred to account
+  4: Paid
+  5: Blocked
+  6: Unblocked
+  7: Refilled
+  22: Error sending to bank
+  33: Bank error
   11: Sent to bank
   13: The operation blocked
   14: Posted into account

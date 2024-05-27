@@ -50,6 +50,15 @@ aVerificationCodeHasBeenSent: Tasdiqlash kodi yuborildi
 resendCode: Orqaga tugmasini bosing va kodni qayta yuboring.
 сonfirm: Tasdiqlash
 balanceStatus:
+  1: Kliringga jo'natildi
+  2: Bankka jo'natildi
+  3: Xisob raqamiga o'tkazildi
+  4: To'landi
+  5: Bloklangan
+  6: Blokdan chiqarilgan
+  7: To'ldirilgan
+  22: Bankka jo'natishda xatolik
+  33: Bankda xatolik
   11: Bankga yuborildi
   13: Operatsiya bloklandi
   14: Hisob raqamiga tushgan
