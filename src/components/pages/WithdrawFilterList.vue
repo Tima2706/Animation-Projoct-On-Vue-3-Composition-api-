@@ -204,12 +204,12 @@ getOrganizationForSearch()
     <div class="flex mt-8 items-center justify-center">
       <StateHuman />
     </div>
-    <p style="font-size: 24px" class="text-center font-[600] text-[#48545D] my-4" v-html="errorData.title"></p>
-    <p style="font-size: 18px" class="text-[#90A5BE] text-center" v-html="errorData.description"></p>
+    <p style="font-size: 24px" class="text-center font-[600] text-[#48545D] my-4" v-html="errorData?.title"></p>
+    <p style="font-size: 18px" class="text-[#90A5BE] text-center" v-html="errorData?.description"></p>
     <a-divider />
     <div class="flex items-center justify-center gap-3 ">
       <a-button class="text-[#fff] bg-[#9EABBE]" @click="errorModal = false">{{ $t('close') }}</a-button>
-      <a target="_blank" :href="errorData.redirect_url">
+      <a target="_blank" :href="errorData?.redirect_url">
         <a-button @click="errorModal = false" type="primary">
           {{ errorData.button }}
         </a-button>
