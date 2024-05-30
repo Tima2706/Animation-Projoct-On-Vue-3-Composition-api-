@@ -651,7 +651,7 @@ defineExpose({
       <a-button class="bg-[#7A889B] text-[#fff]"   @click="errorModal = false">
         {{ t('back') }}
       </a-button>
-      <a :href="errorMessage.redirect_url" target="_blank" >
+      <a :href="errorMessage?.redirect_url" target="_blank" >
         <a-button type="primary"  @click="errorModal = false">
           {{ t('writeToTheOperator') }}
         </a-button>
