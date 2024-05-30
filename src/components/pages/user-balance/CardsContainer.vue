@@ -389,13 +389,14 @@ defineExpose({
       class="swiperModal"
       :style="{ overflow: 'hidden' }"
       @cancel="cancelBalanceModal"
+      :maskClosable="false"
     >
-      <Form v-slot="{ meta }">
+      <Form  v-slot="{ meta }">
         <div v-if="cards.length !== 0 && isConfimationData === null">
           <h2 class="modal-title">
             {{ t('topUpYourAccount') }}
           </h2>
-          <div class="swiperWrapper">
+          <div class="swiperWrapper"   @touchstart.stop.prevent @touchmove.stop.prevent @touchend.stop.prevent>
             <Swiper
               ref="swiperRef"
               class="swiperContainer swiper"
@@ -637,6 +638,13 @@ defineExpose({
             {{ t('next') }}
           </a-button>
         </Form>
+        <a-button
+          key="cancel"
+          class="py-5 buttonNext mt-4 w-[100%] bg-[#D65E81] text-[#fff]"
+          @click="() => { balanceCardModal = false; cancelBalanceModal() }"
+        >
+          {{ t('cancel') }}
+        </a-button>
       </template>
     </a-modal>
   </div>
